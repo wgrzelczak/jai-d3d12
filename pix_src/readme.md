@@ -4,7 +4,7 @@
 ## Source
 https://www.nuget.org/api/v2/package/WinPixEventRuntime/1.0.220124001
 
-## Directory hierarchy
+## Current directory content
 ```
 ./_rels/
 ./bin/
