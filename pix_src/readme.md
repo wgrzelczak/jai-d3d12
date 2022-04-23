@@ -4,7 +4,8 @@
 ## Source
 https://www.nuget.org/api/v2/package/WinPixEventRuntime/1.0.220124001
 
-## Desried directory hierarchy
+## Directory hierarchy
+```
 ./_rels/
 ./bin/
 ./build/
@@ -17,3 +18,4 @@ https://www.nuget.org/api/v2/package/WinPixEventRuntime/1.0.220124001
 ./ThirdPartyNotices.txt
 ./WinPixEventRuntime.nuspec
 ./WinPixEventRuntimeIcon.png
+```
