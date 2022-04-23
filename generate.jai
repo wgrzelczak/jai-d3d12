@@ -167,9 +167,6 @@ d3d_visitor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Vi
 
 get_enum_name :: (argument_name: string, parent_name: string) -> string {
     if argument_name == {
-        case "BindFlags";       return "D3D11_BIND_FLAG";
-        case "CPUAccessFlags";  return "D3D11_CPU_ACCESS_FLAG";
-        case "MiscFlags";       return "D3D11_RESOURCE_MISC_FLAG";
         case "Flags";
             if parent_name == {
                 case "DXGI_SWAP_CHAIN_DESC";  return "DXGI_SWAP_CHAIN_FLAG";
