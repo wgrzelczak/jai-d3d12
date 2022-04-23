@@ -1,0 +1,4 @@
+.build/
+pix_src/
+dxc_src/
+d3d12_agility_src/
