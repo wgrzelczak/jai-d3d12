@@ -44,6 +44,13 @@ D3D_SHADER_FEATURE_NATIVE_16BIT_OPS :: 0x40000;
 D3D_SHADER_FEATURE_SHADING_RATE :: 0x80000;
 D3D_SHADER_FEATURE_RAYTRACING_TIER_1_1 :: 0x100000;
 D3D_SHADER_FEATURE_SAMPLER_FEEDBACK :: 0x200000;
+D3D_SHADER_FEATURE_ATOMIC_INT64_ON_TYPED_RESOURCE :: 0x400000;
+D3D_SHADER_FEATURE_ATOMIC_INT64_ON_GROUP_SHARED :: 0x800000;
+D3D_SHADER_FEATURE_DERIVATIVES_IN_MESH_AND_AMPLIFICATION_SHADERS :: 0x1000000;
+D3D_SHADER_FEATURE_RESOURCE_DESCRIPTOR_HEAP_INDEXING :: 0x2000000;
+D3D_SHADER_FEATURE_SAMPLER_DESCRIPTOR_HEAP_INDEXING :: 0x4000000;
+D3D_SHADER_FEATURE_WAVE_MMA :: 0x8000000;
+D3D_SHADER_FEATURE_ATOMIC_INT64_ON_DESCRIPTOR_HEAP_RESOURCE :: 0x10000000;
 
 D3D_COMPONENT_MASK_X :: 1;
 D3D_COMPONENT_MASK_Y :: 2;
@@ -562,6 +569,8 @@ D3D12_PACKED_TILE :: 0xffffffff;
 
 D3D12_PIXEL_ADDRESS_RANGE_BIT_COUNT :: 15;
 
+D3D12_PREVIEW_SDK_VERSION :: 700;
+
 D3D12_PRE_SCISSOR_PIXEL_ADDRESS_RANGE_BIT_COUNT :: 16;
 
 D3D12_PS_CS_UAV_REGISTER_COMPONENTS :: 1;
@@ -693,7 +702,7 @@ D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES :: 0xffffffff;
 
 D3D12_RS_SET_SHADING_RATE_COMBINER_COUNT :: 2;
 
-D3D12_SDK_VERSION :: 3;
+D3D12_SDK_VERSION :: 600;
 
 D3D12_SHADER_IDENTIFIER_SIZE_IN_BYTES :: 32;
 
@@ -865,6 +874,8 @@ D3D12_ANISOTROPIC_FILTERING_BIT :: 0x40;
 D3D12_SHADING_RATE_X_AXIS_SHIFT :: 2;
 D3D12_SHADING_RATE_VALID_MASK :: 3;
 
+/* interface __MIDL_itf_d3dcommon_0000_0000 */
+/* [local] */
 D3D_DRIVER_TYPE :: enum s32 {
     UNKNOWN   :: 0;
     HARDWARE  :: 1;
@@ -1275,6 +1286,8 @@ ID3DDestructionNotifier_UnregisterDestructionCallback :: inline (this: *ID3DDest
 vtable :: (obj: *ID3DDestructionNotifier) -> *ID3DDestructionNotifier_VTable { return obj.id3ddestructionnotifier_vtable; }
 
 
+/* interface __MIDL_itf_d3dcommon_0000_0002 */
+/* [local] */
 D3D_INCLUDE_TYPE :: enum s32 {
     INCLUDE_LOCAL       :: 0;
     INCLUDE_SYSTEM      :: 1;
@@ -1421,6 +1434,11 @@ D3D_SHADER_VARIABLE_TYPE :: enum s32 {
     SVT_MIN12INT                      :: 55;
     SVT_MIN16INT                      :: 56;
     SVT_MIN16UINT                     :: 57;
+    SVT_INT16                         :: 58;
+    SVT_UINT16                        :: 59;
+    SVT_FLOAT16                       :: 60;
+    SVT_INT64                         :: 61;
+    SVT_UINT64                        :: 62;
     _10_SVT_VOID                      :: 0;
     _10_SVT_BOOL                      :: 1;
     _10_SVT_INT                       :: 2;
@@ -1533,6 +1551,11 @@ D3D_SHADER_VARIABLE_TYPE :: enum s32 {
     D3D_SVT_MIN12INT                    :: SVT_MIN12INT;
     D3D_SVT_MIN16INT                    :: SVT_MIN16INT;
     D3D_SVT_MIN16UINT                   :: SVT_MIN16UINT;
+    D3D_SVT_INT16                       :: SVT_INT16;
+    D3D_SVT_UINT16                      :: SVT_UINT16;
+    D3D_SVT_FLOAT16                     :: SVT_FLOAT16;
+    D3D_SVT_INT64                       :: SVT_INT64;
+    D3D_SVT_UINT64                      :: SVT_UINT64;
     D3D10_SVT_VOID                      :: _10_SVT_VOID;
     D3D10_SVT_BOOL                      :: _10_SVT_BOOL;
     D3D10_SVT_INT                       :: _10_SVT_INT;
@@ -2304,6 +2327,8 @@ D3D12_BLEND_DESC :: struct {
     RenderTarget:           [8] D3D12_RENDER_TARGET_BLEND_DESC;
 }
 
+/* Note, the array size for RenderTarget[] above is D3D12_SIMULTANEOUS_RENDERTARGET_COUNT. 
+IDL processing/generation of this header replaces the define; this comment is merely explaining what happened. */
 D3D12_CONSERVATIVE_RASTERIZATION_MODE :: enum s32 {
     OFF :: 0;
     ON  :: 1;
@@ -2368,6 +2393,8 @@ ID3D12RootSignature :: struct {
     #as using id3d12devicechild: ID3D12DeviceChild;
 }
 
+/* interface __MIDL_itf_d3d12_0000_0001 */
+/* [local] */
 D3D12_SHADER_BYTECODE :: struct {
     pShaderBytecode: *void;
     BytecodeLength:  SIZE_T;
@@ -2529,6 +2556,7 @@ D3D12_FEATURE :: enum s32 {
     SERIALIZATION                         :: 24;
     CROSS_NODE                            :: 25;
     D3D12_OPTIONS5                        :: 27;
+    DISPLAYABLE                           :: 28;
     D3D12_OPTIONS6                        :: 30;
     QUERY_META_COMMAND                    :: 31;
     D3D12_OPTIONS7                        :: 32;
@@ -2536,7 +2564,9 @@ D3D12_FEATURE :: enum s32 {
     PROTECTED_RESOURCE_SESSION_TYPES      :: 34;
     D3D12_OPTIONS8                        :: 36;
     D3D12_OPTIONS9                        :: 37;
-    WAVE_MMA                              :: 38;
+    D3D12_OPTIONS10                       :: 39;
+    D3D12_OPTIONS11                       :: 40;
+    D3D12_OPTIONS12                       :: 41;
 
     D3D12_FEATURE_D3D12_OPTIONS                         :: D3D12_OPTIONS;
     D3D12_FEATURE_ARCHITECTURE                          :: ARCHITECTURE;
@@ -2559,6 +2589,7 @@ D3D12_FEATURE :: enum s32 {
     D3D12_FEATURE_SERIALIZATION                         :: SERIALIZATION;
     D3D12_FEATURE_CROSS_NODE                            :: CROSS_NODE;
     D3D12_FEATURE_D3D12_OPTIONS5                        :: D3D12_OPTIONS5;
+    D3D12_FEATURE_DISPLAYABLE                           :: DISPLAYABLE;
     D3D12_FEATURE_D3D12_OPTIONS6                        :: D3D12_OPTIONS6;
     D3D12_FEATURE_QUERY_META_COMMAND                    :: QUERY_META_COMMAND;
     D3D12_FEATURE_D3D12_OPTIONS7                        :: D3D12_OPTIONS7;
@@ -2566,7 +2597,9 @@ D3D12_FEATURE :: enum s32 {
     D3D12_FEATURE_PROTECTED_RESOURCE_SESSION_TYPES      :: PROTECTED_RESOURCE_SESSION_TYPES;
     D3D12_FEATURE_D3D12_OPTIONS8                        :: D3D12_OPTIONS8;
     D3D12_FEATURE_D3D12_OPTIONS9                        :: D3D12_OPTIONS9;
-    D3D12_FEATURE_WAVE_MMA                              :: WAVE_MMA;
+    D3D12_FEATURE_D3D12_OPTIONS10                       :: D3D12_OPTIONS10;
+    D3D12_FEATURE_D3D12_OPTIONS11                       :: D3D12_OPTIONS11;
+    D3D12_FEATURE_D3D12_OPTIONS12                       :: D3D12_OPTIONS12;
 }
 
 D3D12_SHADER_MIN_PRECISION_SUPPORT :: enum s32 {
@@ -2829,15 +2862,16 @@ D3D12_FEATURE_DATA_FEATURE_LEVELS :: struct {
 }
 
 D3D_SHADER_MODEL :: enum s32 {
-    _5_1 :: 81;
-    _6_0 :: 96;
-    _6_1 :: 97;
-    _6_2 :: 98;
-    _6_3 :: 99;
-    _6_4 :: 100;
-    _6_5 :: 101;
-    _6_6 :: 102;
-    _6_7 :: 103;
+    _5_1                     :: 81;
+    _6_0                     :: 96;
+    _6_1                     :: 97;
+    _6_2                     :: 98;
+    _6_3                     :: 99;
+    _6_4                     :: 100;
+    _6_5                     :: 101;
+    _6_6                     :: 102;
+    _6_7                     :: 103;
+    D3D_HIGHEST_SHADER_MODEL :: 103;
 
     D3D_SHADER_MODEL_5_1 :: _5_1;
     D3D_SHADER_MODEL_6_0 :: _6_0;
@@ -2884,6 +2918,8 @@ D3D12_SHADER_CACHE_SUPPORT_FLAGS :: enum_flags u32 {
     AUTOMATIC_INPROC_CACHE :: 0x4;
     AUTOMATIC_DISK_CACHE   :: 0x8;
     DRIVER_MANAGED_CACHE   :: 0x10;
+    SHADER_CONTROL_CLEAR   :: 0x20;
+    SHADER_SESSION_DELETE  :: 0x40;
 
     D3D12_SHADER_CACHE_SUPPORT_NONE                   :: NONE;
     D3D12_SHADER_CACHE_SUPPORT_SINGLE_PSO             :: SINGLE_PSO;
@@ -2891,6 +2927,8 @@ D3D12_SHADER_CACHE_SUPPORT_FLAGS :: enum_flags u32 {
     D3D12_SHADER_CACHE_SUPPORT_AUTOMATIC_INPROC_CACHE :: AUTOMATIC_INPROC_CACHE;
     D3D12_SHADER_CACHE_SUPPORT_AUTOMATIC_DISK_CACHE   :: AUTOMATIC_DISK_CACHE;
     D3D12_SHADER_CACHE_SUPPORT_DRIVER_MANAGED_CACHE   :: DRIVER_MANAGED_CACHE;
+    D3D12_SHADER_CACHE_SUPPORT_SHADER_CONTROL_CLEAR   :: SHADER_CONTROL_CLEAR;
+    D3D12_SHADER_CACHE_SUPPORT_SHADER_SESSION_DELETE  :: SHADER_SESSION_DELETE;
 }
 
 D3D12_FEATURE_DATA_SHADER_CACHE :: struct {
@@ -2943,6 +2981,11 @@ D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER :: enum s32 {
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_0 :: _0;
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_1 :: _1;
     D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER_2 :: _2;
+}
+
+D3D12_FEATURE_DATA_DISPLAYABLE :: struct {
+    DisplayableTexture:              BOOL;
+    SharedResourceCompatibilityTier: D3D12_SHARED_RESOURCE_COMPATIBILITY_TIER;
 }
 
 D3D12_FEATURE_DATA_D3D12_OPTIONS4 :: struct {
@@ -3066,49 +3109,28 @@ D3D12_FEATURE_DATA_D3D12_OPTIONS9 :: struct {
     WaveMMATier:                                       D3D12_WAVE_MMA_TIER;
 }
 
-D3D12_WAVE_MMA_INPUT_DATATYPE :: enum s32 {
-    INVALID :: 0;
-    BYTE    :: 1;
-    FLOAT16 :: 2;
-    FLOAT   :: 3;
-
-    D3D12_WAVE_MMA_INPUT_DATATYPE_INVALID :: INVALID;
-    D3D12_WAVE_MMA_INPUT_DATATYPE_BYTE    :: BYTE;
-    D3D12_WAVE_MMA_INPUT_DATATYPE_FLOAT16 :: FLOAT16;
-    D3D12_WAVE_MMA_INPUT_DATATYPE_FLOAT   :: FLOAT;
+D3D12_FEATURE_DATA_D3D12_OPTIONS10 :: struct {
+    VariableRateShadingSumCombinerSupported:    BOOL;
+    MeshShaderPerPrimitiveShadingRateSupported: BOOL;
 }
 
-D3D12_WAVE_MMA_DIMENSION :: enum s32 {
-    INVALID :: 0;
-    _16     :: 1;
-    _64     :: 2;
-
-    D3D12_WAVE_MMA_DIMENSION_INVALID :: INVALID;
-    D3D12_WAVE_MMA_DIMENSION_16      :: _16;
-    D3D12_WAVE_MMA_DIMENSION_64      :: _64;
+D3D12_FEATURE_DATA_D3D12_OPTIONS11 :: struct {
+    AtomicInt64OnDescriptorHeapResourceSupported: BOOL;
 }
 
-D3D12_WAVE_MMA_ACCUM_DATATYPE :: enum s32 {
-    NONE    :: 0;
-    INT32   :: 1;
-    FLOAT16 :: 2;
-    FLOAT   :: 4;
+D3D12_TRI_STATE :: enum s32 {
+    UNKNOWN :: -1;
+    FALSE   :: 0;
+    TRUE    :: 1;
 
-    D3D12_WAVE_MMA_ACCUM_DATATYPE_NONE    :: NONE;
-    D3D12_WAVE_MMA_ACCUM_DATATYPE_INT32   :: INT32;
-    D3D12_WAVE_MMA_ACCUM_DATATYPE_FLOAT16 :: FLOAT16;
-    D3D12_WAVE_MMA_ACCUM_DATATYPE_FLOAT   :: FLOAT;
+    D3D12_TRI_STATE_UNKNOWN :: UNKNOWN;
+    D3D12_TRI_STATE_FALSE   :: FALSE;
+    D3D12_TRI_STATE_TRUE    :: TRUE;
 }
 
-D3D12_FEATURE_DATA_WAVE_MMA :: struct {
-    InputDataType:            D3D12_WAVE_MMA_INPUT_DATATYPE;
-    M:                        D3D12_WAVE_MMA_DIMENSION;
-    N:                        D3D12_WAVE_MMA_DIMENSION;
-    Supported:                BOOL;
-    K:                        u32;
-    AccumDataTypes:           D3D12_WAVE_MMA_ACCUM_DATATYPE;
-    RequiredWaveLaneCountMin: u32;
-    RequiredWaveLaneCountMax: u32;
+D3D12_FEATURE_DATA_D3D12_OPTIONS12 :: struct {
+    MSPrimitivesPipelineStatisticIncludesCulledPrimitives: D3D12_TRI_STATE;
+    EnhancedBarriersSupported:                             BOOL;
 }
 
 D3D12_RESOURCE_ALLOCATION_INFO :: struct {
@@ -3234,25 +3256,27 @@ D3D12_TEXTURE_LAYOUT :: enum s32 {
 }
 
 D3D12_RESOURCE_FLAGS :: enum_flags u32 {
-    NONE                        :: 0x0;
-    ALLOW_RENDER_TARGET         :: 0x1;
-    ALLOW_DEPTH_STENCIL         :: 0x2;
-    ALLOW_UNORDERED_ACCESS      :: 0x4;
-    DENY_SHADER_RESOURCE        :: 0x8;
-    ALLOW_CROSS_ADAPTER         :: 0x10;
-    ALLOW_SIMULTANEOUS_ACCESS   :: 0x20;
-    VIDEO_DECODE_REFERENCE_ONLY :: 0x40;
-    VIDEO_ENCODE_REFERENCE_ONLY :: 0x80;
+    NONE                              :: 0x0;
+    ALLOW_RENDER_TARGET               :: 0x1;
+    ALLOW_DEPTH_STENCIL               :: 0x2;
+    ALLOW_UNORDERED_ACCESS            :: 0x4;
+    DENY_SHADER_RESOURCE              :: 0x8;
+    ALLOW_CROSS_ADAPTER               :: 0x10;
+    ALLOW_SIMULTANEOUS_ACCESS         :: 0x20;
+    VIDEO_DECODE_REFERENCE_ONLY       :: 0x40;
+    VIDEO_ENCODE_REFERENCE_ONLY       :: 0x80;
+    RAYTRACING_ACCELERATION_STRUCTURE :: 0x100;
 
-    D3D12_RESOURCE_FLAG_NONE                        :: NONE;
-    D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET         :: ALLOW_RENDER_TARGET;
-    D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL         :: ALLOW_DEPTH_STENCIL;
-    D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS      :: ALLOW_UNORDERED_ACCESS;
-    D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE        :: DENY_SHADER_RESOURCE;
-    D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER         :: ALLOW_CROSS_ADAPTER;
-    D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS   :: ALLOW_SIMULTANEOUS_ACCESS;
-    D3D12_RESOURCE_FLAG_VIDEO_DECODE_REFERENCE_ONLY :: VIDEO_DECODE_REFERENCE_ONLY;
-    D3D12_RESOURCE_FLAG_VIDEO_ENCODE_REFERENCE_ONLY :: VIDEO_ENCODE_REFERENCE_ONLY;
+    D3D12_RESOURCE_FLAG_NONE                              :: NONE;
+    D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET               :: ALLOW_RENDER_TARGET;
+    D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL               :: ALLOW_DEPTH_STENCIL;
+    D3D12_RESOURCE_FLAG_ALLOW_UNORDERED_ACCESS            :: ALLOW_UNORDERED_ACCESS;
+    D3D12_RESOURCE_FLAG_DENY_SHADER_RESOURCE              :: DENY_SHADER_RESOURCE;
+    D3D12_RESOURCE_FLAG_ALLOW_CROSS_ADAPTER               :: ALLOW_CROSS_ADAPTER;
+    D3D12_RESOURCE_FLAG_ALLOW_SIMULTANEOUS_ACCESS         :: ALLOW_SIMULTANEOUS_ACCESS;
+    D3D12_RESOURCE_FLAG_VIDEO_DECODE_REFERENCE_ONLY       :: VIDEO_DECODE_REFERENCE_ONLY;
+    D3D12_RESOURCE_FLAG_VIDEO_ENCODE_REFERENCE_ONLY       :: VIDEO_ENCODE_REFERENCE_ONLY;
+    D3D12_RESOURCE_FLAG_RAYTRACING_ACCELERATION_STRUCTURE :: RAYTRACING_ACCELERATION_STRUCTURE;
 }
 
 D3D12_MIP_REGION :: struct {
@@ -4358,6 +4382,8 @@ ID3D12VersionedRootSignatureDeserializer_GetUnconvertedRootSignatureDesc :: inli
 vtable :: (obj: *ID3D12VersionedRootSignatureDeserializer) -> *ID3D12VersionedRootSignatureDeserializer_VTable { return obj.id3d12versionedrootsignaturedeserializer_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0003 */
+/* [local] */
 PFN_D3D12_SERIALIZE_ROOT_SIGNATURE :: #type (a0: *D3D12_ROOT_SIGNATURE_DESC, a1: D3D_ROOT_SIGNATURE_VERSION, a2: **ID3DBlob, a3: **ID3DBlob) -> HRESULT #c_call;
 
 D3D12SerializeRootSignature :: (pRootSignature: *D3D12_ROOT_SIGNATURE_DESC, Version: D3D_ROOT_SIGNATURE_VERSION, ppBlob: **ID3DBlob, ppErrorBlob: **ID3DBlob) -> HRESULT #foreign d3d12;
@@ -4388,6 +4414,8 @@ D3D12_GPU_DESCRIPTOR_HANDLE :: struct {
     ptr: u64;
 }
 
+// If rects are supplied in D3D12_DISCARD_REGION, below, the resource 
+// must have 2D subresources with all specified subresources the same dimension.
 D3D12_DISCARD_REGION :: struct {
     NumRects:         u32;
     pRects:           *D3D12_RECT;
@@ -4884,6 +4912,8 @@ ID3D12GraphicsCommandList1_SetViewInstanceMask :: inline (this: *ID3D12GraphicsC
 vtable :: (obj: *ID3D12GraphicsCommandList1) -> *ID3D12GraphicsCommandList1_VTable { return obj.id3d12graphicscommandlist1_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0018 */
+/* [local] */
 D3D12_WRITEBUFFERIMMEDIATE_PARAMETER :: struct {
     Dest:  D3D12_GPU_VIRTUAL_ADDRESS;
     Value: u32;
@@ -5074,6 +5104,8 @@ ID3D12PipelineLibrary1_LoadPipeline :: inline (this: *ID3D12PipelineLibrary1, pN
 vtable :: (obj: *ID3D12PipelineLibrary1) -> *ID3D12PipelineLibrary1_VTable { return obj.id3d12pipelinelibrary1_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0023 */
+/* [local] */
 D3D12_MULTIPLE_FENCE_WAIT_FLAGS :: enum_flags u32 {
     NONE :: 0x0;
     ANY  :: 0x1;
@@ -5132,6 +5164,8 @@ ID3D12Device2_CreatePipelineState :: inline (this: *ID3D12Device2, pDesc: *D3D12
 vtable :: (obj: *ID3D12Device2) -> *ID3D12Device2_VTable { return obj.id3d12device2_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0025 */
+/* [local] */
 D3D12_RESIDENCY_FLAGS :: enum_flags u32 {
     NONE            :: 0x0;
     DENY_OVERBUDGET :: 0x1;
@@ -5159,6 +5193,8 @@ ID3D12Device3_EnqueueMakeResident :: inline (this: *ID3D12Device3, Flags: D3D12_
 vtable :: (obj: *ID3D12Device3) -> *ID3D12Device3_VTable { return obj.id3d12device3_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0026 */
+/* [local] */
 D3D12_COMMAND_LIST_FLAGS :: enum_flags u32 {
     D3D12_COMMAND_LIST_FLAG_NONE :: 0x0;
 }
@@ -5196,6 +5232,8 @@ ID3D12ProtectedSession_GetSessionStatus :: inline (this: *ID3D12ProtectedSession
 vtable :: (obj: *ID3D12ProtectedSession) -> *ID3D12ProtectedSession_VTable { return obj.id3d12protectedsession_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0027 */
+/* [local] */
 D3D12_PROTECTED_RESOURCE_SESSION_SUPPORT_FLAGS :: enum_flags u32 {
     NONE      :: 0x0;
     SUPPORTED :: 0x1;
@@ -5258,6 +5296,8 @@ ID3D12Device4_GetResourceAllocationInfo1 :: inline (this: *ID3D12Device4, visibl
 vtable :: (obj: *ID3D12Device4) -> *ID3D12Device4_VTable { return obj.id3d12device4_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0029 */
+/* [local] */
 D3D12_LIFETIME_STATE :: enum s32 {
     IN_USE     :: 0;
     NOT_IN_USE :: 1;
@@ -5317,6 +5357,8 @@ ID3D12LifetimeTracker_DestroyOwnedObject :: inline (this: *ID3D12LifetimeTracker
 vtable :: (obj: *ID3D12LifetimeTracker) -> *ID3D12LifetimeTracker_VTable { return obj.id3d12lifetimetracker_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0032 */
+/* [local] */
 D3D12_META_COMMAND_PARAMETER_TYPE :: enum s32 {
     FLOAT                                       :: 0;
     UINT64                                      :: 1;
@@ -5431,6 +5473,8 @@ ID3D12StateObjectProperties_SetPipelineStackSize :: inline (this: *ID3D12StateOb
 vtable :: (obj: *ID3D12StateObjectProperties) -> *ID3D12StateObjectProperties_VTable { return obj.id3d12stateobjectproperties_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0034 */
+/* [local] */
 D3D12_STATE_SUBOBJECT_TYPE :: enum s32 {
     STATE_OBJECT_CONFIG                   :: 0;
     GLOBAL_ROOT_SIGNATURE                 :: 1;
@@ -5732,6 +5776,11 @@ D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_TOOLS_VISUALIZATION_HEADER :: stru
     NumDescs: u32;
 }
 
+// Regarding D3D12_BUILD_RAY_TRACING_ACCELERATION_STRUCTURE_TOOLS_VISUALIZATION_HEADER above,
+// depending on Type field, NumDescs above is followed by either:
+//       D3D12_RAY_TRACING_INSTANCE_DESC InstanceDescs[NumDescs]
+//    or D3D12_RAY_TRACING_GEOMETRY_DESC GeometryDescs[NumDescs].
+// There is 4 bytes of padding between GeometryDesc structs in the array so alignment is natural when viewed by CPU.
 D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_SERIALIZATION_DESC :: struct {
     SerializedSizeInBytes:                       u64;
     NumBottomLevelAccelerationStructurePointers: u64;
@@ -5877,6 +5926,8 @@ ID3D12Device5_CheckDriverMatchingIdentifier :: inline (this: *ID3D12Device5, Ser
 vtable :: (obj: *ID3D12Device5) -> *ID3D12Device5_VTable { return obj.id3d12device5_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0035 */
+/* [local] */
 D3D12_AUTO_BREADCRUMB_OP :: enum s32 {
     SETMARKER                                        :: 0;
     BEGINEVENT                                       :: 1;
@@ -6276,6 +6327,8 @@ ID3D12DeviceRemovedExtendedData2_GetDeviceState :: inline (this: *ID3D12DeviceRe
 vtable :: (obj: *ID3D12DeviceRemovedExtendedData2) -> *ID3D12DeviceRemovedExtendedData2_VTable { return obj.id3d12deviceremovedextendeddata2_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0040 */
+/* [local] */
 D3D12_BACKGROUND_PROCESSING_MODE :: enum s32 {
     ALLOWED                      :: 0;
     ALLOW_INTRUSIVE_MEASUREMENTS :: 1;
@@ -6448,6 +6501,8 @@ ID3D12GraphicsCommandList3_SetProtectedResourceSession :: inline (this: *ID3D12G
 vtable :: (obj: *ID3D12GraphicsCommandList3) -> *ID3D12GraphicsCommandList3_VTable { return obj.id3d12graphicscommandlist3_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0048 */
+/* [local] */
 D3D12_RENDER_PASS_BEGINNING_ACCESS_TYPE :: enum s32 {
     DISCARD   :: 0;
     PRESERVE  :: 1;
@@ -6549,6 +6604,8 @@ ID3D12MetaCommand_GetRequiredParameterResourceSize :: inline (this: *ID3D12MetaC
 vtable :: (obj: *ID3D12MetaCommand) -> *ID3D12MetaCommand_VTable { return obj.id3d12metacommand_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0049 */
+/* [local] */
 D3D12_DISPATCH_RAYS_DESC :: struct {
     RayGenerationShaderRecord: D3D12_GPU_VIRTUAL_ADDRESS_RANGE;
     MissShaderTable:           D3D12_GPU_VIRTUAL_ADDRESS_RANGE_AND_STRIDE;
@@ -6590,6 +6647,8 @@ ID3D12GraphicsCommandList4_DispatchRays :: inline (this: *ID3D12GraphicsCommandL
 vtable :: (obj: *ID3D12GraphicsCommandList4) -> *ID3D12GraphicsCommandList4_VTable { return obj.id3d12graphicscommandlist4_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0050 */
+/* [local] */
 D3D12_SHADER_CACHE_MODE :: enum s32 {
     MEMORY :: 0;
     DISK   :: 1;
@@ -6618,6 +6677,258 @@ D3D12_SHADER_CACHE_SESSION_DESC :: struct {
     Version:                       u64;
 }
 
+D3D12_BARRIER_LAYOUT :: enum s32 {
+    UNDEFINED                      :: -1;
+    COMMON                         :: 0;
+    PRESENT                        :: 0;
+    GENERIC_READ                   :: 1;
+    RENDER_TARGET                  :: 2;
+    UNORDERED_ACCESS               :: 3;
+    DEPTH_STENCIL_WRITE            :: 4;
+    DEPTH_STENCIL_READ             :: 5;
+    SHADER_RESOURCE                :: 6;
+    COPY_SOURCE                    :: 7;
+    COPY_DEST                      :: 8;
+    RESOLVE_SOURCE                 :: 9;
+    RESOLVE_DEST                   :: 10;
+    SHADING_RATE_SOURCE            :: 11;
+    VIDEO_DECODE_READ              :: 12;
+    VIDEO_DECODE_WRITE             :: 13;
+    VIDEO_PROCESS_READ             :: 14;
+    VIDEO_PROCESS_WRITE            :: 15;
+    VIDEO_ENCODE_READ              :: 16;
+    VIDEO_ENCODE_WRITE             :: 17;
+    DIRECT_QUEUE_COMMON            :: 18;
+    DIRECT_QUEUE_GENERIC_READ      :: 19;
+    DIRECT_QUEUE_UNORDERED_ACCESS  :: 20;
+    DIRECT_QUEUE_SHADER_RESOURCE   :: 21;
+    DIRECT_QUEUE_COPY_SOURCE       :: 22;
+    DIRECT_QUEUE_COPY_DEST         :: 23;
+    COMPUTE_QUEUE_COMMON           :: 24;
+    COMPUTE_QUEUE_GENERIC_READ     :: 25;
+    COMPUTE_QUEUE_UNORDERED_ACCESS :: 26;
+    COMPUTE_QUEUE_SHADER_RESOURCE  :: 27;
+    COMPUTE_QUEUE_COPY_SOURCE      :: 28;
+    COMPUTE_QUEUE_COPY_DEST        :: 29;
+    VIDEO_QUEUE_COMMON             :: 30;
+
+    D3D12_BARRIER_LAYOUT_UNDEFINED                      :: UNDEFINED;
+    D3D12_BARRIER_LAYOUT_COMMON                         :: COMMON;
+    D3D12_BARRIER_LAYOUT_PRESENT                        :: PRESENT;
+    D3D12_BARRIER_LAYOUT_GENERIC_READ                   :: GENERIC_READ;
+    D3D12_BARRIER_LAYOUT_RENDER_TARGET                  :: RENDER_TARGET;
+    D3D12_BARRIER_LAYOUT_UNORDERED_ACCESS               :: UNORDERED_ACCESS;
+    D3D12_BARRIER_LAYOUT_DEPTH_STENCIL_WRITE            :: DEPTH_STENCIL_WRITE;
+    D3D12_BARRIER_LAYOUT_DEPTH_STENCIL_READ             :: DEPTH_STENCIL_READ;
+    D3D12_BARRIER_LAYOUT_SHADER_RESOURCE                :: SHADER_RESOURCE;
+    D3D12_BARRIER_LAYOUT_COPY_SOURCE                    :: COPY_SOURCE;
+    D3D12_BARRIER_LAYOUT_COPY_DEST                      :: COPY_DEST;
+    D3D12_BARRIER_LAYOUT_RESOLVE_SOURCE                 :: RESOLVE_SOURCE;
+    D3D12_BARRIER_LAYOUT_RESOLVE_DEST                   :: RESOLVE_DEST;
+    D3D12_BARRIER_LAYOUT_SHADING_RATE_SOURCE            :: SHADING_RATE_SOURCE;
+    D3D12_BARRIER_LAYOUT_VIDEO_DECODE_READ              :: VIDEO_DECODE_READ;
+    D3D12_BARRIER_LAYOUT_VIDEO_DECODE_WRITE             :: VIDEO_DECODE_WRITE;
+    D3D12_BARRIER_LAYOUT_VIDEO_PROCESS_READ             :: VIDEO_PROCESS_READ;
+    D3D12_BARRIER_LAYOUT_VIDEO_PROCESS_WRITE            :: VIDEO_PROCESS_WRITE;
+    D3D12_BARRIER_LAYOUT_VIDEO_ENCODE_READ              :: VIDEO_ENCODE_READ;
+    D3D12_BARRIER_LAYOUT_VIDEO_ENCODE_WRITE             :: VIDEO_ENCODE_WRITE;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_COMMON            :: DIRECT_QUEUE_COMMON;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_GENERIC_READ      :: DIRECT_QUEUE_GENERIC_READ;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_UNORDERED_ACCESS  :: DIRECT_QUEUE_UNORDERED_ACCESS;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_SHADER_RESOURCE   :: DIRECT_QUEUE_SHADER_RESOURCE;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_COPY_SOURCE       :: DIRECT_QUEUE_COPY_SOURCE;
+    D3D12_BARRIER_LAYOUT_DIRECT_QUEUE_COPY_DEST         :: DIRECT_QUEUE_COPY_DEST;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COMMON           :: COMPUTE_QUEUE_COMMON;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_GENERIC_READ     :: COMPUTE_QUEUE_GENERIC_READ;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_UNORDERED_ACCESS :: COMPUTE_QUEUE_UNORDERED_ACCESS;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_SHADER_RESOURCE  :: COMPUTE_QUEUE_SHADER_RESOURCE;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COPY_SOURCE      :: COMPUTE_QUEUE_COPY_SOURCE;
+    D3D12_BARRIER_LAYOUT_COMPUTE_QUEUE_COPY_DEST        :: COMPUTE_QUEUE_COPY_DEST;
+    D3D12_BARRIER_LAYOUT_VIDEO_QUEUE_COMMON             :: VIDEO_QUEUE_COMMON;
+}
+
+D3D12_BARRIER_SYNC :: enum s32 {
+    NONE                                                  :: 0;
+    ALL                                                   :: 1;
+    DRAW                                                  :: 2;
+    INPUT_ASSEMBLER                                       :: 4;
+    VERTEX_SHADING                                        :: 8;
+    PIXEL_SHADING                                         :: 16;
+    DEPTH_STENCIL                                         :: 32;
+    RENDER_TARGET                                         :: 64;
+    COMPUTE_SHADING                                       :: 128;
+    RAYTRACING                                            :: 256;
+    COPY                                                  :: 512;
+    RESOLVE                                               :: 1024;
+    EXECUTE_INDIRECT                                      :: 2048;
+    PREDICATION                                           :: 2048;
+    ALL_SHADING                                           :: 4096;
+    NON_PIXEL_SHADING                                     :: 8192;
+    EMIT_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO :: 16384;
+    VIDEO_DECODE                                          :: 1048576;
+    VIDEO_PROCESS                                         :: 2097152;
+    VIDEO_ENCODE                                          :: 4194304;
+    BUILD_RAYTRACING_ACCELERATION_STRUCTURE               :: 8388608;
+    COPY_RAYTRACING_ACCELERATION_STRUCTURE                :: 16777216;
+    SPLIT                                                 :: -2147483648;
+
+    D3D12_BARRIER_SYNC_NONE                                                  :: NONE;
+    D3D12_BARRIER_SYNC_ALL                                                   :: ALL;
+    D3D12_BARRIER_SYNC_DRAW                                                  :: DRAW;
+    D3D12_BARRIER_SYNC_INPUT_ASSEMBLER                                       :: INPUT_ASSEMBLER;
+    D3D12_BARRIER_SYNC_VERTEX_SHADING                                        :: VERTEX_SHADING;
+    D3D12_BARRIER_SYNC_PIXEL_SHADING                                         :: PIXEL_SHADING;
+    D3D12_BARRIER_SYNC_DEPTH_STENCIL                                         :: DEPTH_STENCIL;
+    D3D12_BARRIER_SYNC_RENDER_TARGET                                         :: RENDER_TARGET;
+    D3D12_BARRIER_SYNC_COMPUTE_SHADING                                       :: COMPUTE_SHADING;
+    D3D12_BARRIER_SYNC_RAYTRACING                                            :: RAYTRACING;
+    D3D12_BARRIER_SYNC_COPY                                                  :: COPY;
+    D3D12_BARRIER_SYNC_RESOLVE                                               :: RESOLVE;
+    D3D12_BARRIER_SYNC_EXECUTE_INDIRECT                                      :: EXECUTE_INDIRECT;
+    D3D12_BARRIER_SYNC_PREDICATION                                           :: PREDICATION;
+    D3D12_BARRIER_SYNC_ALL_SHADING                                           :: ALL_SHADING;
+    D3D12_BARRIER_SYNC_NON_PIXEL_SHADING                                     :: NON_PIXEL_SHADING;
+    D3D12_BARRIER_SYNC_EMIT_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO :: EMIT_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO;
+    D3D12_BARRIER_SYNC_VIDEO_DECODE                                          :: VIDEO_DECODE;
+    D3D12_BARRIER_SYNC_VIDEO_PROCESS                                         :: VIDEO_PROCESS;
+    D3D12_BARRIER_SYNC_VIDEO_ENCODE                                          :: VIDEO_ENCODE;
+    D3D12_BARRIER_SYNC_BUILD_RAYTRACING_ACCELERATION_STRUCTURE               :: BUILD_RAYTRACING_ACCELERATION_STRUCTURE;
+    D3D12_BARRIER_SYNC_COPY_RAYTRACING_ACCELERATION_STRUCTURE                :: COPY_RAYTRACING_ACCELERATION_STRUCTURE;
+    D3D12_BARRIER_SYNC_SPLIT                                                 :: SPLIT;
+}
+
+D3D12_BARRIER_ACCESS :: enum s32 {
+    COMMON                                  :: 0;
+    VERTEX_BUFFER                           :: 1;
+    CONSTANT_BUFFER                         :: 2;
+    INDEX_BUFFER                            :: 4;
+    RENDER_TARGET                           :: 8;
+    UNORDERED_ACCESS                        :: 16;
+    DEPTH_STENCIL_WRITE                     :: 32;
+    DEPTH_STENCIL_READ                      :: 64;
+    SHADER_RESOURCE                         :: 128;
+    STREAM_OUTPUT                           :: 256;
+    INDIRECT_ARGUMENT                       :: 512;
+    PREDICATION                             :: 512;
+    COPY_DEST                               :: 1024;
+    COPY_SOURCE                             :: 2048;
+    RESOLVE_DEST                            :: 4096;
+    RESOLVE_SOURCE                          :: 8192;
+    RAYTRACING_ACCELERATION_STRUCTURE_READ  :: 16384;
+    RAYTRACING_ACCELERATION_STRUCTURE_WRITE :: 32768;
+    SHADING_RATE_SOURCE                     :: 65536;
+    VIDEO_DECODE_READ                       :: 131072;
+    VIDEO_DECODE_WRITE                      :: 262144;
+    VIDEO_PROCESS_READ                      :: 524288;
+    VIDEO_PROCESS_WRITE                     :: 1048576;
+    VIDEO_ENCODE_READ                       :: 2097152;
+    VIDEO_ENCODE_WRITE                      :: 4194304;
+    NO_ACCESS                               :: -2147483648;
+
+    D3D12_BARRIER_ACCESS_COMMON                                  :: COMMON;
+    D3D12_BARRIER_ACCESS_VERTEX_BUFFER                           :: VERTEX_BUFFER;
+    D3D12_BARRIER_ACCESS_CONSTANT_BUFFER                         :: CONSTANT_BUFFER;
+    D3D12_BARRIER_ACCESS_INDEX_BUFFER                            :: INDEX_BUFFER;
+    D3D12_BARRIER_ACCESS_RENDER_TARGET                           :: RENDER_TARGET;
+    D3D12_BARRIER_ACCESS_UNORDERED_ACCESS                        :: UNORDERED_ACCESS;
+    D3D12_BARRIER_ACCESS_DEPTH_STENCIL_WRITE                     :: DEPTH_STENCIL_WRITE;
+    D3D12_BARRIER_ACCESS_DEPTH_STENCIL_READ                      :: DEPTH_STENCIL_READ;
+    D3D12_BARRIER_ACCESS_SHADER_RESOURCE                         :: SHADER_RESOURCE;
+    D3D12_BARRIER_ACCESS_STREAM_OUTPUT                           :: STREAM_OUTPUT;
+    D3D12_BARRIER_ACCESS_INDIRECT_ARGUMENT                       :: INDIRECT_ARGUMENT;
+    D3D12_BARRIER_ACCESS_PREDICATION                             :: PREDICATION;
+    D3D12_BARRIER_ACCESS_COPY_DEST                               :: COPY_DEST;
+    D3D12_BARRIER_ACCESS_COPY_SOURCE                             :: COPY_SOURCE;
+    D3D12_BARRIER_ACCESS_RESOLVE_DEST                            :: RESOLVE_DEST;
+    D3D12_BARRIER_ACCESS_RESOLVE_SOURCE                          :: RESOLVE_SOURCE;
+    D3D12_BARRIER_ACCESS_RAYTRACING_ACCELERATION_STRUCTURE_READ  :: RAYTRACING_ACCELERATION_STRUCTURE_READ;
+    D3D12_BARRIER_ACCESS_RAYTRACING_ACCELERATION_STRUCTURE_WRITE :: RAYTRACING_ACCELERATION_STRUCTURE_WRITE;
+    D3D12_BARRIER_ACCESS_SHADING_RATE_SOURCE                     :: SHADING_RATE_SOURCE;
+    D3D12_BARRIER_ACCESS_VIDEO_DECODE_READ                       :: VIDEO_DECODE_READ;
+    D3D12_BARRIER_ACCESS_VIDEO_DECODE_WRITE                      :: VIDEO_DECODE_WRITE;
+    D3D12_BARRIER_ACCESS_VIDEO_PROCESS_READ                      :: VIDEO_PROCESS_READ;
+    D3D12_BARRIER_ACCESS_VIDEO_PROCESS_WRITE                     :: VIDEO_PROCESS_WRITE;
+    D3D12_BARRIER_ACCESS_VIDEO_ENCODE_READ                       :: VIDEO_ENCODE_READ;
+    D3D12_BARRIER_ACCESS_VIDEO_ENCODE_WRITE                      :: VIDEO_ENCODE_WRITE;
+    D3D12_BARRIER_ACCESS_NO_ACCESS                               :: NO_ACCESS;
+}
+
+D3D12_BARRIER_TYPE :: enum s32 {
+    GLOBAL  :: 0;
+    TEXTURE :: 1;
+    BUFFER  :: 2;
+
+    D3D12_BARRIER_TYPE_GLOBAL  :: GLOBAL;
+    D3D12_BARRIER_TYPE_TEXTURE :: TEXTURE;
+    D3D12_BARRIER_TYPE_BUFFER  :: BUFFER;
+}
+
+D3D12_TEXTURE_BARRIER_FLAGS :: enum_flags u32 {
+    NONE    :: 0x0;
+    DISCARD :: 0x1;
+
+    D3D12_TEXTURE_BARRIER_FLAG_NONE    :: NONE;
+    D3D12_TEXTURE_BARRIER_FLAG_DISCARD :: DISCARD;
+}
+
+D3D12_BARRIER_SUBRESOURCE_RANGE :: struct {
+    IndexOrFirstMipLevel: u32;
+    NumMipLevels:         u32;
+    FirstArraySlice:      u32;
+    NumArraySlices:       u32;
+    FirstPlane:           u32;
+    NumPlanes:            u32;
+}
+
+D3D12_GLOBAL_BARRIER :: struct {
+    SyncBefore:   D3D12_BARRIER_SYNC;
+    SyncAfter:    D3D12_BARRIER_SYNC;
+    AccessBefore: D3D12_BARRIER_ACCESS;
+    AccessAfter:  D3D12_BARRIER_ACCESS;
+}
+
+D3D12_TEXTURE_BARRIER :: struct {
+    SyncBefore:   D3D12_BARRIER_SYNC;
+    SyncAfter:    D3D12_BARRIER_SYNC;
+    AccessBefore: D3D12_BARRIER_ACCESS;
+    AccessAfter:  D3D12_BARRIER_ACCESS;
+    LayoutBefore: D3D12_BARRIER_LAYOUT;
+    LayoutAfter:  D3D12_BARRIER_LAYOUT;
+    pResource:    *ID3D12Resource;
+    Subresources: D3D12_BARRIER_SUBRESOURCE_RANGE;
+    Flags:        D3D12_TEXTURE_BARRIER_FLAGS;
+}
+
+D3D12_BUFFER_BARRIER :: struct {
+    SyncBefore:   D3D12_BARRIER_SYNC;
+    SyncAfter:    D3D12_BARRIER_SYNC;
+    AccessBefore: D3D12_BARRIER_ACCESS;
+    AccessAfter:  D3D12_BARRIER_ACCESS;
+    pResource:    *ID3D12Resource;
+    Offset:       u64;
+    Size:         u64;
+}
+
+D3D12_RESOURCE_STATE_BARRIER :: struct {
+    State:       D3D12_RESOURCE_STATES;
+    pResource:   *ID3D12Resource;
+    Subresource: u32;
+    Sync:        D3D12_BARRIER_SYNC;
+    Access:      D3D12_BARRIER_ACCESS;
+    Layout:      D3D12_BARRIER_LAYOUT;
+}
+
+D3D12_BARRIER_GROUP :: struct {
+    Type:        D3D12_BARRIER_TYPE;
+    NumBarriers: u32;
+    union {
+        pGlobalBarriers:  *D3D12_GLOBAL_BARRIER;
+        pTextureBarriers: *D3D12_TEXTURE_BARRIER;
+        pBufferBarriers:  *D3D12_BUFFER_BARRIER;
+        pStateBarriers:   *D3D12_RESOURCE_STATE_BARRIER;
+    }
+}
+
 
 ID3D12ShaderCacheSession_UUID :: "28e2495d-0f64-4ae4-a6ec-129255dc49a8";
 ID3D12ShaderCacheSession :: struct {
@@ -6639,6 +6950,8 @@ ID3D12ShaderCacheSession_GetDesc :: inline (this: *ID3D12ShaderCacheSession) -> 
 vtable :: (obj: *ID3D12ShaderCacheSession) -> *ID3D12ShaderCacheSession_VTable { return obj.id3d12shadercachesession_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0051 */
+/* [local] */
 D3D12_SHADER_CACHE_KIND_FLAGS :: enum_flags u32 {
     IMPLICIT_D3D_CACHE_FOR_DRIVER :: 0x1;
     IMPLICIT_D3D_CONVERSIONS      :: 0x2;
@@ -6681,6 +6994,42 @@ vtable :: (obj: *ID3D12Device9) -> *ID3D12Device9_VTable { return obj.id3d12devi
 
 
 
+ID3D12Device10_UUID :: "517f8718-aa66-49f9-b02b-a7ab89c06031";
+ID3D12Device10 :: struct {
+    #as using id3d12device9: ID3D12Device9;
+    #place vtable; id3d12device10_vtable: *ID3D12Device10_VTable;
+}
+ID3D12Device10_VTable :: struct #type_info_none {
+    using id3d12device9: ID3D12Device9_VTable;
+    CreateCommittedResource3: (this: *ID3D12Device10, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riidResource: *IID, ppvResource: **void) -> HRESULT #cpp_method;
+    CreatePlacedResource2: (this: *ID3D12Device10, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT #cpp_method;
+    CreateReservedResource2: (this: *ID3D12Device10, pDesc: *D3D12_RESOURCE_DESC, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT #cpp_method;
+}
+ID3D12Device10_CreateCommittedResource3 :: inline (this: *ID3D12Device10, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riidResource: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreateCommittedResource3(this, pHeapProperties, HeapFlags, pDesc, InitialLayout, pOptimizedClearValue, pProtectedSession, NumCastableFormats, pCastableFormats, riidResource, ppvResource); }
+ID3D12Device10_CreatePlacedResource2 :: inline (this: *ID3D12Device10, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreatePlacedResource2(this, pHeap, HeapOffset, pDesc, InitialLayout, pOptimizedClearValue, NumCastableFormats, pCastableFormats, riid, ppvResource); }
+ID3D12Device10_CreateReservedResource2 :: inline (this: *ID3D12Device10, pDesc: *D3D12_RESOURCE_DESC, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreateReservedResource2(this, pDesc, InitialLayout, pOptimizedClearValue, pProtectedSession, NumCastableFormats, pCastableFormats, riid, ppvResource); }
+
+vtable :: (obj: *ID3D12Device10) -> *ID3D12Device10_VTable { return obj.id3d12device10_vtable; }
+
+
+
+ID3D12VirtualizationGuestDevice_UUID :: "bc66d368-7373-4943-8757-fc87dc79e476";
+ID3D12VirtualizationGuestDevice :: struct {
+    #as using iunknown: IUnknown;
+    #place vtable; id3d12virtualizationguestdevice_vtable: *ID3D12VirtualizationGuestDevice_VTable;
+}
+ID3D12VirtualizationGuestDevice_VTable :: struct #type_info_none {
+    using iunknown: IUnknown_VTable;
+    ShareWithHost: (this: *ID3D12VirtualizationGuestDevice, pObject: *ID3D12DeviceChild, pHandle: *HANDLE) -> HRESULT #cpp_method;
+    CreateFenceFd: (this: *ID3D12VirtualizationGuestDevice, pFence: *ID3D12Fence, FenceValue: u64, pFenceFd: *s32) -> HRESULT #cpp_method;
+}
+ID3D12VirtualizationGuestDevice_ShareWithHost :: inline (this: *ID3D12VirtualizationGuestDevice, pObject: *ID3D12DeviceChild, pHandle: *HANDLE) -> HRESULT { return this.id3d12virtualizationguestdevice_vtable.ShareWithHost(this, pObject, pHandle); }
+ID3D12VirtualizationGuestDevice_CreateFenceFd :: inline (this: *ID3D12VirtualizationGuestDevice, pFence: *ID3D12Fence, FenceValue: u64, pFenceFd: *s32) -> HRESULT { return this.id3d12virtualizationguestdevice_vtable.CreateFenceFd(this, pFence, FenceValue, pFenceFd); }
+
+vtable :: (obj: *ID3D12VirtualizationGuestDevice) -> *ID3D12VirtualizationGuestDevice_VTable { return obj.id3d12virtualizationguestdevice_vtable; }
+
+
+
 ID3D12Tools_UUID :: "7071e1f0-e84b-4b33-974f-12fa49de65c5";
 ID3D12Tools :: struct {
     #as using iunknown: IUnknown;
@@ -6697,6 +7046,8 @@ ID3D12Tools_ShaderInstrumentationEnabled :: inline (this: *ID3D12Tools) -> BOOL 
 vtable :: (obj: *ID3D12Tools) -> *ID3D12Tools_VTable { return obj.id3d12tools_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0055 */
+/* [local] */
 D3D12_SUBRESOURCE_DATA :: struct {
     pData:      *void;
     RowPitch:   s64;
@@ -6709,6 +7060,27 @@ D3D12_MEMCPY_DEST :: struct {
     SlicePitch: SIZE_T;
 }
 
+///////////////////////////////////////////////////////////////////////////
+// D3D12CreateDevice
+// ------------------
+//
+// pAdapter
+//      If NULL, D3D12CreateDevice will choose the primary adapter.
+//      If non-NULL, D3D12CreateDevice will use the provided adapter.
+// MinimumFeatureLevel
+//      The minimum feature level required for successful device creation.
+// riid
+//      The interface IID of the device to be returned. Expected: ID3D12Device.
+// ppDevice
+//      Pointer to returned interface. May be NULL.
+//
+// Return Values
+//  Any of those documented for 
+//          CreateDXGIFactory1
+//          IDXGIFactory::EnumAdapters
+//          D3D12CreateDevice
+//
+///////////////////////////////////////////////////////////////////////////
 PFN_D3D12_CREATE_DEVICE :: #type (a0: *IUnknown, a1: D3D_FEATURE_LEVEL, a2: *IID, a3: **void) -> HRESULT #c_call;
 
 D3D12CreateDevice :: (pAdapter: *IUnknown, MinimumFeatureLevel: D3D_FEATURE_LEVEL, riid: *IID, ppDevice: **void) -> HRESULT #foreign d3d12;
@@ -6723,13 +7095,37 @@ D3D12GetDebugInterface :: (riid: IID, ppvDebug: **void) -> HRESULT #no_context {
     return D3D12GetDebugInterface(*riid, ppvDebug);
 }
 
+// --------------------------------------------------------------------------------------------------------------------------------
+// D3D12EnableExperimentalFeatures
+//
+// Pass in a list of feature GUIDs to be enabled together.
+// 
+// If a particular feature requires some configuration information on enablement, it will have
+// a configuration struct that can be passed alongside the GUID.
+// 
+// Some features might use an interface IID as the GUID.  For these, once the feature is enabled via
+// D3D12EnableExperimentalFeatures, D3D12GetDebugInterface can then be called with the IID to retrieve the interface
+// for manipulating the feature.  This allows for control that might not cleanly be expressed by just 
+// the configuration struct that D3D12EnableExperimentalFeatures provides.
+//
+// If this method is called and a change to existing feature enablement is made, 
+// all current D3D12 devices are set to DEVICE_REMOVED state, since under the covers there is really only one
+// singleton device for a process.  Removing the devices when configuration changes prevents
+// mismatched expectations of how a device is supposed to work after it has been created from the app's point of view.
+//
+// The call returns E_NOINTERFACE if an unrecognized feature is passed in or Windows Developer mode is not on.
+// The call returns E_INVALIDARG if the configuration of a feature is incorrect, the set of features passed
+// in are known to be incompatible with each other, or other errors.
+// Returns S_OK otherwise.
+//
+// --------------------------------------------------------------------------------------------------------------------------------
 D3D12EnableExperimentalFeatures :: (NumFeatures: u32, pIIDs: *IID, pConfigurationStructs: *void, pConfigurationStructSizes: *u32) -> HRESULT #foreign d3d12;
 
-D3D12ExperimentalShaderModels: UUID;
+D3D12ExperimentalShaderModels: UUID; /* 76f5573e-f13a-40f5-b297-81ce9e18933f */
 
-D3D12TiledResourceTier4: UUID;
+D3D12TiledResourceTier4: UUID; /* c9c4725f-a81a-4f56-8c5b-c51039d694fb */
 
-D3D12MetaCommand: UUID;
+D3D12MetaCommand: UUID; /* C734C97E-8077-48C8-9FDC-D9D1DD31DD77 */
 
 CLSID_D3D12Debug: GUID;
 CLSID_D3D12Tools: GUID;
@@ -6758,6 +7154,8 @@ ID3D12SDKConfiguration_SetSDKVersion :: inline (this: *ID3D12SDKConfiguration, S
 vtable :: (obj: *ID3D12SDKConfiguration) -> *ID3D12SDKConfiguration_VTable { return obj.id3d12sdkconfiguration_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0056 */
+/* [local] */
 D3D12_AXIS_SHADING_RATE :: enum s32 {
     _1X :: 0;
     _2X :: 1;
@@ -6817,6 +7215,8 @@ ID3D12GraphicsCommandList5_RSSetShadingRateImage :: inline (this: *ID3D12Graphic
 vtable :: (obj: *ID3D12GraphicsCommandList5) -> *ID3D12GraphicsCommandList5_VTable { return obj.id3d12graphicscommandlist5_vtable; }
 
 
+/* interface __MIDL_itf_d3d12_0000_0057 */
+/* [local] */
 D3D12_DISPATCH_MESH_ARGUMENTS :: struct {
     ThreadGroupCountX: u32;
     ThreadGroupCountY: u32;
@@ -6836,6 +7236,2572 @@ ID3D12GraphicsCommandList6_VTable :: struct #type_info_none {
 ID3D12GraphicsCommandList6_DispatchMesh :: inline (this: *ID3D12GraphicsCommandList6, ThreadGroupCountX: u32, ThreadGroupCountY: u32, ThreadGroupCountZ: u32) { this.id3d12graphicscommandlist6_vtable.DispatchMesh(this, ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ); }
 
 vtable :: (obj: *ID3D12GraphicsCommandList6) -> *ID3D12GraphicsCommandList6_VTable { return obj.id3d12graphicscommandlist6_vtable; }
+
+
+
+ID3D12GraphicsCommandList7_UUID :: "dd171223-8b61-4769-90e3-160ccde4e2c1";
+ID3D12GraphicsCommandList7 :: struct {
+    #as using id3d12graphicscommandlist6: ID3D12GraphicsCommandList6;
+    #place vtable; id3d12graphicscommandlist7_vtable: *ID3D12GraphicsCommandList7_VTable;
+}
+ID3D12GraphicsCommandList7_VTable :: struct #type_info_none {
+    using id3d12graphicscommandlist6: ID3D12GraphicsCommandList6_VTable;
+    Barrier: (this: *ID3D12GraphicsCommandList7, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
+}
+ID3D12GraphicsCommandList7_Barrier :: inline (this: *ID3D12GraphicsCommandList7, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12graphicscommandlist7_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
+
+vtable :: (obj: *ID3D12GraphicsCommandList7) -> *ID3D12GraphicsCommandList7_VTable { return obj.id3d12graphicscommandlist7_vtable; }
+
+
+D3D12_VIDEO_FIELD_TYPE :: enum s32 {
+    NONE                          :: 0;
+    INTERLACED_TOP_FIELD_FIRST    :: 1;
+    INTERLACED_BOTTOM_FIELD_FIRST :: 2;
+
+    D3D12_VIDEO_FIELD_TYPE_NONE                          :: NONE;
+    D3D12_VIDEO_FIELD_TYPE_INTERLACED_TOP_FIELD_FIRST    :: INTERLACED_TOP_FIELD_FIRST;
+    D3D12_VIDEO_FIELD_TYPE_INTERLACED_BOTTOM_FIELD_FIRST :: INTERLACED_BOTTOM_FIELD_FIRST;
+}
+
+D3D12_VIDEO_FRAME_STEREO_FORMAT :: enum s32 {
+    NONE       :: 0;
+    MONO       :: 1;
+    HORIZONTAL :: 2;
+    VERTICAL   :: 3;
+    SEPARATE   :: 4;
+
+    D3D12_VIDEO_FRAME_STEREO_FORMAT_NONE       :: NONE;
+    D3D12_VIDEO_FRAME_STEREO_FORMAT_MONO       :: MONO;
+    D3D12_VIDEO_FRAME_STEREO_FORMAT_HORIZONTAL :: HORIZONTAL;
+    D3D12_VIDEO_FRAME_STEREO_FORMAT_VERTICAL   :: VERTICAL;
+    D3D12_VIDEO_FRAME_STEREO_FORMAT_SEPARATE   :: SEPARATE;
+}
+
+D3D12_VIDEO_FORMAT :: struct {
+    Format:     DXGI_FORMAT;
+    ColorSpace: DXGI_COLOR_SPACE_TYPE;
+}
+
+D3D12_VIDEO_SAMPLE :: struct {
+    Width:  u32;
+    Height: u32;
+    Format: D3D12_VIDEO_FORMAT;
+}
+
+D3D12_VIDEO_FRAME_CODED_INTERLACE_TYPE :: enum s32 {
+    NONE        :: 0;
+    FIELD_BASED :: 1;
+
+    D3D12_VIDEO_FRAME_CODED_INTERLACE_TYPE_NONE        :: NONE;
+    D3D12_VIDEO_FRAME_CODED_INTERLACE_TYPE_FIELD_BASED :: FIELD_BASED;
+}
+
+D3D12_FEATURE_VIDEO :: enum s32 {
+    DECODE_SUPPORT                         :: 0;
+    DECODE_PROFILES                        :: 1;
+    DECODE_FORMATS                         :: 2;
+    DECODE_CONVERSION_SUPPORT              :: 3;
+    PROCESS_SUPPORT                        :: 5;
+    PROCESS_MAX_INPUT_STREAMS              :: 6;
+    PROCESS_REFERENCE_INFO                 :: 7;
+    DECODER_HEAP_SIZE                      :: 8;
+    PROCESSOR_SIZE                         :: 9;
+    DECODE_PROFILE_COUNT                   :: 10;
+    DECODE_FORMAT_COUNT                    :: 11;
+    ARCHITECTURE                           :: 17;
+    DECODE_HISTOGRAM                       :: 18;
+    FEATURE_AREA_SUPPORT                   :: 19;
+    MOTION_ESTIMATOR                       :: 20;
+    MOTION_ESTIMATOR_SIZE                  :: 21;
+    EXTENSION_COMMAND_COUNT                :: 22;
+    EXTENSION_COMMANDS                     :: 23;
+    EXTENSION_COMMAND_PARAMETER_COUNT      :: 24;
+    EXTENSION_COMMAND_PARAMETERS           :: 25;
+    EXTENSION_COMMAND_SUPPORT              :: 26;
+    EXTENSION_COMMAND_SIZE                 :: 27;
+    DECODE_PROTECTED_RESOURCES             :: 28;
+    PROCESS_PROTECTED_RESOURCES            :: 29;
+    MOTION_ESTIMATOR_PROTECTED_RESOURCES   :: 30;
+    DECODER_HEAP_SIZE1                     :: 31;
+    PROCESSOR_SIZE1                        :: 32;
+    ENCODER_CODEC                          :: 33;
+    ENCODER_PROFILE_LEVEL                  :: 34;
+    ENCODER_OUTPUT_RESOLUTION_RATIOS_COUNT :: 35;
+    ENCODER_OUTPUT_RESOLUTION              :: 36;
+    ENCODER_INPUT_FORMAT                   :: 37;
+    ENCODER_RATE_CONTROL_MODE              :: 38;
+    ENCODER_INTRA_REFRESH_MODE             :: 39;
+    ENCODER_FRAME_SUBREGION_LAYOUT_MODE    :: 40;
+    ENCODER_HEAP_SIZE                      :: 41;
+    ENCODER_CODEC_CONFIGURATION_SUPPORT    :: 42;
+    ENCODER_SUPPORT                        :: 43;
+    ENCODER_CODEC_PICTURE_CONTROL_SUPPORT  :: 44;
+    ENCODER_RESOURCE_REQUIREMENTS          :: 45;
+
+    D3D12_FEATURE_VIDEO_DECODE_SUPPORT                         :: DECODE_SUPPORT;
+    D3D12_FEATURE_VIDEO_DECODE_PROFILES                        :: DECODE_PROFILES;
+    D3D12_FEATURE_VIDEO_DECODE_FORMATS                         :: DECODE_FORMATS;
+    D3D12_FEATURE_VIDEO_DECODE_CONVERSION_SUPPORT              :: DECODE_CONVERSION_SUPPORT;
+    D3D12_FEATURE_VIDEO_PROCESS_SUPPORT                        :: PROCESS_SUPPORT;
+    D3D12_FEATURE_VIDEO_PROCESS_MAX_INPUT_STREAMS              :: PROCESS_MAX_INPUT_STREAMS;
+    D3D12_FEATURE_VIDEO_PROCESS_REFERENCE_INFO                 :: PROCESS_REFERENCE_INFO;
+    D3D12_FEATURE_VIDEO_DECODER_HEAP_SIZE                      :: DECODER_HEAP_SIZE;
+    D3D12_FEATURE_VIDEO_PROCESSOR_SIZE                         :: PROCESSOR_SIZE;
+    D3D12_FEATURE_VIDEO_DECODE_PROFILE_COUNT                   :: DECODE_PROFILE_COUNT;
+    D3D12_FEATURE_VIDEO_DECODE_FORMAT_COUNT                    :: DECODE_FORMAT_COUNT;
+    D3D12_FEATURE_VIDEO_ARCHITECTURE                           :: ARCHITECTURE;
+    D3D12_FEATURE_VIDEO_DECODE_HISTOGRAM                       :: DECODE_HISTOGRAM;
+    D3D12_FEATURE_VIDEO_FEATURE_AREA_SUPPORT                   :: FEATURE_AREA_SUPPORT;
+    D3D12_FEATURE_VIDEO_MOTION_ESTIMATOR                       :: MOTION_ESTIMATOR;
+    D3D12_FEATURE_VIDEO_MOTION_ESTIMATOR_SIZE                  :: MOTION_ESTIMATOR_SIZE;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_COUNT                :: EXTENSION_COMMAND_COUNT;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMANDS                     :: EXTENSION_COMMANDS;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_PARAMETER_COUNT      :: EXTENSION_COMMAND_PARAMETER_COUNT;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_PARAMETERS           :: EXTENSION_COMMAND_PARAMETERS;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_SUPPORT              :: EXTENSION_COMMAND_SUPPORT;
+    D3D12_FEATURE_VIDEO_EXTENSION_COMMAND_SIZE                 :: EXTENSION_COMMAND_SIZE;
+    D3D12_FEATURE_VIDEO_DECODE_PROTECTED_RESOURCES             :: DECODE_PROTECTED_RESOURCES;
+    D3D12_FEATURE_VIDEO_PROCESS_PROTECTED_RESOURCES            :: PROCESS_PROTECTED_RESOURCES;
+    D3D12_FEATURE_VIDEO_MOTION_ESTIMATOR_PROTECTED_RESOURCES   :: MOTION_ESTIMATOR_PROTECTED_RESOURCES;
+    D3D12_FEATURE_VIDEO_DECODER_HEAP_SIZE1                     :: DECODER_HEAP_SIZE1;
+    D3D12_FEATURE_VIDEO_PROCESSOR_SIZE1                        :: PROCESSOR_SIZE1;
+    D3D12_FEATURE_VIDEO_ENCODER_CODEC                          :: ENCODER_CODEC;
+    D3D12_FEATURE_VIDEO_ENCODER_PROFILE_LEVEL                  :: ENCODER_PROFILE_LEVEL;
+    D3D12_FEATURE_VIDEO_ENCODER_OUTPUT_RESOLUTION_RATIOS_COUNT :: ENCODER_OUTPUT_RESOLUTION_RATIOS_COUNT;
+    D3D12_FEATURE_VIDEO_ENCODER_OUTPUT_RESOLUTION              :: ENCODER_OUTPUT_RESOLUTION;
+    D3D12_FEATURE_VIDEO_ENCODER_INPUT_FORMAT                   :: ENCODER_INPUT_FORMAT;
+    D3D12_FEATURE_VIDEO_ENCODER_RATE_CONTROL_MODE              :: ENCODER_RATE_CONTROL_MODE;
+    D3D12_FEATURE_VIDEO_ENCODER_INTRA_REFRESH_MODE             :: ENCODER_INTRA_REFRESH_MODE;
+    D3D12_FEATURE_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE    :: ENCODER_FRAME_SUBREGION_LAYOUT_MODE;
+    D3D12_FEATURE_VIDEO_ENCODER_HEAP_SIZE                      :: ENCODER_HEAP_SIZE;
+    D3D12_FEATURE_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT    :: ENCODER_CODEC_CONFIGURATION_SUPPORT;
+    D3D12_FEATURE_VIDEO_ENCODER_SUPPORT                        :: ENCODER_SUPPORT;
+    D3D12_FEATURE_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT  :: ENCODER_CODEC_PICTURE_CONTROL_SUPPORT;
+    D3D12_FEATURE_VIDEO_ENCODER_RESOURCE_REQUIREMENTS          :: ENCODER_RESOURCE_REQUIREMENTS;
+}
+
+D3D12_BITSTREAM_ENCRYPTION_TYPE :: enum s32 {
+    NONE :: 0;
+    D3D12_BITSTREAM_ENCRYPTION_TYPE_NONE :: NONE;
+}
+
+D3D12_VIDEO_DECODE_CONFIGURATION :: struct {
+    DecodeProfile:       GUID;
+    BitstreamEncryption: D3D12_BITSTREAM_ENCRYPTION_TYPE;
+    InterlaceType:       D3D12_VIDEO_FRAME_CODED_INTERLACE_TYPE;
+}
+
+D3D12_VIDEO_DECODER_DESC :: struct {
+    NodeMask:      u32;
+    Configuration: D3D12_VIDEO_DECODE_CONFIGURATION;
+}
+
+D3D12_VIDEO_DECODER_HEAP_DESC :: struct {
+    NodeMask:                    u32;
+    Configuration:               D3D12_VIDEO_DECODE_CONFIGURATION;
+    DecodeWidth:                 u32;
+    DecodeHeight:                u32;
+    Format:                      DXGI_FORMAT;
+    FrameRate:                   DXGI_RATIONAL;
+    BitRate:                     u32;
+    MaxDecodePictureBufferCount: u32;
+}
+
+D3D12_VIDEO_SIZE_RANGE :: struct {
+    MaxWidth:  u32;
+    MaxHeight: u32;
+    MinWidth:  u32;
+    MinHeight: u32;
+}
+
+D3D12_VIDEO_PROCESS_FILTER :: enum s32 {
+    BRIGHTNESS         :: 0;
+    CONTRAST           :: 1;
+    HUE                :: 2;
+    SATURATION         :: 3;
+    NOISE_REDUCTION    :: 4;
+    EDGE_ENHANCEMENT   :: 5;
+    ANAMORPHIC_SCALING :: 6;
+    STEREO_ADJUSTMENT  :: 7;
+
+    D3D12_VIDEO_PROCESS_FILTER_BRIGHTNESS         :: BRIGHTNESS;
+    D3D12_VIDEO_PROCESS_FILTER_CONTRAST           :: CONTRAST;
+    D3D12_VIDEO_PROCESS_FILTER_HUE                :: HUE;
+    D3D12_VIDEO_PROCESS_FILTER_SATURATION         :: SATURATION;
+    D3D12_VIDEO_PROCESS_FILTER_NOISE_REDUCTION    :: NOISE_REDUCTION;
+    D3D12_VIDEO_PROCESS_FILTER_EDGE_ENHANCEMENT   :: EDGE_ENHANCEMENT;
+    D3D12_VIDEO_PROCESS_FILTER_ANAMORPHIC_SCALING :: ANAMORPHIC_SCALING;
+    D3D12_VIDEO_PROCESS_FILTER_STEREO_ADJUSTMENT  :: STEREO_ADJUSTMENT;
+}
+
+D3D12_VIDEO_PROCESS_FILTER_FLAGS :: enum_flags u32 {
+    NONE               :: 0x0;
+    BRIGHTNESS         :: 0x1;
+    CONTRAST           :: 0x2;
+    HUE                :: 0x4;
+    SATURATION         :: 0x8;
+    NOISE_REDUCTION    :: 0x10;
+    EDGE_ENHANCEMENT   :: 0x20;
+    ANAMORPHIC_SCALING :: 0x40;
+    STEREO_ADJUSTMENT  :: 0x80;
+
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_NONE               :: NONE;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_BRIGHTNESS         :: BRIGHTNESS;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_CONTRAST           :: CONTRAST;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_HUE                :: HUE;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_SATURATION         :: SATURATION;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_NOISE_REDUCTION    :: NOISE_REDUCTION;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_EDGE_ENHANCEMENT   :: EDGE_ENHANCEMENT;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_ANAMORPHIC_SCALING :: ANAMORPHIC_SCALING;
+    D3D12_VIDEO_PROCESS_FILTER_FLAG_STEREO_ADJUSTMENT  :: STEREO_ADJUSTMENT;
+}
+
+D3D12_VIDEO_PROCESS_DEINTERLACE_FLAGS :: enum_flags u32 {
+    NONE   :: 0x0;
+    BOB    :: 0x1;
+    CUSTOM :: 0x80000000;
+
+    D3D12_VIDEO_PROCESS_DEINTERLACE_FLAG_NONE   :: NONE;
+    D3D12_VIDEO_PROCESS_DEINTERLACE_FLAG_BOB    :: BOB;
+    D3D12_VIDEO_PROCESS_DEINTERLACE_FLAG_CUSTOM :: CUSTOM;
+}
+
+D3D12_VIDEO_PROCESS_ALPHA_BLENDING :: struct {
+    Enable: BOOL;
+    Alpha:  float;
+}
+
+D3D12_VIDEO_PROCESS_LUMA_KEY :: struct {
+    Enable: BOOL;
+    Lower:  float;
+    Upper:  float;
+}
+
+D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC :: struct {
+    Format:                 DXGI_FORMAT;
+    ColorSpace:             DXGI_COLOR_SPACE_TYPE;
+    SourceAspectRatio:      DXGI_RATIONAL;
+    DestinationAspectRatio: DXGI_RATIONAL;
+    FrameRate:              DXGI_RATIONAL;
+    SourceSizeRange:        D3D12_VIDEO_SIZE_RANGE;
+    DestinationSizeRange:   D3D12_VIDEO_SIZE_RANGE;
+    EnableOrientation:      BOOL;
+    FilterFlags:            D3D12_VIDEO_PROCESS_FILTER_FLAGS;
+    StereoFormat:           D3D12_VIDEO_FRAME_STEREO_FORMAT;
+    FieldType:              D3D12_VIDEO_FIELD_TYPE;
+    DeinterlaceMode:        D3D12_VIDEO_PROCESS_DEINTERLACE_FLAGS;
+    EnableAlphaBlending:    BOOL;
+    LumaKey:                D3D12_VIDEO_PROCESS_LUMA_KEY;
+    NumPastFrames:          u32;
+    NumFutureFrames:        u32;
+    EnableAutoProcessing:   BOOL;
+}
+
+D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE :: enum s32 {
+    OPAQUE        :: 0;
+    BACKGROUND    :: 1;
+    DESTINATION   :: 2;
+    SOURCE_STREAM :: 3;
+
+    D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE_OPAQUE        :: OPAQUE;
+    D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE_BACKGROUND    :: BACKGROUND;
+    D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE_DESTINATION   :: DESTINATION;
+    D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE_SOURCE_STREAM :: SOURCE_STREAM;
+}
+
+D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC :: struct {
+    Format:                         DXGI_FORMAT;
+    ColorSpace:                     DXGI_COLOR_SPACE_TYPE;
+    AlphaFillMode:                  D3D12_VIDEO_PROCESS_ALPHA_FILL_MODE;
+    AlphaFillModeSourceStreamIndex: u32;
+    BackgroundColor:                [4] float;
+    FrameRate:                      DXGI_RATIONAL;
+    EnableStereo:                   BOOL;
+}
+
+
+ID3D12VideoDecoderHeap_UUID :: "0946B7C9-EBF6-4047-BB73-8683E27DBB1F";
+ID3D12VideoDecoderHeap :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videodecoderheap_vtable: *ID3D12VideoDecoderHeap_VTable;
+}
+ID3D12VideoDecoderHeap_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetDesc: (this: *ID3D12VideoDecoderHeap) -> D3D12_VIDEO_DECODER_HEAP_DESC #cpp_method;
+}
+ID3D12VideoDecoderHeap_GetDesc :: inline (this: *ID3D12VideoDecoderHeap) -> D3D12_VIDEO_DECODER_HEAP_DESC { return this.id3d12videodecoderheap_vtable.GetDesc(this); }
+
+vtable :: (obj: *ID3D12VideoDecoderHeap) -> *ID3D12VideoDecoderHeap_VTable { return obj.id3d12videodecoderheap_vtable; }
+
+
+
+ID3D12VideoDevice_UUID :: "1F052807-0B46-4ACC-8A89-364F793718A4";
+ID3D12VideoDevice :: struct {
+    #as using iunknown: IUnknown;
+    #place vtable; id3d12videodevice_vtable: *ID3D12VideoDevice_VTable;
+}
+ID3D12VideoDevice_VTable :: struct #type_info_none {
+    using iunknown: IUnknown_VTable;
+    CheckFeatureSupport: (this: *ID3D12VideoDevice, FeatureVideo: D3D12_FEATURE_VIDEO, pFeatureSupportData: *void, FeatureSupportDataSize: u32) -> HRESULT #cpp_method;
+    CreateVideoDecoder: (this: *ID3D12VideoDevice, pDesc: *D3D12_VIDEO_DECODER_DESC, riid: *IID, ppVideoDecoder: **void) -> HRESULT #cpp_method;
+    CreateVideoDecoderHeap: (this: *ID3D12VideoDevice, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT #cpp_method;
+    CreateVideoProcessor: (this: *ID3D12VideoDevice, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, riid: *IID, ppVideoProcessor: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoDevice_CheckFeatureSupport :: inline (this: *ID3D12VideoDevice, FeatureVideo: D3D12_FEATURE_VIDEO, pFeatureSupportData: *void, FeatureSupportDataSize: u32) -> HRESULT { return this.id3d12videodevice_vtable.CheckFeatureSupport(this, FeatureVideo, pFeatureSupportData, FeatureSupportDataSize); }
+ID3D12VideoDevice_CreateVideoDecoder :: inline (this: *ID3D12VideoDevice, pDesc: *D3D12_VIDEO_DECODER_DESC, riid: *IID, ppVideoDecoder: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoDecoder(this, pDesc, riid, ppVideoDecoder); }
+ID3D12VideoDevice_CreateVideoDecoderHeap :: inline (this: *ID3D12VideoDevice, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoDecoderHeap(this, pVideoDecoderHeapDesc, riid, ppVideoDecoderHeap); }
+ID3D12VideoDevice_CreateVideoProcessor :: inline (this: *ID3D12VideoDevice, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, riid: *IID, ppVideoProcessor: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoProcessor(this, NodeMask, pOutputStreamDesc, NumInputStreamDescs, pInputStreamDescs, riid, ppVideoProcessor); }
+
+vtable :: (obj: *ID3D12VideoDevice) -> *ID3D12VideoDevice_VTable { return obj.id3d12videodevice_vtable; }
+
+
+
+ID3D12VideoDecoder_UUID :: "C59B6BDC-7720-4074-A136-17A156037470";
+ID3D12VideoDecoder :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videodecoder_vtable: *ID3D12VideoDecoder_VTable;
+}
+ID3D12VideoDecoder_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetDesc: (this: *ID3D12VideoDecoder) -> D3D12_VIDEO_DECODER_DESC #cpp_method;
+}
+ID3D12VideoDecoder_GetDesc :: inline (this: *ID3D12VideoDecoder) -> D3D12_VIDEO_DECODER_DESC { return this.id3d12videodecoder_vtable.GetDesc(this); }
+
+vtable :: (obj: *ID3D12VideoDecoder) -> *ID3D12VideoDecoder_VTable { return obj.id3d12videodecoder_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0003 */
+/* [local] */
+D3D12_VIDEO_DECODE_TIER :: enum s32 {
+    NOT_SUPPORTED :: 0;
+    _1            :: 1;
+    _2            :: 2;
+    _3            :: 3;
+
+    D3D12_VIDEO_DECODE_TIER_NOT_SUPPORTED :: NOT_SUPPORTED;
+    D3D12_VIDEO_DECODE_TIER_1             :: _1;
+    D3D12_VIDEO_DECODE_TIER_2             :: _2;
+    D3D12_VIDEO_DECODE_TIER_3             :: _3;
+}
+
+D3D12_VIDEO_DECODE_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE      :: 0x0;
+    SUPPORTED :: 0x1;
+
+    D3D12_VIDEO_DECODE_SUPPORT_FLAG_NONE      :: NONE;
+    D3D12_VIDEO_DECODE_SUPPORT_FLAG_SUPPORTED :: SUPPORTED;
+}
+
+D3D12_VIDEO_DECODE_CONFIGURATION_FLAGS :: enum_flags u32 {
+    NONE                                     :: 0x0;
+    HEIGHT_ALIGNMENT_MULTIPLE_32_REQUIRED    :: 0x1;
+    POST_PROCESSING_SUPPORTED                :: 0x2;
+    REFERENCE_ONLY_ALLOCATIONS_REQUIRED      :: 0x4;
+    ALLOW_RESOLUTION_CHANGE_ON_NON_KEY_FRAME :: 0x8;
+
+    D3D12_VIDEO_DECODE_CONFIGURATION_FLAG_NONE                                     :: NONE;
+    D3D12_VIDEO_DECODE_CONFIGURATION_FLAG_HEIGHT_ALIGNMENT_MULTIPLE_32_REQUIRED    :: HEIGHT_ALIGNMENT_MULTIPLE_32_REQUIRED;
+    D3D12_VIDEO_DECODE_CONFIGURATION_FLAG_POST_PROCESSING_SUPPORTED                :: POST_PROCESSING_SUPPORTED;
+    D3D12_VIDEO_DECODE_CONFIGURATION_FLAG_REFERENCE_ONLY_ALLOCATIONS_REQUIRED      :: REFERENCE_ONLY_ALLOCATIONS_REQUIRED;
+    D3D12_VIDEO_DECODE_CONFIGURATION_FLAG_ALLOW_RESOLUTION_CHANGE_ON_NON_KEY_FRAME :: ALLOW_RESOLUTION_CHANGE_ON_NON_KEY_FRAME;
+}
+
+D3D12_VIDEO_DECODE_STATUS :: enum s32 {
+    OK                    :: 0;
+    CONTINUE              :: 1;
+    CONTINUE_SKIP_DISPLAY :: 2;
+    RESTART               :: 3;
+    RATE_EXCEEDED         :: 4;
+
+    D3D12_VIDEO_DECODE_STATUS_OK                    :: OK;
+    D3D12_VIDEO_DECODE_STATUS_CONTINUE              :: CONTINUE;
+    D3D12_VIDEO_DECODE_STATUS_CONTINUE_SKIP_DISPLAY :: CONTINUE_SKIP_DISPLAY;
+    D3D12_VIDEO_DECODE_STATUS_RESTART               :: RESTART;
+    D3D12_VIDEO_DECODE_STATUS_RATE_EXCEEDED         :: RATE_EXCEEDED;
+}
+
+D3D12_VIDEO_DECODE_ARGUMENT_TYPE :: enum s32 {
+    PICTURE_PARAMETERS          :: 0;
+    INVERSE_QUANTIZATION_MATRIX :: 1;
+    SLICE_CONTROL               :: 2;
+    MAX_VALID                   :: 3;
+
+    D3D12_VIDEO_DECODE_ARGUMENT_TYPE_PICTURE_PARAMETERS          :: PICTURE_PARAMETERS;
+    D3D12_VIDEO_DECODE_ARGUMENT_TYPE_INVERSE_QUANTIZATION_MATRIX :: INVERSE_QUANTIZATION_MATRIX;
+    D3D12_VIDEO_DECODE_ARGUMENT_TYPE_SLICE_CONTROL               :: SLICE_CONTROL;
+    D3D12_VIDEO_DECODE_ARGUMENT_TYPE_MAX_VALID                   :: MAX_VALID;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_SUPPORT :: struct {
+    NodeIndex:          u32;
+    Configuration:      D3D12_VIDEO_DECODE_CONFIGURATION;
+    Width:              u32;
+    Height:             u32;
+    DecodeFormat:       DXGI_FORMAT;
+    FrameRate:          DXGI_RATIONAL;
+    BitRate:            u32;
+    SupportFlags:       D3D12_VIDEO_DECODE_SUPPORT_FLAGS;
+    ConfigurationFlags: D3D12_VIDEO_DECODE_CONFIGURATION_FLAGS;
+    DecodeTier:         D3D12_VIDEO_DECODE_TIER;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_PROFILE_COUNT :: struct {
+    NodeIndex:    u32;
+    ProfileCount: u32;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_PROFILES :: struct {
+    NodeIndex:    u32;
+    ProfileCount: u32;
+    pProfiles:    *GUID;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_FORMAT_COUNT :: struct {
+    NodeIndex:     u32;
+    Configuration: D3D12_VIDEO_DECODE_CONFIGURATION;
+    FormatCount:   u32;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_FORMATS :: struct {
+    NodeIndex:      u32;
+    Configuration:  D3D12_VIDEO_DECODE_CONFIGURATION;
+    FormatCount:    u32;
+    pOutputFormats: *DXGI_FORMAT;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ARCHITECTURE :: struct {
+    IOCoherent: BOOL;
+}
+
+D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT :: enum s32 {
+    Y :: 0;
+    U :: 1;
+    V :: 2;
+    R :: 0;
+    G :: 1;
+    B :: 2;
+    A :: 3;
+
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_Y :: Y;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_U :: U;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_V :: V;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_R :: R;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_G :: G;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_B :: B;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_A :: A;
+}
+
+D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAGS :: enum_flags u32 {
+    NONE :: 0x0;
+    Y    :: 0x1;
+    U    :: 0x2;
+    V    :: 0x4;
+    R    :: 0x1;
+    G    :: 0x2;
+    B    :: 0x4;
+    A    :: 0x8;
+
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_NONE :: NONE;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_Y    :: Y;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_U    :: U;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_V    :: V;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_R    :: R;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_G    :: G;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_B    :: B;
+    D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAG_A    :: A;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_HISTOGRAM :: struct {
+    NodeIndex:       u32;
+    DecodeProfile:   GUID;
+    Width:           u32;
+    Height:          u32;
+    DecodeFormat:    DXGI_FORMAT;
+    Components:      D3D12_VIDEO_DECODE_HISTOGRAM_COMPONENT_FLAGS;
+    BinCount:        u32;
+    CounterBitDepth: u32;
+}
+
+D3D12_VIDEO_DECODE_CONVERSION_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE      :: 0x0;
+    SUPPORTED :: 0x1;
+
+    D3D12_VIDEO_DECODE_CONVERSION_SUPPORT_FLAG_NONE      :: NONE;
+    D3D12_VIDEO_DECODE_CONVERSION_SUPPORT_FLAG_SUPPORTED :: SUPPORTED;
+}
+
+D3D12_VIDEO_SCALE_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE                 :: 0x0;
+    POW2_ONLY            :: 0x1;
+    EVEN_DIMENSIONS_ONLY :: 0x2;
+
+    D3D12_VIDEO_SCALE_SUPPORT_FLAG_NONE                 :: NONE;
+    D3D12_VIDEO_SCALE_SUPPORT_FLAG_POW2_ONLY            :: POW2_ONLY;
+    D3D12_VIDEO_SCALE_SUPPORT_FLAG_EVEN_DIMENSIONS_ONLY :: EVEN_DIMENSIONS_ONLY;
+}
+
+D3D12_VIDEO_SCALE_SUPPORT :: struct {
+    OutputSizeRange: D3D12_VIDEO_SIZE_RANGE;
+    Flags:           D3D12_VIDEO_SCALE_SUPPORT_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_CONVERSION_SUPPORT :: struct {
+    NodeIndex:     u32;
+    Configuration: D3D12_VIDEO_DECODE_CONFIGURATION;
+    DecodeSample:  D3D12_VIDEO_SAMPLE;
+    OutputFormat:  D3D12_VIDEO_FORMAT;
+    FrameRate:     DXGI_RATIONAL;
+    BitRate:       u32;
+    SupportFlags:  D3D12_VIDEO_DECODE_CONVERSION_SUPPORT_FLAGS;
+    ScaleSupport:  D3D12_VIDEO_SCALE_SUPPORT;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODER_HEAP_SIZE :: struct {
+    VideoDecoderHeapDesc: D3D12_VIDEO_DECODER_HEAP_DESC;
+    MemoryPoolL0Size:     u64;
+    MemoryPoolL1Size:     u64;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESSOR_SIZE :: struct {
+    NodeMask:            u32;
+    pOutputStreamDesc:   *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC;
+    NumInputStreamDescs: u32;
+    pInputStreamDescs:   *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC;
+    MemoryPoolL0Size:    u64;
+    MemoryPoolL1Size:    u64;
+}
+
+D3D12_QUERY_DATA_VIDEO_DECODE_STATISTICS :: struct {
+    Status:                 u64;
+    NumMacroblocksAffected: u64;
+    FrameRate:              DXGI_RATIONAL;
+    BitRate:                u32;
+}
+
+D3D12_VIDEO_DECODE_FRAME_ARGUMENT :: struct {
+    Type:  D3D12_VIDEO_DECODE_ARGUMENT_TYPE;
+    Size:  u32;
+    pData: *void;
+}
+
+D3D12_VIDEO_DECODE_REFERENCE_FRAMES :: struct {
+    NumTexture2Ds: u32;
+    ppTexture2Ds:  **ID3D12Resource;
+    pSubresources: *u32;
+    ppHeaps:       **ID3D12VideoDecoderHeap;
+}
+
+D3D12_VIDEO_DECODE_COMPRESSED_BITSTREAM :: struct {
+    pBuffer: *ID3D12Resource;
+    Offset:  u64;
+    Size:    u64;
+}
+
+D3D12_VIDEO_DECODE_CONVERSION_ARGUMENTS :: struct {
+    Enable:               BOOL;
+    pReferenceTexture2D:  *ID3D12Resource;
+    ReferenceSubresource: u32;
+    OutputColorSpace:     DXGI_COLOR_SPACE_TYPE;
+    DecodeColorSpace:     DXGI_COLOR_SPACE_TYPE;
+}
+
+D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS :: struct {
+    NumFrameArguments:   u32;
+    FrameArguments:      [10] D3D12_VIDEO_DECODE_FRAME_ARGUMENT;
+    ReferenceFrames:     D3D12_VIDEO_DECODE_REFERENCE_FRAMES;
+    CompressedBitstream: D3D12_VIDEO_DECODE_COMPRESSED_BITSTREAM;
+    pHeap:               *ID3D12VideoDecoderHeap;
+}
+
+D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS :: struct {
+    pOutputTexture2D:    *ID3D12Resource;
+    OutputSubresource:   u32;
+    ConversionArguments: D3D12_VIDEO_DECODE_CONVERSION_ARGUMENTS;
+}
+
+
+ID3D12VideoProcessor_UUID :: "304FDB32-BEDE-410A-8545-943AC6A46138";
+ID3D12VideoProcessor :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videoprocessor_vtable: *ID3D12VideoProcessor_VTable;
+}
+ID3D12VideoProcessor_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetNodeMask: (this: *ID3D12VideoProcessor) -> u32 #cpp_method;
+    GetNumInputStreamDescs: (this: *ID3D12VideoProcessor) -> u32 #cpp_method;
+    GetInputStreamDescs: (this: *ID3D12VideoProcessor, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC) -> HRESULT #cpp_method;
+    GetOutputStreamDesc: (this: *ID3D12VideoProcessor) -> D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC #cpp_method;
+}
+ID3D12VideoProcessor_GetNodeMask :: inline (this: *ID3D12VideoProcessor) -> u32 { return this.id3d12videoprocessor_vtable.GetNodeMask(this); }
+ID3D12VideoProcessor_GetNumInputStreamDescs :: inline (this: *ID3D12VideoProcessor) -> u32 { return this.id3d12videoprocessor_vtable.GetNumInputStreamDescs(this); }
+ID3D12VideoProcessor_GetInputStreamDescs :: inline (this: *ID3D12VideoProcessor, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC) -> HRESULT { return this.id3d12videoprocessor_vtable.GetInputStreamDescs(this, NumInputStreamDescs, pInputStreamDescs); }
+ID3D12VideoProcessor_GetOutputStreamDesc :: inline (this: *ID3D12VideoProcessor) -> D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC { return this.id3d12videoprocessor_vtable.GetOutputStreamDesc(this); }
+
+vtable :: (obj: *ID3D12VideoProcessor) -> *ID3D12VideoProcessor_VTable { return obj.id3d12videoprocessor_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0004 */
+/* [local] */
+D3D12_VIDEO_PROCESS_FEATURE_FLAGS :: enum_flags u32 {
+    NONE               :: 0x0;
+    ALPHA_FILL         :: 0x1;
+    LUMA_KEY           :: 0x2;
+    STEREO             :: 0x4;
+    ROTATION           :: 0x8;
+    FLIP               :: 0x10;
+    ALPHA_BLENDING     :: 0x20;
+    PIXEL_ASPECT_RATIO :: 0x40;
+
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_NONE               :: NONE;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_ALPHA_FILL         :: ALPHA_FILL;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_LUMA_KEY           :: LUMA_KEY;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_STEREO             :: STEREO;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_ROTATION           :: ROTATION;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_FLIP               :: FLIP;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_ALPHA_BLENDING     :: ALPHA_BLENDING;
+    D3D12_VIDEO_PROCESS_FEATURE_FLAG_PIXEL_ASPECT_RATIO :: PIXEL_ASPECT_RATIO;
+}
+
+D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAGS :: enum_flags u32 {
+    NONE                :: 0x0;
+    DENOISE             :: 0x1;
+    DERINGING           :: 0x2;
+    EDGE_ENHANCEMENT    :: 0x4;
+    COLOR_CORRECTION    :: 0x8;
+    FLESH_TONE_MAPPING  :: 0x10;
+    IMAGE_STABILIZATION :: 0x20;
+    SUPER_RESOLUTION    :: 0x40;
+    ANAMORPHIC_SCALING  :: 0x80;
+    CUSTOM              :: 0x80000000;
+
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_NONE                :: NONE;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_DENOISE             :: DENOISE;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_DERINGING           :: DERINGING;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_EDGE_ENHANCEMENT    :: EDGE_ENHANCEMENT;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_COLOR_CORRECTION    :: COLOR_CORRECTION;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_FLESH_TONE_MAPPING  :: FLESH_TONE_MAPPING;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_IMAGE_STABILIZATION :: IMAGE_STABILIZATION;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_SUPER_RESOLUTION    :: SUPER_RESOLUTION;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_ANAMORPHIC_SCALING  :: ANAMORPHIC_SCALING;
+    D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAG_CUSTOM              :: CUSTOM;
+}
+
+D3D12_VIDEO_PROCESS_ORIENTATION :: enum s32 {
+    DEFAULT                       :: 0;
+    FLIP_HORIZONTAL               :: 1;
+    CLOCKWISE_90                  :: 2;
+    CLOCKWISE_90_FLIP_HORIZONTAL  :: 3;
+    CLOCKWISE_180                 :: 4;
+    FLIP_VERTICAL                 :: 5;
+    CLOCKWISE_270                 :: 6;
+    CLOCKWISE_270_FLIP_HORIZONTAL :: 7;
+
+    D3D12_VIDEO_PROCESS_ORIENTATION_DEFAULT                       :: DEFAULT;
+    D3D12_VIDEO_PROCESS_ORIENTATION_FLIP_HORIZONTAL               :: FLIP_HORIZONTAL;
+    D3D12_VIDEO_PROCESS_ORIENTATION_CLOCKWISE_90                  :: CLOCKWISE_90;
+    D3D12_VIDEO_PROCESS_ORIENTATION_CLOCKWISE_90_FLIP_HORIZONTAL  :: CLOCKWISE_90_FLIP_HORIZONTAL;
+    D3D12_VIDEO_PROCESS_ORIENTATION_CLOCKWISE_180                 :: CLOCKWISE_180;
+    D3D12_VIDEO_PROCESS_ORIENTATION_FLIP_VERTICAL                 :: FLIP_VERTICAL;
+    D3D12_VIDEO_PROCESS_ORIENTATION_CLOCKWISE_270                 :: CLOCKWISE_270;
+    D3D12_VIDEO_PROCESS_ORIENTATION_CLOCKWISE_270_FLIP_HORIZONTAL :: CLOCKWISE_270_FLIP_HORIZONTAL;
+}
+
+D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAGS :: enum_flags u32 {
+    NONE                :: 0x0;
+    FRAME_DISCONTINUITY :: 0x1;
+    FRAME_REPEAT        :: 0x2;
+
+    D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAG_NONE                :: NONE;
+    D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAG_FRAME_DISCONTINUITY :: FRAME_DISCONTINUITY;
+    D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAG_FRAME_REPEAT        :: FRAME_REPEAT;
+}
+
+D3D12_VIDEO_PROCESS_FILTER_RANGE :: struct {
+    Minimum:    s32;
+    Maximum:    s32;
+    Default:    s32;
+    Multiplier: float;
+}
+
+D3D12_VIDEO_PROCESS_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE      :: 0x0;
+    SUPPORTED :: 0x1;
+
+    D3D12_VIDEO_PROCESS_SUPPORT_FLAG_NONE      :: NONE;
+    D3D12_VIDEO_PROCESS_SUPPORT_FLAG_SUPPORTED :: SUPPORTED;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESS_SUPPORT :: struct {
+    NodeIndex:             u32;
+    InputSample:           D3D12_VIDEO_SAMPLE;
+    InputFieldType:        D3D12_VIDEO_FIELD_TYPE;
+    InputStereoFormat:     D3D12_VIDEO_FRAME_STEREO_FORMAT;
+    InputFrameRate:        DXGI_RATIONAL;
+    OutputFormat:          D3D12_VIDEO_FORMAT;
+    OutputStereoFormat:    D3D12_VIDEO_FRAME_STEREO_FORMAT;
+    OutputFrameRate:       DXGI_RATIONAL;
+    SupportFlags:          D3D12_VIDEO_PROCESS_SUPPORT_FLAGS;
+    ScaleSupport:          D3D12_VIDEO_SCALE_SUPPORT;
+    FeatureSupport:        D3D12_VIDEO_PROCESS_FEATURE_FLAGS;
+    DeinterlaceSupport:    D3D12_VIDEO_PROCESS_DEINTERLACE_FLAGS;
+    AutoProcessingSupport: D3D12_VIDEO_PROCESS_AUTO_PROCESSING_FLAGS;
+    FilterSupport:         D3D12_VIDEO_PROCESS_FILTER_FLAGS;
+    FilterRangeSupport:    [32] D3D12_VIDEO_PROCESS_FILTER_RANGE;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESS_MAX_INPUT_STREAMS :: struct {
+    NodeIndex:       u32;
+    MaxInputStreams: u32;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESS_REFERENCE_INFO :: struct {
+    NodeIndex:            u32;
+    DeinterlaceMode:      D3D12_VIDEO_PROCESS_DEINTERLACE_FLAGS;
+    Filters:              D3D12_VIDEO_PROCESS_FILTER_FLAGS;
+    FeatureSupport:       D3D12_VIDEO_PROCESS_FEATURE_FLAGS;
+    InputFrameRate:       DXGI_RATIONAL;
+    OutputFrameRate:      DXGI_RATIONAL;
+    EnableAutoProcessing: BOOL;
+    PastFrames:           u32;
+    FutureFrames:         u32;
+}
+
+D3D12_VIDEO_PROCESS_REFERENCE_SET :: struct {
+    NumPastFrames:       u32;
+    ppPastFrames:        **ID3D12Resource;
+    pPastSubresources:   *u32;
+    NumFutureFrames:     u32;
+    ppFutureFrames:      **ID3D12Resource;
+    pFutureSubresources: *u32;
+}
+
+D3D12_VIDEO_PROCESS_TRANSFORM :: struct {
+    SourceRectangle:      D3D12_RECT;
+    DestinationRectangle: D3D12_RECT;
+    Orientation:          D3D12_VIDEO_PROCESS_ORIENTATION;
+}
+
+D3D12_VIDEO_PROCESS_INPUT_STREAM_RATE :: struct {
+    OutputIndex:       u32;
+    InputFrameOrField: u32;
+}
+
+D3D12_VIDEO_PROCESS_INPUT_STREAM :: struct {
+    pTexture2D:   *ID3D12Resource;
+    Subresource:  u32;
+    ReferenceSet: D3D12_VIDEO_PROCESS_REFERENCE_SET;
+}
+
+D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS :: struct {
+    InputStream:   [2] D3D12_VIDEO_PROCESS_INPUT_STREAM;
+    Transform:     D3D12_VIDEO_PROCESS_TRANSFORM;
+    Flags:         D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAGS;
+    RateInfo:      D3D12_VIDEO_PROCESS_INPUT_STREAM_RATE;
+    FilterLevels:  [32] s32;
+    AlphaBlending: D3D12_VIDEO_PROCESS_ALPHA_BLENDING;
+}
+
+D3D12_VIDEO_PROCESS_OUTPUT_STREAM :: struct {
+    pTexture2D:  *ID3D12Resource;
+    Subresource: u32;
+}
+
+D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS :: struct {
+    OutputStream:    [2] D3D12_VIDEO_PROCESS_OUTPUT_STREAM;
+    TargetRectangle: D3D12_RECT;
+}
+
+
+ID3D12VideoDecodeCommandList_UUID :: "3B60536E-AD29-4E64-A269-F853837E5E53";
+ID3D12VideoDecodeCommandList :: struct {
+    #as using id3d12commandlist: ID3D12CommandList;
+    #place vtable; id3d12videodecodecommandlist_vtable: *ID3D12VideoDecodeCommandList_VTable;
+}
+ID3D12VideoDecodeCommandList_VTable :: struct #type_info_none {
+    using id3d12commandlist: ID3D12CommandList_VTable;
+    Close: (this: *ID3D12VideoDecodeCommandList) -> HRESULT #cpp_method;
+    Reset: (this: *ID3D12VideoDecodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT #cpp_method;
+    ClearState: (this: *ID3D12VideoDecodeCommandList) -> void #cpp_method;
+    ResourceBarrier: (this: *ID3D12VideoDecodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) -> void #cpp_method;
+    DiscardResource: (this: *ID3D12VideoDecodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) -> void #cpp_method;
+    BeginQuery: (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    EndQuery: (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    ResolveQueryData: (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) -> void #cpp_method;
+    SetPredication: (this: *ID3D12VideoDecodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) -> void #cpp_method;
+    SetMarker: (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    BeginEvent: (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    EndEvent: (this: *ID3D12VideoDecodeCommandList) -> void #cpp_method;
+    DecodeFrame: (this: *ID3D12VideoDecodeCommandList, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
+    WriteBufferImmediate: (this: *ID3D12VideoDecodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
+}
+ID3D12VideoDecodeCommandList_Close :: inline (this: *ID3D12VideoDecodeCommandList) -> HRESULT { return this.id3d12videodecodecommandlist_vtable.Close(this); }
+ID3D12VideoDecodeCommandList_Reset :: inline (this: *ID3D12VideoDecodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videodecodecommandlist_vtable.Reset(this, pAllocator); }
+ID3D12VideoDecodeCommandList_ClearState :: inline (this: *ID3D12VideoDecodeCommandList) { this.id3d12videodecodecommandlist_vtable.ClearState(this); }
+ID3D12VideoDecodeCommandList_ResourceBarrier :: inline (this: *ID3D12VideoDecodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videodecodecommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
+ID3D12VideoDecodeCommandList_DiscardResource :: inline (this: *ID3D12VideoDecodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videodecodecommandlist_vtable.DiscardResource(this, pResource, pRegion); }
+ID3D12VideoDecodeCommandList_BeginQuery :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videodecodecommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoDecodeCommandList_EndQuery :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videodecodecommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoDecodeCommandList_ResolveQueryData :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videodecodecommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
+ID3D12VideoDecodeCommandList_SetPredication :: inline (this: *ID3D12VideoDecodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videodecodecommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
+ID3D12VideoDecodeCommandList_SetMarker :: inline (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videodecodecommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
+ID3D12VideoDecodeCommandList_BeginEvent :: inline (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videodecodecommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
+ID3D12VideoDecodeCommandList_EndEvent :: inline (this: *ID3D12VideoDecodeCommandList) { this.id3d12videodecodecommandlist_vtable.EndEvent(this); }
+ID3D12VideoDecodeCommandList_DecodeFrame :: inline (this: *ID3D12VideoDecodeCommandList, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) { this.id3d12videodecodecommandlist_vtable.DecodeFrame(this, pDecoder, pOutputArguments, pInputArguments); }
+ID3D12VideoDecodeCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoDecodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videodecodecommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
+
+vtable :: (obj: *ID3D12VideoDecodeCommandList) -> *ID3D12VideoDecodeCommandList_VTable { return obj.id3d12videodecodecommandlist_vtable; }
+
+
+
+ID3D12VideoProcessCommandList_UUID :: "AEB2543A-167F-4682-ACC8-D159ED4A6209";
+ID3D12VideoProcessCommandList :: struct {
+    #as using id3d12commandlist: ID3D12CommandList;
+    #place vtable; id3d12videoprocesscommandlist_vtable: *ID3D12VideoProcessCommandList_VTable;
+}
+ID3D12VideoProcessCommandList_VTable :: struct #type_info_none {
+    using id3d12commandlist: ID3D12CommandList_VTable;
+    Close: (this: *ID3D12VideoProcessCommandList) -> HRESULT #cpp_method;
+    Reset: (this: *ID3D12VideoProcessCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT #cpp_method;
+    ClearState: (this: *ID3D12VideoProcessCommandList) -> void #cpp_method;
+    ResourceBarrier: (this: *ID3D12VideoProcessCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) -> void #cpp_method;
+    DiscardResource: (this: *ID3D12VideoProcessCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) -> void #cpp_method;
+    BeginQuery: (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    EndQuery: (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    ResolveQueryData: (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) -> void #cpp_method;
+    SetPredication: (this: *ID3D12VideoProcessCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) -> void #cpp_method;
+    SetMarker: (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    BeginEvent: (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    EndEvent: (this: *ID3D12VideoProcessCommandList) -> void #cpp_method;
+    ProcessFrames: (this: *ID3D12VideoProcessCommandList, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
+    WriteBufferImmediate: (this: *ID3D12VideoProcessCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
+}
+ID3D12VideoProcessCommandList_Close :: inline (this: *ID3D12VideoProcessCommandList) -> HRESULT { return this.id3d12videoprocesscommandlist_vtable.Close(this); }
+ID3D12VideoProcessCommandList_Reset :: inline (this: *ID3D12VideoProcessCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videoprocesscommandlist_vtable.Reset(this, pAllocator); }
+ID3D12VideoProcessCommandList_ClearState :: inline (this: *ID3D12VideoProcessCommandList) { this.id3d12videoprocesscommandlist_vtable.ClearState(this); }
+ID3D12VideoProcessCommandList_ResourceBarrier :: inline (this: *ID3D12VideoProcessCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videoprocesscommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
+ID3D12VideoProcessCommandList_DiscardResource :: inline (this: *ID3D12VideoProcessCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videoprocesscommandlist_vtable.DiscardResource(this, pResource, pRegion); }
+ID3D12VideoProcessCommandList_BeginQuery :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoprocesscommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoProcessCommandList_EndQuery :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoprocesscommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoProcessCommandList_ResolveQueryData :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videoprocesscommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
+ID3D12VideoProcessCommandList_SetPredication :: inline (this: *ID3D12VideoProcessCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videoprocesscommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
+ID3D12VideoProcessCommandList_SetMarker :: inline (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoprocesscommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
+ID3D12VideoProcessCommandList_BeginEvent :: inline (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoprocesscommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
+ID3D12VideoProcessCommandList_EndEvent :: inline (this: *ID3D12VideoProcessCommandList) { this.id3d12videoprocesscommandlist_vtable.EndEvent(this); }
+ID3D12VideoProcessCommandList_ProcessFrames :: inline (this: *ID3D12VideoProcessCommandList, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS) { this.id3d12videoprocesscommandlist_vtable.ProcessFrames(this, pVideoProcessor, pOutputArguments, NumInputStreams, pInputArguments); }
+ID3D12VideoProcessCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoProcessCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videoprocesscommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
+
+vtable :: (obj: *ID3D12VideoProcessCommandList) -> *ID3D12VideoProcessCommandList_VTable { return obj.id3d12videoprocesscommandlist_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0006 */
+/* [local] */
+D3D12_VIDEO_DECODE_OUTPUT_HISTOGRAM :: struct {
+    Offset:  u64;
+    pBuffer: *ID3D12Resource;
+}
+
+D3D12_VIDEO_DECODE_CONVERSION_ARGUMENTS1 :: struct {
+    Enable:               BOOL;
+    pReferenceTexture2D:  *ID3D12Resource;
+    ReferenceSubresource: u32;
+    OutputColorSpace:     DXGI_COLOR_SPACE_TYPE;
+    DecodeColorSpace:     DXGI_COLOR_SPACE_TYPE;
+    OutputWidth:          u32;
+    OutputHeight:         u32;
+}
+
+D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS1 :: struct {
+    pOutputTexture2D:    *ID3D12Resource;
+    OutputSubresource:   u32;
+    ConversionArguments: D3D12_VIDEO_DECODE_CONVERSION_ARGUMENTS1;
+    Histograms:          [4] D3D12_VIDEO_DECODE_OUTPUT_HISTOGRAM;
+}
+
+
+ID3D12VideoDecodeCommandList1_UUID :: "D52F011B-B56E-453C-A05A-A7F311C8F472";
+ID3D12VideoDecodeCommandList1 :: struct {
+    #as using id3d12videodecodecommandlist: ID3D12VideoDecodeCommandList;
+    #place vtable; id3d12videodecodecommandlist1_vtable: *ID3D12VideoDecodeCommandList1_VTable;
+}
+ID3D12VideoDecodeCommandList1_VTable :: struct #type_info_none {
+    using id3d12videodecodecommandlist: ID3D12VideoDecodeCommandList_VTable;
+    DecodeFrame1: (this: *ID3D12VideoDecodeCommandList1, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS1, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
+}
+ID3D12VideoDecodeCommandList1_DecodeFrame1 :: inline (this: *ID3D12VideoDecodeCommandList1, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS1, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) { this.id3d12videodecodecommandlist1_vtable.DecodeFrame1(this, pDecoder, pOutputArguments, pInputArguments); }
+
+vtable :: (obj: *ID3D12VideoDecodeCommandList1) -> *ID3D12VideoDecodeCommandList1_VTable { return obj.id3d12videodecodecommandlist1_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0007 */
+/* [local] */
+D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1 :: struct {
+    InputStream:   [2] D3D12_VIDEO_PROCESS_INPUT_STREAM;
+    Transform:     D3D12_VIDEO_PROCESS_TRANSFORM;
+    Flags:         D3D12_VIDEO_PROCESS_INPUT_STREAM_FLAGS;
+    RateInfo:      D3D12_VIDEO_PROCESS_INPUT_STREAM_RATE;
+    FilterLevels:  [32] s32;
+    AlphaBlending: D3D12_VIDEO_PROCESS_ALPHA_BLENDING;
+    FieldType:     D3D12_VIDEO_FIELD_TYPE;
+}
+
+
+ID3D12VideoProcessCommandList1_UUID :: "542C5C4D-7596-434F-8C93-4EFA6766F267";
+ID3D12VideoProcessCommandList1 :: struct {
+    #as using id3d12videoprocesscommandlist: ID3D12VideoProcessCommandList;
+    #place vtable; id3d12videoprocesscommandlist1_vtable: *ID3D12VideoProcessCommandList1_VTable;
+}
+ID3D12VideoProcessCommandList1_VTable :: struct #type_info_none {
+    using id3d12videoprocesscommandlist: ID3D12VideoProcessCommandList_VTable;
+    ProcessFrames1: (this: *ID3D12VideoProcessCommandList1, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1) -> void #cpp_method;
+}
+ID3D12VideoProcessCommandList1_ProcessFrames1 :: inline (this: *ID3D12VideoProcessCommandList1, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1) { this.id3d12videoprocesscommandlist1_vtable.ProcessFrames1(this, pVideoProcessor, pOutputArguments, NumInputStreams, pInputArguments); }
+
+vtable :: (obj: *ID3D12VideoProcessCommandList1) -> *ID3D12VideoProcessCommandList1_VTable { return obj.id3d12videoprocesscommandlist1_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0008 */
+/* [local] */
+D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE :: enum s32 {
+    _8X8   :: 0;
+    _16X16 :: 1;
+
+    D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_8X8   :: _8X8;
+    D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_16X16 :: _16X16;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_FLAGS :: enum_flags u32 {
+    NONE   :: 0x0;
+    _8X8   :: 0x1;
+    _16X16 :: 0x2;
+
+    D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_FLAG_NONE  :: NONE;
+    D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_FLAG_8X8   :: _8X8;
+    D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_FLAG_16X16 :: _16X16;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION :: enum s32 {
+    QUARTER_PEL :: 0;
+    D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION_QUARTER_PEL :: QUARTER_PEL;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION_FLAGS :: enum_flags u32 {
+    NONE        :: 0x0;
+    QUARTER_PEL :: 0x1;
+
+    D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION_FLAG_NONE        :: NONE;
+    D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION_FLAG_QUARTER_PEL :: QUARTER_PEL;
+}
+
+D3D12_FEATURE_DATA_VIDEO_FEATURE_AREA_SUPPORT :: struct {
+    NodeIndex:           u32;
+    VideoDecodeSupport:  BOOL;
+    VideoProcessSupport: BOOL;
+    VideoEncodeSupport:  BOOL;
+}
+
+D3D12_FEATURE_DATA_VIDEO_MOTION_ESTIMATOR :: struct {
+    NodeIndex:      u32;
+    InputFormat:    DXGI_FORMAT;
+    BlockSizeFlags: D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE_FLAGS;
+    PrecisionFlags: D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION_FLAGS;
+    SizeRange:      D3D12_VIDEO_SIZE_RANGE;
+}
+
+D3D12_FEATURE_DATA_VIDEO_MOTION_ESTIMATOR_SIZE :: struct {
+    NodeIndex:                        u32;
+    InputFormat:                      DXGI_FORMAT;
+    BlockSize:                        D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE;
+    Precision:                        D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION;
+    SizeRange:                        D3D12_VIDEO_SIZE_RANGE;
+    Protected:                        BOOL;
+    MotionVectorHeapMemoryPoolL0Size: u64;
+    MotionVectorHeapMemoryPoolL1Size: u64;
+    MotionEstimatorMemoryPoolL0Size:  u64;
+    MotionEstimatorMemoryPoolL1Size:  u64;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_DESC :: struct {
+    NodeMask:    u32;
+    InputFormat: DXGI_FORMAT;
+    BlockSize:   D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE;
+    Precision:   D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION;
+    SizeRange:   D3D12_VIDEO_SIZE_RANGE;
+}
+
+
+ID3D12VideoMotionEstimator_UUID :: "33FDAE0E-098B-428F-87BB-34B695DE08F8";
+ID3D12VideoMotionEstimator :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videomotionestimator_vtable: *ID3D12VideoMotionEstimator_VTable;
+}
+ID3D12VideoMotionEstimator_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetDesc: (this: *ID3D12VideoMotionEstimator) -> D3D12_VIDEO_MOTION_ESTIMATOR_DESC #cpp_method;
+    GetProtectedResourceSession: (this: *ID3D12VideoMotionEstimator, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoMotionEstimator_GetDesc :: inline (this: *ID3D12VideoMotionEstimator) -> D3D12_VIDEO_MOTION_ESTIMATOR_DESC { return this.id3d12videomotionestimator_vtable.GetDesc(this); }
+ID3D12VideoMotionEstimator_GetProtectedResourceSession :: inline (this: *ID3D12VideoMotionEstimator, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videomotionestimator_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoMotionEstimator) -> *ID3D12VideoMotionEstimator_VTable { return obj.id3d12videomotionestimator_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0009 */
+/* [local] */
+D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC :: struct {
+    NodeMask:    u32;
+    InputFormat: DXGI_FORMAT;
+    BlockSize:   D3D12_VIDEO_MOTION_ESTIMATOR_SEARCH_BLOCK_SIZE;
+    Precision:   D3D12_VIDEO_MOTION_ESTIMATOR_VECTOR_PRECISION;
+    SizeRange:   D3D12_VIDEO_SIZE_RANGE;
+}
+
+
+ID3D12VideoMotionVectorHeap_UUID :: "5BE17987-743A-4061-834B-23D22DAEA505";
+ID3D12VideoMotionVectorHeap :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videomotionvectorheap_vtable: *ID3D12VideoMotionVectorHeap_VTable;
+}
+ID3D12VideoMotionVectorHeap_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetDesc: (this: *ID3D12VideoMotionVectorHeap) -> D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC #cpp_method;
+    GetProtectedResourceSession: (this: *ID3D12VideoMotionVectorHeap, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoMotionVectorHeap_GetDesc :: inline (this: *ID3D12VideoMotionVectorHeap) -> D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC { return this.id3d12videomotionvectorheap_vtable.GetDesc(this); }
+ID3D12VideoMotionVectorHeap_GetProtectedResourceSession :: inline (this: *ID3D12VideoMotionVectorHeap, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videomotionvectorheap_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoMotionVectorHeap) -> *ID3D12VideoMotionVectorHeap_VTable { return obj.id3d12videomotionvectorheap_vtable; }
+
+
+
+ID3D12VideoDevice1_UUID :: "981611AD-A144-4C83-9890-F30E26D658AB";
+ID3D12VideoDevice1 :: struct {
+    #as using id3d12videodevice: ID3D12VideoDevice;
+    #place vtable; id3d12videodevice1_vtable: *ID3D12VideoDevice1_VTable;
+}
+ID3D12VideoDevice1_VTable :: struct #type_info_none {
+    using id3d12videodevice: ID3D12VideoDevice_VTable;
+    CreateVideoMotionEstimator: (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_ESTIMATOR_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionEstimator: **void) -> HRESULT #cpp_method;
+    CreateVideoMotionVectorHeap: (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionVectorHeap: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoDevice1_CreateVideoMotionEstimator :: inline (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_ESTIMATOR_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionEstimator: **void) -> HRESULT { return this.id3d12videodevice1_vtable.CreateVideoMotionEstimator(this, pDesc, pProtectedResourceSession, riid, ppVideoMotionEstimator); }
+ID3D12VideoDevice1_CreateVideoMotionVectorHeap :: inline (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionVectorHeap: **void) -> HRESULT { return this.id3d12videodevice1_vtable.CreateVideoMotionVectorHeap(this, pDesc, pProtectedResourceSession, riid, ppVideoMotionVectorHeap); }
+
+vtable :: (obj: *ID3D12VideoDevice1) -> *ID3D12VideoDevice1_VTable { return obj.id3d12videodevice1_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0011 */
+/* [local] */
+D3D12_RESOURCE_COORDINATE :: struct {
+    X:                u64;
+    Y:                u32;
+    Z:                u32;
+    SubresourceIndex: u32;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_OUTPUT :: struct {
+    pMotionVectorHeap: *ID3D12VideoMotionVectorHeap;
+}
+
+D3D12_VIDEO_MOTION_ESTIMATOR_INPUT :: struct {
+    pInputTexture2D:           *ID3D12Resource;
+    InputSubresourceIndex:     u32;
+    pReferenceTexture2D:       *ID3D12Resource;
+    ReferenceSubresourceIndex: u32;
+    pHintMotionVectorHeap:     *ID3D12VideoMotionVectorHeap;
+}
+
+D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_OUTPUT :: struct {
+    pMotionVectorTexture2D: *ID3D12Resource;
+    MotionVectorCoordinate: D3D12_RESOURCE_COORDINATE;
+}
+
+D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_INPUT :: struct {
+    pMotionVectorHeap: *ID3D12VideoMotionVectorHeap;
+    PixelWidth:        u32;
+    PixelHeight:       u32;
+}
+
+
+ID3D12VideoEncodeCommandList_UUID :: "8455293A-0CBD-4831-9B39-FBDBAB724723";
+ID3D12VideoEncodeCommandList :: struct {
+    #as using id3d12commandlist: ID3D12CommandList;
+    #place vtable; id3d12videoencodecommandlist_vtable: *ID3D12VideoEncodeCommandList_VTable;
+}
+ID3D12VideoEncodeCommandList_VTable :: struct #type_info_none {
+    using id3d12commandlist: ID3D12CommandList_VTable;
+    Close: (this: *ID3D12VideoEncodeCommandList) -> HRESULT #cpp_method;
+    Reset: (this: *ID3D12VideoEncodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT #cpp_method;
+    ClearState: (this: *ID3D12VideoEncodeCommandList) -> void #cpp_method;
+    ResourceBarrier: (this: *ID3D12VideoEncodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) -> void #cpp_method;
+    DiscardResource: (this: *ID3D12VideoEncodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) -> void #cpp_method;
+    BeginQuery: (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    EndQuery: (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) -> void #cpp_method;
+    ResolveQueryData: (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) -> void #cpp_method;
+    SetPredication: (this: *ID3D12VideoEncodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) -> void #cpp_method;
+    SetMarker: (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    BeginEvent: (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) -> void #cpp_method;
+    EndEvent: (this: *ID3D12VideoEncodeCommandList) -> void #cpp_method;
+    EstimateMotion: (this: *ID3D12VideoEncodeCommandList, pMotionEstimator: *ID3D12VideoMotionEstimator, pOutputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_OUTPUT, pInputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_INPUT) -> void #cpp_method;
+    ResolveMotionVectorHeap: (this: *ID3D12VideoEncodeCommandList, pOutputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_OUTPUT, pInputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_INPUT) -> void #cpp_method;
+    WriteBufferImmediate: (this: *ID3D12VideoEncodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
+    SetProtectedResourceSession: (this: *ID3D12VideoEncodeCommandList, pProtectedResourceSession: *ID3D12ProtectedResourceSession) -> void #cpp_method;
+}
+ID3D12VideoEncodeCommandList_Close :: inline (this: *ID3D12VideoEncodeCommandList) -> HRESULT { return this.id3d12videoencodecommandlist_vtable.Close(this); }
+ID3D12VideoEncodeCommandList_Reset :: inline (this: *ID3D12VideoEncodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videoencodecommandlist_vtable.Reset(this, pAllocator); }
+ID3D12VideoEncodeCommandList_ClearState :: inline (this: *ID3D12VideoEncodeCommandList) { this.id3d12videoencodecommandlist_vtable.ClearState(this); }
+ID3D12VideoEncodeCommandList_ResourceBarrier :: inline (this: *ID3D12VideoEncodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videoencodecommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
+ID3D12VideoEncodeCommandList_DiscardResource :: inline (this: *ID3D12VideoEncodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videoencodecommandlist_vtable.DiscardResource(this, pResource, pRegion); }
+ID3D12VideoEncodeCommandList_BeginQuery :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoencodecommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoEncodeCommandList_EndQuery :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoencodecommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
+ID3D12VideoEncodeCommandList_ResolveQueryData :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videoencodecommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
+ID3D12VideoEncodeCommandList_SetPredication :: inline (this: *ID3D12VideoEncodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videoencodecommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
+ID3D12VideoEncodeCommandList_SetMarker :: inline (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoencodecommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
+ID3D12VideoEncodeCommandList_BeginEvent :: inline (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoencodecommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
+ID3D12VideoEncodeCommandList_EndEvent :: inline (this: *ID3D12VideoEncodeCommandList) { this.id3d12videoencodecommandlist_vtable.EndEvent(this); }
+ID3D12VideoEncodeCommandList_EstimateMotion :: inline (this: *ID3D12VideoEncodeCommandList, pMotionEstimator: *ID3D12VideoMotionEstimator, pOutputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_OUTPUT, pInputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_INPUT) { this.id3d12videoencodecommandlist_vtable.EstimateMotion(this, pMotionEstimator, pOutputArguments, pInputArguments); }
+ID3D12VideoEncodeCommandList_ResolveMotionVectorHeap :: inline (this: *ID3D12VideoEncodeCommandList, pOutputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_OUTPUT, pInputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_INPUT) { this.id3d12videoencodecommandlist_vtable.ResolveMotionVectorHeap(this, pOutputArguments, pInputArguments); }
+ID3D12VideoEncodeCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoEncodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videoencodecommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
+ID3D12VideoEncodeCommandList_SetProtectedResourceSession :: inline (this: *ID3D12VideoEncodeCommandList, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videoencodecommandlist_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
+
+vtable :: (obj: *ID3D12VideoEncodeCommandList) -> *ID3D12VideoEncodeCommandList_VTable { return obj.id3d12videoencodecommandlist_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0012 */
+/* [local] */
+D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE      :: 0x0;
+    SUPPORTED :: 0x1;
+
+    D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAG_NONE      :: NONE;
+    D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAG_SUPPORTED :: SUPPORTED;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODE_PROTECTED_RESOURCES :: struct {
+    NodeIndex:     u32;
+    Configuration: D3D12_VIDEO_DECODE_CONFIGURATION;
+    SupportFlags:  D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESS_PROTECTED_RESOURCES :: struct {
+    NodeIndex:    u32;
+    SupportFlags: D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_MOTION_ESTIMATOR_PROTECTED_RESOURCES :: struct {
+    NodeIndex:    u32;
+    SupportFlags: D3D12_VIDEO_PROTECTED_RESOURCE_SUPPORT_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_DECODER_HEAP_SIZE1 :: struct {
+    VideoDecoderHeapDesc: D3D12_VIDEO_DECODER_HEAP_DESC;
+    Protected:            BOOL;
+    MemoryPoolL0Size:     u64;
+    MemoryPoolL1Size:     u64;
+}
+
+D3D12_FEATURE_DATA_VIDEO_PROCESSOR_SIZE1 :: struct {
+    NodeMask:            u32;
+    pOutputStreamDesc:   *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC;
+    NumInputStreamDescs: u32;
+    pInputStreamDescs:   *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC;
+    Protected:           BOOL;
+    MemoryPoolL0Size:    u64;
+    MemoryPoolL1Size:    u64;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE :: enum s32 {
+    CREATION              :: 0;
+    INITIALIZATION        :: 1;
+    EXECUTION             :: 2;
+    CAPS_INPUT            :: 3;
+    CAPS_OUTPUT           :: 4;
+    DEVICE_EXECUTE_INPUT  :: 5;
+    DEVICE_EXECUTE_OUTPUT :: 6;
+
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_CREATION              :: CREATION;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_INITIALIZATION        :: INITIALIZATION;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_EXECUTION             :: EXECUTION;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_CAPS_INPUT            :: CAPS_INPUT;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_CAPS_OUTPUT           :: CAPS_OUTPUT;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_DEVICE_EXECUTE_INPUT  :: DEVICE_EXECUTE_INPUT;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE_DEVICE_EXECUTE_OUTPUT :: DEVICE_EXECUTE_OUTPUT;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE :: enum s32 {
+    UINT8    :: 0;
+    UINT16   :: 1;
+    UINT32   :: 2;
+    UINT64   :: 3;
+    SINT8    :: 4;
+    SINT16   :: 5;
+    SINT32   :: 6;
+    SINT64   :: 7;
+    FLOAT    :: 8;
+    DOUBLE   :: 9;
+    RESOURCE :: 10;
+
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_UINT8    :: UINT8;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_UINT16   :: UINT16;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_UINT32   :: UINT32;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_UINT64   :: UINT64;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_SINT8    :: SINT8;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_SINT16   :: SINT16;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_SINT32   :: SINT32;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_SINT64   :: SINT64;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_FLOAT    :: FLOAT;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_DOUBLE   :: DOUBLE;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE_RESOURCE :: RESOURCE;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS :: enum_flags u32 {
+    NONE  :: 0x0;
+    READ  :: 0x1;
+    WRITE :: 0x2;
+
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAG_NONE  :: NONE;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAG_READ  :: READ;
+    D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAG_WRITE :: WRITE;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMAND_COUNT :: struct {
+    NodeIndex:    u32;
+    CommandCount: u32;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_INFO :: struct {
+    CommandId:               GUID;
+    Name:                    *s16;
+    CommandListSupportFlags: D3D12_COMMAND_LIST_SUPPORT_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMANDS :: struct {
+    NodeIndex:     u32;
+    CommandCount:  u32;
+    pCommandInfos: *D3D12_VIDEO_EXTENSION_COMMAND_INFO;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMAND_PARAMETER_COUNT :: struct {
+    CommandId:        GUID;
+    Stage:            D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE;
+    ParameterCount:   u32;
+    ParameterPacking: u32;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_INFO :: struct {
+    Name:  *s16;
+    Type:  D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_TYPE;
+    Flags: D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_FLAGS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMAND_PARAMETERS :: struct {
+    CommandId:       GUID;
+    Stage:           D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_STAGE;
+    ParameterCount:  u32;
+    pParameterInfos: *D3D12_VIDEO_EXTENSION_COMMAND_PARAMETER_INFO;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMAND_SUPPORT :: struct {
+    NodeIndex:             u32;
+    CommandId:             GUID;
+    pInputData:            *void;
+    InputDataSizeInBytes:  SIZE_T;
+    pOutputData:           *void;
+    OutputDataSizeInBytes: SIZE_T;
+}
+
+D3D12_FEATURE_DATA_VIDEO_EXTENSION_COMMAND_SIZE :: struct {
+    NodeIndex:                     u32;
+    CommandId:                     GUID;
+    pCreationParameters:           *void;
+    CreationParametersSizeInBytes: SIZE_T;
+    MemoryPoolL0Size:              u64;
+    MemoryPoolL1Size:              u64;
+}
+
+D3D12_VIDEO_EXTENSION_COMMAND_DESC :: struct {
+    NodeMask:  u32;
+    CommandId: GUID;
+}
+
+
+ID3D12VideoDecoder1_UUID :: "79A2E5FB-CCD2-469A-9FDE-195D10951F7E";
+ID3D12VideoDecoder1 :: struct {
+    #as using id3d12videodecoder: ID3D12VideoDecoder;
+    #place vtable; id3d12videodecoder1_vtable: *ID3D12VideoDecoder1_VTable;
+}
+ID3D12VideoDecoder1_VTable :: struct #type_info_none {
+    using id3d12videodecoder: ID3D12VideoDecoder_VTable;
+    GetProtectedResourceSession: (this: *ID3D12VideoDecoder1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoDecoder1_GetProtectedResourceSession :: inline (this: *ID3D12VideoDecoder1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videodecoder1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoDecoder1) -> *ID3D12VideoDecoder1_VTable { return obj.id3d12videodecoder1_vtable; }
+
+
+
+ID3D12VideoDecoderHeap1_UUID :: "DA1D98C5-539F-41B2-BF6B-1198A03B6D26";
+ID3D12VideoDecoderHeap1 :: struct {
+    #as using id3d12videodecoderheap: ID3D12VideoDecoderHeap;
+    #place vtable; id3d12videodecoderheap1_vtable: *ID3D12VideoDecoderHeap1_VTable;
+}
+ID3D12VideoDecoderHeap1_VTable :: struct #type_info_none {
+    using id3d12videodecoderheap: ID3D12VideoDecoderHeap_VTable;
+    GetProtectedResourceSession: (this: *ID3D12VideoDecoderHeap1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoDecoderHeap1_GetProtectedResourceSession :: inline (this: *ID3D12VideoDecoderHeap1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videodecoderheap1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoDecoderHeap1) -> *ID3D12VideoDecoderHeap1_VTable { return obj.id3d12videodecoderheap1_vtable; }
+
+
+
+ID3D12VideoProcessor1_UUID :: "F3CFE615-553F-425C-86D8-EE8C1B1FB01C";
+ID3D12VideoProcessor1 :: struct {
+    #as using id3d12videoprocessor: ID3D12VideoProcessor;
+    #place vtable; id3d12videoprocessor1_vtable: *ID3D12VideoProcessor1_VTable;
+}
+ID3D12VideoProcessor1_VTable :: struct #type_info_none {
+    using id3d12videoprocessor: ID3D12VideoProcessor_VTable;
+    GetProtectedResourceSession: (this: *ID3D12VideoProcessor1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoProcessor1_GetProtectedResourceSession :: inline (this: *ID3D12VideoProcessor1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videoprocessor1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoProcessor1) -> *ID3D12VideoProcessor1_VTable { return obj.id3d12videoprocessor1_vtable; }
+
+
+
+ID3D12VideoExtensionCommand_UUID :: "554E41E8-AE8E-4A8C-B7D2-5B4F274A30E4";
+ID3D12VideoExtensionCommand :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videoextensioncommand_vtable: *ID3D12VideoExtensionCommand_VTable;
+}
+ID3D12VideoExtensionCommand_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetDesc: (this: *ID3D12VideoExtensionCommand) -> D3D12_VIDEO_EXTENSION_COMMAND_DESC #cpp_method;
+    GetProtectedResourceSession: (this: *ID3D12VideoExtensionCommand, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoExtensionCommand_GetDesc :: inline (this: *ID3D12VideoExtensionCommand) -> D3D12_VIDEO_EXTENSION_COMMAND_DESC { return this.id3d12videoextensioncommand_vtable.GetDesc(this); }
+ID3D12VideoExtensionCommand_GetProtectedResourceSession :: inline (this: *ID3D12VideoExtensionCommand, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videoextensioncommand_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
+
+vtable :: (obj: *ID3D12VideoExtensionCommand) -> *ID3D12VideoExtensionCommand_VTable { return obj.id3d12videoextensioncommand_vtable; }
+
+
+
+ID3D12VideoDevice2_UUID :: "F019AC49-F838-4A95-9B17-579437C8F513";
+ID3D12VideoDevice2 :: struct {
+    #as using id3d12videodevice1: ID3D12VideoDevice1;
+    #place vtable; id3d12videodevice2_vtable: *ID3D12VideoDevice2_VTable;
+}
+ID3D12VideoDevice2_VTable :: struct #type_info_none {
+    using id3d12videodevice1: ID3D12VideoDevice1_VTable;
+    CreateVideoDecoder1: (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_DECODER_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoder: **void) -> HRESULT #cpp_method;
+    CreateVideoDecoderHeap1: (this: *ID3D12VideoDevice2, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT #cpp_method;
+    CreateVideoProcessor1: (this: *ID3D12VideoDevice2, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoProcessor: **void) -> HRESULT #cpp_method;
+    CreateVideoExtensionCommand: (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_EXTENSION_COMMAND_DESC, pCreationParameters: *void, CreationParametersDataSizeInBytes: SIZE_T, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoExtensionCommand: **void) -> HRESULT #cpp_method;
+    ExecuteExtensionCommand: (this: *ID3D12VideoDevice2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T, pOutputData: *void, OutputDataSizeInBytes: SIZE_T) -> HRESULT #cpp_method;
+}
+ID3D12VideoDevice2_CreateVideoDecoder1 :: inline (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_DECODER_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoder: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoDecoder1(this, pDesc, pProtectedResourceSession, riid, ppVideoDecoder); }
+ID3D12VideoDevice2_CreateVideoDecoderHeap1 :: inline (this: *ID3D12VideoDevice2, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoDecoderHeap1(this, pVideoDecoderHeapDesc, pProtectedResourceSession, riid, ppVideoDecoderHeap); }
+ID3D12VideoDevice2_CreateVideoProcessor1 :: inline (this: *ID3D12VideoDevice2, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoProcessor: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoProcessor1(this, NodeMask, pOutputStreamDesc, NumInputStreamDescs, pInputStreamDescs, pProtectedResourceSession, riid, ppVideoProcessor); }
+ID3D12VideoDevice2_CreateVideoExtensionCommand :: inline (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_EXTENSION_COMMAND_DESC, pCreationParameters: *void, CreationParametersDataSizeInBytes: SIZE_T, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoExtensionCommand: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoExtensionCommand(this, pDesc, pCreationParameters, CreationParametersDataSizeInBytes, pProtectedResourceSession, riid, ppVideoExtensionCommand); }
+ID3D12VideoDevice2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoDevice2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T, pOutputData: *void, OutputDataSizeInBytes: SIZE_T) -> HRESULT { return this.id3d12videodevice2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes, pOutputData, OutputDataSizeInBytes); }
+
+vtable :: (obj: *ID3D12VideoDevice2) -> *ID3D12VideoDevice2_VTable { return obj.id3d12videodevice2_vtable; }
+
+
+
+ID3D12VideoDecodeCommandList2_UUID :: "6e120880-c114-4153-8036-d247051e1729";
+ID3D12VideoDecodeCommandList2 :: struct {
+    #as using id3d12videodecodecommandlist1: ID3D12VideoDecodeCommandList1;
+    #place vtable; id3d12videodecodecommandlist2_vtable: *ID3D12VideoDecodeCommandList2_VTable;
+}
+ID3D12VideoDecodeCommandList2_VTable :: struct #type_info_none {
+    using id3d12videodecodecommandlist1: ID3D12VideoDecodeCommandList1_VTable;
+    SetProtectedResourceSession: (this: *ID3D12VideoDecodeCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) -> void #cpp_method;
+    InitializeExtensionCommand: (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+    ExecuteExtensionCommand: (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+}
+ID3D12VideoDecodeCommandList2_SetProtectedResourceSession :: inline (this: *ID3D12VideoDecodeCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videodecodecommandlist2_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
+ID3D12VideoDecodeCommandList2_InitializeExtensionCommand :: inline (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videodecodecommandlist2_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
+ID3D12VideoDecodeCommandList2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videodecodecommandlist2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
+
+vtable :: (obj: *ID3D12VideoDecodeCommandList2) -> *ID3D12VideoDecodeCommandList2_VTable { return obj.id3d12videodecodecommandlist2_vtable; }
+
+
+
+ID3D12VideoDecodeCommandList3_UUID :: "2aee8c37-9562-42da-8abf-61efeb2e4513";
+ID3D12VideoDecodeCommandList3 :: struct {
+    #as using id3d12videodecodecommandlist2: ID3D12VideoDecodeCommandList2;
+    #place vtable; id3d12videodecodecommandlist3_vtable: *ID3D12VideoDecodeCommandList3_VTable;
+}
+ID3D12VideoDecodeCommandList3_VTable :: struct #type_info_none {
+    using id3d12videodecodecommandlist2: ID3D12VideoDecodeCommandList2_VTable;
+    Barrier: (this: *ID3D12VideoDecodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
+}
+ID3D12VideoDecodeCommandList3_Barrier :: inline (this: *ID3D12VideoDecodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videodecodecommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
+
+vtable :: (obj: *ID3D12VideoDecodeCommandList3) -> *ID3D12VideoDecodeCommandList3_VTable { return obj.id3d12videodecodecommandlist3_vtable; }
+
+
+
+ID3D12VideoProcessCommandList2_UUID :: "db525ae4-6ad6-473c-baa7-59b2e37082e4";
+ID3D12VideoProcessCommandList2 :: struct {
+    #as using id3d12videoprocesscommandlist1: ID3D12VideoProcessCommandList1;
+    #place vtable; id3d12videoprocesscommandlist2_vtable: *ID3D12VideoProcessCommandList2_VTable;
+}
+ID3D12VideoProcessCommandList2_VTable :: struct #type_info_none {
+    using id3d12videoprocesscommandlist1: ID3D12VideoProcessCommandList1_VTable;
+    SetProtectedResourceSession: (this: *ID3D12VideoProcessCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) -> void #cpp_method;
+    InitializeExtensionCommand: (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+    ExecuteExtensionCommand: (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+}
+ID3D12VideoProcessCommandList2_SetProtectedResourceSession :: inline (this: *ID3D12VideoProcessCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videoprocesscommandlist2_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
+ID3D12VideoProcessCommandList2_InitializeExtensionCommand :: inline (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videoprocesscommandlist2_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
+ID3D12VideoProcessCommandList2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videoprocesscommandlist2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
+
+vtable :: (obj: *ID3D12VideoProcessCommandList2) -> *ID3D12VideoProcessCommandList2_VTable { return obj.id3d12videoprocesscommandlist2_vtable; }
+
+
+
+ID3D12VideoProcessCommandList3_UUID :: "1a0a4ca4-9f08-40ce-9558-b411fd2666ff";
+ID3D12VideoProcessCommandList3 :: struct {
+    #as using id3d12videoprocesscommandlist2: ID3D12VideoProcessCommandList2;
+    #place vtable; id3d12videoprocesscommandlist3_vtable: *ID3D12VideoProcessCommandList3_VTable;
+}
+ID3D12VideoProcessCommandList3_VTable :: struct #type_info_none {
+    using id3d12videoprocesscommandlist2: ID3D12VideoProcessCommandList2_VTable;
+    Barrier: (this: *ID3D12VideoProcessCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
+}
+ID3D12VideoProcessCommandList3_Barrier :: inline (this: *ID3D12VideoProcessCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videoprocesscommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
+
+vtable :: (obj: *ID3D12VideoProcessCommandList3) -> *ID3D12VideoProcessCommandList3_VTable { return obj.id3d12videoprocesscommandlist3_vtable; }
+
+
+
+ID3D12VideoEncodeCommandList1_UUID :: "94971eca-2bdb-4769-88cf-3675ea757ebc";
+ID3D12VideoEncodeCommandList1 :: struct {
+    #as using id3d12videoencodecommandlist: ID3D12VideoEncodeCommandList;
+    #place vtable; id3d12videoencodecommandlist1_vtable: *ID3D12VideoEncodeCommandList1_VTable;
+}
+ID3D12VideoEncodeCommandList1_VTable :: struct #type_info_none {
+    using id3d12videoencodecommandlist: ID3D12VideoEncodeCommandList_VTable;
+    InitializeExtensionCommand: (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+    ExecuteExtensionCommand: (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
+}
+ID3D12VideoEncodeCommandList1_InitializeExtensionCommand :: inline (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videoencodecommandlist1_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
+ID3D12VideoEncodeCommandList1_ExecuteExtensionCommand :: inline (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videoencodecommandlist1_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
+
+vtable :: (obj: *ID3D12VideoEncodeCommandList1) -> *ID3D12VideoEncodeCommandList1_VTable { return obj.id3d12videoencodecommandlist1_vtable; }
+
+
+D3D12_VIDEO_DECODE_PROFILE_MPEG2: GUID;
+D3D12_VIDEO_DECODE_PROFILE_MPEG1_AND_MPEG2: GUID;
+D3D12_VIDEO_DECODE_PROFILE_H264: GUID;
+D3D12_VIDEO_DECODE_PROFILE_H264_STEREO_PROGRESSIVE: GUID;
+D3D12_VIDEO_DECODE_PROFILE_H264_STEREO: GUID;
+D3D12_VIDEO_DECODE_PROFILE_H264_MULTIVIEW: GUID;
+D3D12_VIDEO_DECODE_PROFILE_VC1: GUID;
+D3D12_VIDEO_DECODE_PROFILE_VC1_D2010: GUID;
+D3D12_VIDEO_DECODE_PROFILE_MPEG4PT2_SIMPLE: GUID;
+D3D12_VIDEO_DECODE_PROFILE_MPEG4PT2_ADVSIMPLE_NOGMC: GUID;
+D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN: GUID;
+D3D12_VIDEO_DECODE_PROFILE_HEVC_MAIN10: GUID;
+D3D12_VIDEO_DECODE_PROFILE_VP9: GUID;
+D3D12_VIDEO_DECODE_PROFILE_VP9_10BIT_PROFILE2: GUID;
+D3D12_VIDEO_DECODE_PROFILE_VP8: GUID;
+D3D12_VIDEO_DECODE_PROFILE_AV1_PROFILE0: GUID;
+D3D12_VIDEO_DECODE_PROFILE_AV1_PROFILE1: GUID;
+D3D12_VIDEO_DECODE_PROFILE_AV1_PROFILE2: GUID;
+D3D12_VIDEO_DECODE_PROFILE_AV1_12BIT_PROFILE2: GUID;
+D3D12_VIDEO_DECODE_PROFILE_AV1_12BIT_PROFILE2_420: GUID;
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE :: enum s32 {
+    ABSOLUTE_QP_MAP :: 0;
+    CQP             :: 1;
+    CBR             :: 2;
+    VBR             :: 3;
+    QVBR            :: 4;
+
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_ABSOLUTE_QP_MAP :: ABSOLUTE_QP_MAP;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_CQP             :: CQP;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_CBR             :: CBR;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_VBR             :: VBR;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE_QVBR            :: QVBR;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS :: enum_flags u32 {
+    NONE                  :: 0x0;
+    ENABLE_DELTA_QP       :: 0x1;
+    ENABLE_FRAME_ANALYSIS :: 0x2;
+    ENABLE_QP_RANGE       :: 0x4;
+    ENABLE_INITIAL_QP     :: 0x8;
+    ENABLE_MAX_FRAME_SIZE :: 0x10;
+    ENABLE_VBV_SIZES      :: 0x20;
+
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_NONE                  :: NONE;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_DELTA_QP       :: ENABLE_DELTA_QP;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_FRAME_ANALYSIS :: ENABLE_FRAME_ANALYSIS;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_QP_RANGE       :: ENABLE_QP_RANGE;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_INITIAL_QP     :: ENABLE_INITIAL_QP;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_MAX_FRAME_SIZE :: ENABLE_MAX_FRAME_SIZE;
+    D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAG_ENABLE_VBV_SIZES      :: ENABLE_VBV_SIZES;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP :: struct {
+    ConstantQP_FullIntracodedFrame:                  u32;
+    ConstantQP_InterPredictedFrame_PrevRefOnly:      u32;
+    ConstantQP_InterPredictedFrame_BiDirectionalRef: u32;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR :: struct {
+    InitialQP:          u32;
+    MinQP:              u32;
+    MaxQP:              u32;
+    MaxFrameBitSize:    u64;
+    TargetBitRate:      u64;
+    VBVCapacity:        u64;
+    InitialVBVFullness: u64;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR :: struct {
+    InitialQP:          u32;
+    MinQP:              u32;
+    MaxQP:              u32;
+    MaxFrameBitSize:    u64;
+    TargetAvgBitRate:   u64;
+    PeakBitRate:        u64;
+    VBVCapacity:        u64;
+    InitialVBVFullness: u64;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR :: struct {
+    InitialQP:             u32;
+    MinQP:                 u32;
+    MaxQP:                 u32;
+    MaxFrameBitSize:       u64;
+    TargetAvgBitRate:      u64;
+    PeakBitRate:           u64;
+    ConstantQualityTarget: u32;
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS :: struct {
+    DataSize: u32;
+    union {
+        pConfiguration_CQP:  *D3D12_VIDEO_ENCODER_RATE_CONTROL_CQP;
+        pConfiguration_CBR:  *D3D12_VIDEO_ENCODER_RATE_CONTROL_CBR;
+        pConfiguration_VBR:  *D3D12_VIDEO_ENCODER_RATE_CONTROL_VBR;
+        pConfiguration_QVBR: *D3D12_VIDEO_ENCODER_RATE_CONTROL_QVBR;
+    }
+}
+
+D3D12_VIDEO_ENCODER_RATE_CONTROL :: struct {
+    Mode:            D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE;
+    Flags:           D3D12_VIDEO_ENCODER_RATE_CONTROL_FLAGS;
+    ConfigParams:    D3D12_VIDEO_ENCODER_RATE_CONTROL_CONFIGURATION_PARAMS;
+    TargetFrameRate: DXGI_RATIONAL;
+}
+
+D3D12_VIDEO_ENCODER_CODEC :: enum s32 {
+    H264 :: 0;
+    HEVC :: 1;
+
+    D3D12_VIDEO_ENCODER_CODEC_H264 :: H264;
+    D3D12_VIDEO_ENCODER_CODEC_HEVC :: HEVC;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_CODEC :: struct {
+    NodeIndex:   u32;
+    Codec:       D3D12_VIDEO_ENCODER_CODEC;
+    IsSupported: BOOL;
+}
+
+D3D12_VIDEO_ENCODER_PROFILE_H264 :: enum s32 {
+    MAIN    :: 0;
+    HIGH    :: 1;
+    HIGH_10 :: 2;
+
+    D3D12_VIDEO_ENCODER_PROFILE_H264_MAIN    :: MAIN;
+    D3D12_VIDEO_ENCODER_PROFILE_H264_HIGH    :: HIGH;
+    D3D12_VIDEO_ENCODER_PROFILE_H264_HIGH_10 :: HIGH_10;
+}
+
+D3D12_VIDEO_ENCODER_PROFILE_HEVC :: enum s32 {
+    MAIN   :: 0;
+    MAIN10 :: 1;
+
+    D3D12_VIDEO_ENCODER_PROFILE_HEVC_MAIN   :: MAIN;
+    D3D12_VIDEO_ENCODER_PROFILE_HEVC_MAIN10 :: MAIN10;
+}
+
+D3D12_VIDEO_ENCODER_PROFILE_DESC :: struct {
+    DataSize: u32;
+    union {
+        pH264Profile: *D3D12_VIDEO_ENCODER_PROFILE_H264;
+        pHEVCProfile: *D3D12_VIDEO_ENCODER_PROFILE_HEVC;
+    }
+}
+
+D3D12_VIDEO_ENCODER_LEVELS_H264 :: enum s32 {
+    _1  :: 0;
+    _1b :: 1;
+    _11 :: 2;
+    _12 :: 3;
+    _13 :: 4;
+    _2  :: 5;
+    _21 :: 6;
+    _22 :: 7;
+    _3  :: 8;
+    _31 :: 9;
+    _32 :: 10;
+    _4  :: 11;
+    _41 :: 12;
+    _42 :: 13;
+    _5  :: 14;
+    _51 :: 15;
+    _52 :: 16;
+    _6  :: 17;
+    _61 :: 18;
+    _62 :: 19;
+
+    D3D12_VIDEO_ENCODER_LEVELS_H264_1  :: _1;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_1b :: _1b;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_11 :: _11;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_12 :: _12;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_13 :: _13;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_2  :: _2;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_21 :: _21;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_22 :: _22;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_3  :: _3;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_31 :: _31;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_32 :: _32;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_4  :: _4;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_41 :: _41;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_42 :: _42;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_5  :: _5;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_51 :: _51;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_52 :: _52;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_6  :: _6;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_61 :: _61;
+    D3D12_VIDEO_ENCODER_LEVELS_H264_62 :: _62;
+}
+
+D3D12_VIDEO_ENCODER_TIER_HEVC :: enum s32 {
+    MAIN :: 0;
+    HIGH :: 1;
+
+    D3D12_VIDEO_ENCODER_TIER_HEVC_MAIN :: MAIN;
+    D3D12_VIDEO_ENCODER_TIER_HEVC_HIGH :: HIGH;
+}
+
+D3D12_VIDEO_ENCODER_LEVELS_HEVC :: enum s32 {
+    _1  :: 0;
+    _2  :: 1;
+    _21 :: 2;
+    _3  :: 3;
+    _31 :: 4;
+    _4  :: 5;
+    _41 :: 6;
+    _5  :: 7;
+    _51 :: 8;
+    _52 :: 9;
+    _6  :: 10;
+    _61 :: 11;
+    _62 :: 12;
+
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_1  :: _1;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_2  :: _2;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_21 :: _21;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_3  :: _3;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_31 :: _31;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_4  :: _4;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_41 :: _41;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_5  :: _5;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_51 :: _51;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_52 :: _52;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_6  :: _6;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_61 :: _61;
+    D3D12_VIDEO_ENCODER_LEVELS_HEVC_62 :: _62;
+}
+
+D3D12_VIDEO_ENCODER_LEVEL_TIER_CONSTRAINTS_HEVC :: struct {
+    Level: D3D12_VIDEO_ENCODER_LEVELS_HEVC;
+    Tier:  D3D12_VIDEO_ENCODER_TIER_HEVC;
+}
+
+D3D12_VIDEO_ENCODER_LEVEL_SETTING :: struct {
+    DataSize: u32;
+    union {
+        pH264LevelSetting: *D3D12_VIDEO_ENCODER_LEVELS_H264;
+        pHEVCLevelSetting: *D3D12_VIDEO_ENCODER_LEVEL_TIER_CONSTRAINTS_HEVC;
+    }
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_PROFILE_LEVEL :: struct {
+    NodeIndex:         u32;
+    Codec:             D3D12_VIDEO_ENCODER_CODEC;
+    Profile:           D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    IsSupported:       BOOL;
+    MinSupportedLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING #align 8;
+    MaxSupportedLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC :: struct {
+    Width:  u32;
+    Height: u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_RATIO_DESC :: struct {
+    WidthRatio:  u32;
+    HeightRatio: u32;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_OUTPUT_RESOLUTION_RATIOS_COUNT :: struct {
+    NodeIndex:             u32;
+    Codec:                 D3D12_VIDEO_ENCODER_CODEC;
+    ResolutionRatiosCount: u32;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_OUTPUT_RESOLUTION :: struct {
+    NodeIndex:                           u32;
+    Codec:                               D3D12_VIDEO_ENCODER_CODEC;
+    ResolutionRatiosCount:               u32;
+    IsSupported:                         BOOL;
+    MinResolutionSupported:              D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    MaxResolutionSupported:              D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    ResolutionWidthMultipleRequirement:  u32;
+    ResolutionHeightMultipleRequirement: u32;
+    pResolutionRatios:                   *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_RATIO_DESC;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_INPUT_FORMAT :: struct {
+    NodeIndex:   u32;
+    Codec:       D3D12_VIDEO_ENCODER_CODEC;
+    Profile:     D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    Format:      DXGI_FORMAT;
+    IsSupported: BOOL;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_RATE_CONTROL_MODE :: struct {
+    NodeIndex:       u32;
+    Codec:           D3D12_VIDEO_ENCODER_CODEC;
+    RateControlMode: D3D12_VIDEO_ENCODER_RATE_CONTROL_MODE;
+    IsSupported:     BOOL;
+}
+
+D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE :: enum s32 {
+    NONE      :: 0;
+    ROW_BASED :: 1;
+
+    D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE_NONE      :: NONE;
+    D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE_ROW_BASED :: ROW_BASED;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_INTRA_REFRESH_MODE :: struct {
+    NodeIndex:        u32;
+    Codec:            D3D12_VIDEO_ENCODER_CODEC;
+    Profile:          D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    Level:            D3D12_VIDEO_ENCODER_LEVEL_SETTING;
+    IntraRefreshMode: D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE;
+    IsSupported:      BOOL;
+}
+
+D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE :: enum s32 {
+    FULL_FRAME                                :: 0;
+    BYTES_PER_SUBREGION                       :: 1;
+    SQUARE_UNITS_PER_SUBREGION_ROW_UNALIGNED  :: 2;
+    UNIFORM_PARTITIONING_ROWS_PER_SUBREGION   :: 3;
+    UNIFORM_PARTITIONING_SUBREGIONS_PER_FRAME :: 4;
+
+    D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_FULL_FRAME                                :: FULL_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_BYTES_PER_SUBREGION                       :: BYTES_PER_SUBREGION;
+    D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_SQUARE_UNITS_PER_SUBREGION_ROW_UNALIGNED  :: SQUARE_UNITS_PER_SUBREGION_ROW_UNALIGNED;
+    D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_UNIFORM_PARTITIONING_ROWS_PER_SUBREGION   :: UNIFORM_PARTITIONING_ROWS_PER_SUBREGION;
+    D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE_UNIFORM_PARTITIONING_SUBREGIONS_PER_FRAME :: UNIFORM_PARTITIONING_SUBREGIONS_PER_FRAME;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE :: struct {
+    NodeIndex:     u32;
+    Codec:         D3D12_VIDEO_ENCODER_CODEC;
+    Profile:       D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    Level:         D3D12_VIDEO_ENCODER_LEVEL_SETTING;
+    SubregionMode: D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE;
+    IsSupported:   BOOL;
+}
+
+D3D12_VIDEO_ENCODER_HEAP_FLAGS :: enum_flags u32 {
+    D3D12_VIDEO_ENCODER_HEAP_FLAG_NONE :: 0x0;
+}
+
+D3D12_VIDEO_ENCODER_HEAP_DESC :: struct {
+    NodeMask:             u32;
+    Flags:                D3D12_VIDEO_ENCODER_HEAP_FLAGS;
+    EncodeCodec:          D3D12_VIDEO_ENCODER_CODEC;
+    EncodeProfile:        D3D12_VIDEO_ENCODER_PROFILE_DESC #align 8;
+    EncodeLevel:          D3D12_VIDEO_ENCODER_LEVEL_SETTING;
+    ResolutionsListCount: u32;
+    pResolutionList:      *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_HEAP_SIZE :: struct {
+    HeapDesc:         D3D12_VIDEO_ENCODER_HEAP_DESC;
+    IsSupported:      BOOL;
+    MemoryPoolL0Size: u64;
+    MemoryPoolL1Size: u64;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAGS :: enum_flags u32 {
+    NONE                                     :: 0x0;
+    CABAC_ENCODING_SUPPORT                   :: 0x1;
+    INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT :: 0x2;
+    BFRAME_LTR_COMBINED_SUPPORT              :: 0x4;
+    ADAPTIVE_8x8_TRANSFORM_ENCODING_SUPPORT  :: 0x8;
+    DIRECT_SPATIAL_ENCODING_SUPPORT          :: 0x10;
+    DIRECT_TEMPORAL_ENCODING_SUPPORT         :: 0x20;
+    CONSTRAINED_INTRAPREDICTION_SUPPORT      :: 0x40;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_NONE                                     :: NONE;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_CABAC_ENCODING_SUPPORT                   :: CABAC_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT :: INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_BFRAME_LTR_COMBINED_SUPPORT              :: BFRAME_LTR_COMBINED_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_ADAPTIVE_8x8_TRANSFORM_ENCODING_SUPPORT  :: ADAPTIVE_8x8_TRANSFORM_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_DIRECT_SPATIAL_ENCODING_SUPPORT          :: DIRECT_SPATIAL_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_DIRECT_TEMPORAL_ENCODING_SUPPORT         :: DIRECT_TEMPORAL_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAG_CONSTRAINED_INTRAPREDICTION_SUPPORT      :: CONSTRAINED_INTRAPREDICTION_SUPPORT;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODES :: enum s32 {
+    _0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED            :: 0;
+    _1_DISABLE_ALL_SLICE_BLOCK_EDGES                                :: 1;
+    _2_DISABLE_SLICE_BOUNDARIES_BLOCKS                              :: 2;
+    _3_USE_TWO_STAGE_DEBLOCKING                                     :: 3;
+    _4_DISABLE_CHROMA_BLOCK_EDGES                                   :: 4;
+    _5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES               :: 5;
+    _6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING :: 6;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED            :: _0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_1_DISABLE_ALL_SLICE_BLOCK_EDGES                                :: _1_DISABLE_ALL_SLICE_BLOCK_EDGES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_2_DISABLE_SLICE_BOUNDARIES_BLOCKS                              :: _2_DISABLE_SLICE_BOUNDARIES_BLOCKS;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_3_USE_TWO_STAGE_DEBLOCKING                                     :: _3_USE_TWO_STAGE_DEBLOCKING;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_4_DISABLE_CHROMA_BLOCK_EDGES                                   :: _4_DISABLE_CHROMA_BLOCK_EDGES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES               :: _5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING :: _6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAGS :: enum_flags u32 {
+    NONE                                                            :: 0x0;
+    _0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED            :: 0x1;
+    _1_DISABLE_ALL_SLICE_BLOCK_EDGES                                :: 0x2;
+    _2_DISABLE_SLICE_BOUNDARIES_BLOCKS                              :: 0x4;
+    _3_USE_TWO_STAGE_DEBLOCKING                                     :: 0x8;
+    _4_DISABLE_CHROMA_BLOCK_EDGES                                   :: 0x10;
+    _5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES               :: 0x20;
+    _6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING :: 0x40;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_NONE                                                           :: NONE;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED            :: _0_ALL_LUMA_CHROMA_SLICE_BLOCK_EDGES_ALWAYS_FILTERED;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_1_DISABLE_ALL_SLICE_BLOCK_EDGES                                :: _1_DISABLE_ALL_SLICE_BLOCK_EDGES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_2_DISABLE_SLICE_BOUNDARIES_BLOCKS                              :: _2_DISABLE_SLICE_BOUNDARIES_BLOCKS;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_3_USE_TWO_STAGE_DEBLOCKING                                     :: _3_USE_TWO_STAGE_DEBLOCKING;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_4_DISABLE_CHROMA_BLOCK_EDGES                                   :: _4_DISABLE_CHROMA_BLOCK_EDGES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES               :: _5_DISABLE_CHROMA_BLOCK_EDGES_AND_LUMA_BOUNDARIES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAG_6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING :: _6_DISABLE_CHROMA_BLOCK_EDGES_AND_USE_LUMA_TWO_STAGE_DEBLOCKING;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264 :: struct {
+    SupportFlags:                          D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264_FLAGS;
+    DisableDeblockingFilterSupportedModes: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODE_FLAGS;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAGS :: enum_flags u32 {
+    NONE                                        :: 0x0;
+    BFRAME_LTR_COMBINED_SUPPORT                 :: 0x1;
+    INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT    :: 0x2;
+    CONSTRAINED_INTRAPREDICTION_SUPPORT         :: 0x4;
+    SAO_FILTER_SUPPORT                          :: 0x8;
+    ASYMETRIC_MOTION_PARTITION_SUPPORT          :: 0x10;
+    ASYMETRIC_MOTION_PARTITION_REQUIRED         :: 0x20;
+    TRANSFORM_SKIP_SUPPORT                      :: 0x40;
+    DISABLING_LOOP_FILTER_ACROSS_SLICES_SUPPORT :: 0x80;
+    P_FRAMES_IMPLEMENTED_AS_LOW_DELAY_B_FRAMES  :: 0x100;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_NONE                                        :: NONE;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_BFRAME_LTR_COMBINED_SUPPORT                 :: BFRAME_LTR_COMBINED_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT    :: INTRA_SLICE_CONSTRAINED_ENCODING_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_CONSTRAINED_INTRAPREDICTION_SUPPORT         :: CONSTRAINED_INTRAPREDICTION_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_SAO_FILTER_SUPPORT                          :: SAO_FILTER_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_ASYMETRIC_MOTION_PARTITION_SUPPORT          :: ASYMETRIC_MOTION_PARTITION_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_ASYMETRIC_MOTION_PARTITION_REQUIRED         :: ASYMETRIC_MOTION_PARTITION_REQUIRED;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_TRANSFORM_SKIP_SUPPORT                      :: TRANSFORM_SKIP_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_DISABLING_LOOP_FILTER_ACROSS_SLICES_SUPPORT :: DISABLING_LOOP_FILTER_ACROSS_SLICES_SUPPORT;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAG_P_FRAMES_IMPLEMENTED_AS_LOW_DELAY_B_FRAMES  :: P_FRAMES_IMPLEMENTED_AS_LOW_DELAY_B_FRAMES;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE :: enum s32 {
+    _8x8   :: 0;
+    _16x16 :: 1;
+    _32x32 :: 2;
+    _64x64 :: 3;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE_8x8   :: _8x8;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE_16x16 :: _16x16;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE_32x32 :: _32x32;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE_64x64 :: _64x64;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE :: enum s32 {
+    _4x4   :: 0;
+    _8x8   :: 1;
+    _16x16 :: 2;
+    _32x32 :: 3;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE_4x4   :: _4x4;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE_8x8   :: _8x8;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE_16x16 :: _16x16;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE_32x32 :: _32x32;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC :: struct {
+    SupportFlags:                        D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC_FLAGS;
+    MinLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
+    MaxLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
+    MinLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
+    MaxLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
+    max_transform_hierarchy_depth_inter: UCHAR;
+    max_transform_hierarchy_depth_intra: UCHAR;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT :: struct {
+    DataSize: u32;
+    union {
+        pH264Support: *D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_H264;
+        pHEVCSupport: *D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC;
+    }
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT :: struct {
+    NodeIndex:          u32;
+    Codec:              D3D12_VIDEO_ENCODER_CODEC;
+    Profile:            D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    IsSupported:        BOOL;
+    CodecSupportLimits: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT #align 8;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_H264 :: struct {
+    MaxL0ReferencesForP:   u32;
+    MaxL0ReferencesForB:   u32;
+    MaxL1ReferencesForB:   u32;
+    MaxLongTermReferences: u32;
+    MaxDPBCapacity:        u32;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_HEVC :: struct {
+    MaxL0ReferencesForP:   u32;
+    MaxL0ReferencesForB:   u32;
+    MaxL1ReferencesForB:   u32;
+    MaxLongTermReferences: u32;
+    MaxDPBCapacity:        u32;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT :: struct {
+    DataSize: u32;
+    union {
+        pH264Support: *D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_H264;
+        pHEVCSupport: *D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT_HEVC;
+    }
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT :: struct {
+    NodeIndex:      u32;
+    Codec:          D3D12_VIDEO_ENCODER_CODEC;
+    Profile:        D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    IsSupported:    BOOL;
+    PictureSupport: D3D12_VIDEO_ENCODER_CODEC_PICTURE_CONTROL_SUPPORT #align 8;
+}
+
+D3D12_VIDEO_ENCODER_SUPPORT_FLAGS :: enum_flags u32 {
+    NONE                                             :: 0x0;
+    GENERAL_SUPPORT_OK                               :: 0x1;
+    RATE_CONTROL_RECONFIGURATION_AVAILABLE           :: 0x2;
+    RESOLUTION_RECONFIGURATION_AVAILABLE             :: 0x4;
+    RATE_CONTROL_VBV_SIZE_CONFIG_AVAILABLE           :: 0x8;
+    RATE_CONTROL_FRAME_ANALYSIS_AVAILABLE            :: 0x10;
+    RECONSTRUCTED_FRAMES_REQUIRE_TEXTURE_ARRAYS      :: 0x20;
+    RATE_CONTROL_DELTA_QP_AVAILABLE                  :: 0x40;
+    SUBREGION_LAYOUT_RECONFIGURATION_AVAILABLE       :: 0x80;
+    RATE_CONTROL_ADJUSTABLE_QP_RANGE_AVAILABLE       :: 0x100;
+    RATE_CONTROL_INITIAL_QP_AVAILABLE                :: 0x200;
+    RATE_CONTROL_MAX_FRAME_SIZE_AVAILABLE            :: 0x400;
+    SEQUENCE_GOP_RECONFIGURATION_AVAILABLE           :: 0x800;
+    MOTION_ESTIMATION_PRECISION_MODE_LIMIT_AVAILABLE :: 0x1000;
+
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_NONE                                             :: NONE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_GENERAL_SUPPORT_OK                               :: GENERAL_SUPPORT_OK;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_RECONFIGURATION_AVAILABLE           :: RATE_CONTROL_RECONFIGURATION_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RESOLUTION_RECONFIGURATION_AVAILABLE             :: RESOLUTION_RECONFIGURATION_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_VBV_SIZE_CONFIG_AVAILABLE           :: RATE_CONTROL_VBV_SIZE_CONFIG_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_FRAME_ANALYSIS_AVAILABLE            :: RATE_CONTROL_FRAME_ANALYSIS_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RECONSTRUCTED_FRAMES_REQUIRE_TEXTURE_ARRAYS      :: RECONSTRUCTED_FRAMES_REQUIRE_TEXTURE_ARRAYS;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_DELTA_QP_AVAILABLE                  :: RATE_CONTROL_DELTA_QP_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_SUBREGION_LAYOUT_RECONFIGURATION_AVAILABLE       :: SUBREGION_LAYOUT_RECONFIGURATION_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_ADJUSTABLE_QP_RANGE_AVAILABLE       :: RATE_CONTROL_ADJUSTABLE_QP_RANGE_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_INITIAL_QP_AVAILABLE                :: RATE_CONTROL_INITIAL_QP_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_RATE_CONTROL_MAX_FRAME_SIZE_AVAILABLE            :: RATE_CONTROL_MAX_FRAME_SIZE_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_SEQUENCE_GOP_RECONFIGURATION_AVAILABLE           :: SEQUENCE_GOP_RECONFIGURATION_AVAILABLE;
+    D3D12_VIDEO_ENCODER_SUPPORT_FLAG_MOTION_ESTIMATION_PRECISION_MODE_LIMIT_AVAILABLE :: MOTION_ESTIMATION_PRECISION_MODE_LIMIT_AVAILABLE;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAGS :: enum_flags u32 {
+    NONE                                   :: 0x0;
+    USE_CONSTRAINED_INTRAPREDICTION        :: 0x1;
+    USE_ADAPTIVE_8x8_TRANSFORM             :: 0x2;
+    ENABLE_CABAC_ENCODING                  :: 0x4;
+    ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES :: 0x8;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAG_NONE                                   :: NONE;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAG_USE_CONSTRAINED_INTRAPREDICTION        :: USE_CONSTRAINED_INTRAPREDICTION;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAG_USE_ADAPTIVE_8x8_TRANSFORM             :: USE_ADAPTIVE_8x8_TRANSFORM;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAG_ENABLE_CABAC_ENCODING                  :: ENABLE_CABAC_ENCODING;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAG_ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES :: ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES :: enum s32 {
+    DISABLED :: 0;
+    TEMPORAL :: 1;
+    SPATIAL  :: 2;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_DISABLED :: DISABLED;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_TEMPORAL :: TEMPORAL;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES_SPATIAL  :: SPATIAL;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264 :: struct {
+    ConfigurationFlags:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_FLAGS;
+    DirectModeConfig:              D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_DIRECT_MODES;
+    DisableDeblockingFilterConfig: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264_SLICES_DEBLOCKING_MODES;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAGS :: enum_flags u32 {
+    NONE                                   :: 0x0;
+    DISABLE_LOOP_FILTER_ACROSS_SLICES      :: 0x1;
+    ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES :: 0x2;
+    ENABLE_SAO_FILTER                      :: 0x4;
+    ENABLE_LONG_TERM_REFERENCES            :: 0x8;
+    USE_ASYMETRIC_MOTION_PARTITION         :: 0x10;
+    ENABLE_TRANSFORM_SKIPPING              :: 0x20;
+    USE_CONSTRAINED_INTRAPREDICTION        :: 0x40;
+
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_NONE                                   :: NONE;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_DISABLE_LOOP_FILTER_ACROSS_SLICES      :: DISABLE_LOOP_FILTER_ACROSS_SLICES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES :: ALLOW_REQUEST_INTRA_CONSTRAINED_SLICES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_ENABLE_SAO_FILTER                      :: ENABLE_SAO_FILTER;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_ENABLE_LONG_TERM_REFERENCES            :: ENABLE_LONG_TERM_REFERENCES;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_USE_ASYMETRIC_MOTION_PARTITION         :: USE_ASYMETRIC_MOTION_PARTITION;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_ENABLE_TRANSFORM_SKIPPING              :: ENABLE_TRANSFORM_SKIPPING;
+    D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAG_USE_CONSTRAINED_INTRAPREDICTION        :: USE_CONSTRAINED_INTRAPREDICTION;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC :: struct {
+    ConfigurationFlags:                  D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_FLAGS;
+    MinLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
+    MaxLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
+    MinLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
+    MaxLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
+    max_transform_hierarchy_depth_inter: UCHAR;
+    max_transform_hierarchy_depth_intra: UCHAR;
+}
+
+D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION :: struct {
+    DataSize: u32;
+    union {
+        pH264Config: *D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_H264;
+        pHEVCConfig: *D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC;
+    }
+}
+
+D3D12_VIDEO_ENCODER_INTRA_REFRESH :: struct {
+    Mode:                 D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE;
+    IntraRefreshDuration: u32;
+}
+
+D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE :: enum s32 {
+    MAXIMUM       :: 0;
+    FULL_PIXEL    :: 1;
+    HALF_PIXEL    :: 2;
+    QUARTER_PIXEL :: 3;
+
+    D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_MAXIMUM       :: MAXIMUM;
+    D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_FULL_PIXEL    :: FULL_PIXEL;
+    D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_HALF_PIXEL    :: HALF_PIXEL;
+    D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE_QUARTER_PIXEL :: QUARTER_PIXEL;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_RESOLUTION_SUPPORT_LIMITS :: struct {
+    MaxSubregionsNumber:          u32;
+    MaxIntraRefreshFrameDuration: u32;
+    SubregionBlockPixelsSize:     u32;
+    QPMapRegionPixelsSize:        u32;
+}
+
+D3D12_VIDEO_ENCODER_VALIDATION_FLAGS :: enum_flags u32 {
+    NONE                                     :: 0x0;
+    CODEC_NOT_SUPPORTED                      :: 0x1;
+    INPUT_FORMAT_NOT_SUPPORTED               :: 0x8;
+    CODEC_CONFIGURATION_NOT_SUPPORTED        :: 0x10;
+    RATE_CONTROL_MODE_NOT_SUPPORTED          :: 0x20;
+    RATE_CONTROL_CONFIGURATION_NOT_SUPPORTED :: 0x40;
+    INTRA_REFRESH_MODE_NOT_SUPPORTED         :: 0x80;
+    SUBREGION_LAYOUT_MODE_NOT_SUPPORTED      :: 0x100;
+    RESOLUTION_NOT_SUPPORTED_IN_LIST         :: 0x200;
+    GOP_STRUCTURE_NOT_SUPPORTED              :: 0x800;
+
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_NONE                                     :: NONE;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_CODEC_NOT_SUPPORTED                      :: CODEC_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_INPUT_FORMAT_NOT_SUPPORTED               :: INPUT_FORMAT_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_CODEC_CONFIGURATION_NOT_SUPPORTED        :: CODEC_CONFIGURATION_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RATE_CONTROL_MODE_NOT_SUPPORTED          :: RATE_CONTROL_MODE_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RATE_CONTROL_CONFIGURATION_NOT_SUPPORTED :: RATE_CONTROL_CONFIGURATION_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_INTRA_REFRESH_MODE_NOT_SUPPORTED         :: INTRA_REFRESH_MODE_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_SUBREGION_LAYOUT_MODE_NOT_SUPPORTED      :: SUBREGION_LAYOUT_MODE_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_RESOLUTION_NOT_SUPPORTED_IN_LIST         :: RESOLUTION_NOT_SUPPORTED_IN_LIST;
+    D3D12_VIDEO_ENCODER_VALIDATION_FLAG_GOP_STRUCTURE_NOT_SUPPORTED              :: GOP_STRUCTURE_NOT_SUPPORTED;
+}
+
+D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_H264 :: struct {
+    GOPLength:                         u32;
+    PPicturePeriod:                    u32;
+    pic_order_cnt_type:                UCHAR;
+    log2_max_frame_num_minus4:         UCHAR;
+    log2_max_pic_order_cnt_lsb_minus4: UCHAR;
+}
+
+D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_HEVC :: struct {
+    GOPLength:                         u32;
+    PPicturePeriod:                    u32;
+    log2_max_pic_order_cnt_lsb_minus4: UCHAR;
+}
+
+D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE :: struct {
+    DataSize: u32;
+    union {
+        pH264GroupOfPictures: *D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_H264;
+        pHEVCGroupOfPictures: *D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_HEVC;
+    }
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_SUPPORT :: struct {
+    NodeIndex:                   u32;
+    Codec:                       D3D12_VIDEO_ENCODER_CODEC;
+    InputFormat:                 DXGI_FORMAT;
+    CodecConfiguration:          D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION #align 8;
+    CodecGopSequence:            D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE;
+    RateControl:                 D3D12_VIDEO_ENCODER_RATE_CONTROL;
+    IntraRefresh:                D3D12_VIDEO_ENCODER_INTRA_REFRESH_MODE;
+    SubregionFrameEncoding:      D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE;
+    ResolutionsListCount:        u32;
+    pResolutionList:             *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    MaxReferenceFramesInDPB:     u32;
+    ValidationFlags:             D3D12_VIDEO_ENCODER_VALIDATION_FLAGS;
+    SupportFlags:                D3D12_VIDEO_ENCODER_SUPPORT_FLAGS;
+    SuggestedProfile:            D3D12_VIDEO_ENCODER_PROFILE_DESC #align 8;
+    SuggestedLevel:              D3D12_VIDEO_ENCODER_LEVEL_SETTING;
+    pResolutionDependentSupport: *D3D12_FEATURE_DATA_VIDEO_ENCODER_RESOLUTION_SUPPORT_LIMITS;
+}
+
+D3D12_FEATURE_DATA_VIDEO_ENCODER_RESOURCE_REQUIREMENTS :: struct {
+    NodeIndex:                                u32;
+    Codec:                                    D3D12_VIDEO_ENCODER_CODEC;
+    Profile:                                  D3D12_VIDEO_ENCODER_PROFILE_DESC;
+    InputFormat:                              DXGI_FORMAT;
+    PictureTargetResolution:                  D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    IsSupported:                              BOOL;
+    CompressedBitstreamBufferAccessAlignment: u32;
+    EncoderMetadataBufferAccessAlignment:     u32;
+    MaxEncoderOutputMetadataBufferSize:       u32;
+}
+
+D3D12_VIDEO_ENCODER_FLAGS :: enum_flags u32 {
+    D3D12_VIDEO_ENCODER_FLAG_NONE :: 0x0;
+}
+
+D3D12_VIDEO_ENCODER_DESC :: struct {
+    NodeMask:                     u32;
+    Flags:                        D3D12_VIDEO_ENCODER_FLAGS;
+    EncodeCodec:                  D3D12_VIDEO_ENCODER_CODEC;
+    EncodeProfile:                D3D12_VIDEO_ENCODER_PROFILE_DESC #align 8;
+    InputFormat:                  DXGI_FORMAT;
+    CodecConfiguration:           D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION #align 8;
+    MaxMotionEstimationPrecision: D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE;
+}
+
+
+ID3D12VideoEncoder_UUID :: "2E0D212D-8DF9-44A6-A770-BB289B182737";
+ID3D12VideoEncoder :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videoencoder_vtable: *ID3D12VideoEncoder_VTable;
+}
+ID3D12VideoEncoder_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetNodeMask: (this: *ID3D12VideoEncoder) -> u32 #cpp_method;
+    GetEncoderFlags: (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_FLAGS #cpp_method;
+    GetCodec: (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_CODEC #cpp_method;
+    GetCodecProfile: (this: *ID3D12VideoEncoder, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT #cpp_method;
+    GetCodecConfiguration: (this: *ID3D12VideoEncoder, dstCodecConfig: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION) -> HRESULT #cpp_method;
+    GetInputFormat: (this: *ID3D12VideoEncoder) -> DXGI_FORMAT #cpp_method;
+    GetMaxMotionEstimationPrecision: (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE #cpp_method;
+}
+ID3D12VideoEncoder_GetNodeMask :: inline (this: *ID3D12VideoEncoder) -> u32 { return this.id3d12videoencoder_vtable.GetNodeMask(this); }
+ID3D12VideoEncoder_GetEncoderFlags :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_FLAGS { return this.id3d12videoencoder_vtable.GetEncoderFlags(this); }
+ID3D12VideoEncoder_GetCodec :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_CODEC { return this.id3d12videoencoder_vtable.GetCodec(this); }
+ID3D12VideoEncoder_GetCodecProfile :: inline (this: *ID3D12VideoEncoder, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT { return this.id3d12videoencoder_vtable.GetCodecProfile(this, dstProfile); }
+ID3D12VideoEncoder_GetCodecConfiguration :: inline (this: *ID3D12VideoEncoder, dstCodecConfig: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION) -> HRESULT { return this.id3d12videoencoder_vtable.GetCodecConfiguration(this, dstCodecConfig); }
+ID3D12VideoEncoder_GetInputFormat :: inline (this: *ID3D12VideoEncoder) -> DXGI_FORMAT { return this.id3d12videoencoder_vtable.GetInputFormat(this); }
+ID3D12VideoEncoder_GetMaxMotionEstimationPrecision :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE { return this.id3d12videoencoder_vtable.GetMaxMotionEstimationPrecision(this); }
+
+vtable :: (obj: *ID3D12VideoEncoder) -> *ID3D12VideoEncoder_VTable { return obj.id3d12videoencoder_vtable; }
+
+
+
+ID3D12VideoEncoderHeap_UUID :: "22B35D96-876A-44C0-B25E-FB8C9C7F1C4A";
+ID3D12VideoEncoderHeap :: struct {
+    #as using id3d12pageable: ID3D12Pageable;
+    #place vtable; id3d12videoencoderheap_vtable: *ID3D12VideoEncoderHeap_VTable;
+}
+ID3D12VideoEncoderHeap_VTable :: struct #type_info_none {
+    using id3d12devicechild: ID3D12DeviceChild_VTable;
+    GetNodeMask: (this: *ID3D12VideoEncoderHeap) -> u32 #cpp_method;
+    GetEncoderHeapFlags: (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_HEAP_FLAGS #cpp_method;
+    GetCodec: (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_CODEC #cpp_method;
+    GetCodecProfile: (this: *ID3D12VideoEncoderHeap, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT #cpp_method;
+    GetCodecLevel: (this: *ID3D12VideoEncoderHeap, dstLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING) -> HRESULT #cpp_method;
+    GetResolutionListCount: (this: *ID3D12VideoEncoderHeap) -> u32 #cpp_method;
+    GetResolutionList: (this: *ID3D12VideoEncoderHeap, ResolutionsListCount: u32, pResolutionList: *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC) -> HRESULT #cpp_method;
+}
+ID3D12VideoEncoderHeap_GetNodeMask :: inline (this: *ID3D12VideoEncoderHeap) -> u32 { return this.id3d12videoencoderheap_vtable.GetNodeMask(this); }
+ID3D12VideoEncoderHeap_GetEncoderHeapFlags :: inline (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_HEAP_FLAGS { return this.id3d12videoencoderheap_vtable.GetEncoderHeapFlags(this); }
+ID3D12VideoEncoderHeap_GetCodec :: inline (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_CODEC { return this.id3d12videoencoderheap_vtable.GetCodec(this); }
+ID3D12VideoEncoderHeap_GetCodecProfile :: inline (this: *ID3D12VideoEncoderHeap, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetCodecProfile(this, dstProfile); }
+ID3D12VideoEncoderHeap_GetCodecLevel :: inline (this: *ID3D12VideoEncoderHeap, dstLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetCodecLevel(this, dstLevel); }
+ID3D12VideoEncoderHeap_GetResolutionListCount :: inline (this: *ID3D12VideoEncoderHeap) -> u32 { return this.id3d12videoencoderheap_vtable.GetResolutionListCount(this); }
+ID3D12VideoEncoderHeap_GetResolutionList :: inline (this: *ID3D12VideoEncoderHeap, ResolutionsListCount: u32, pResolutionList: *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetResolutionList(this, ResolutionsListCount, pResolutionList); }
+
+vtable :: (obj: *ID3D12VideoEncoderHeap) -> *ID3D12VideoEncoderHeap_VTable { return obj.id3d12videoencoderheap_vtable; }
+
+
+
+ID3D12VideoDevice3_UUID :: "4243ADB4-3A32-4666-973C-0CCC5625DC44";
+ID3D12VideoDevice3 :: struct {
+    #as using id3d12videodevice2: ID3D12VideoDevice2;
+    #place vtable; id3d12videodevice3_vtable: *ID3D12VideoDevice3_VTable;
+}
+ID3D12VideoDevice3_VTable :: struct #type_info_none {
+    using id3d12videodevice2: ID3D12VideoDevice2_VTable;
+    CreateVideoEncoder: (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_DESC, riid: *IID, ppVideoEncoder: **void) -> HRESULT #cpp_method;
+    CreateVideoEncoderHeap: (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_HEAP_DESC, riid: *IID, ppVideoEncoderHeap: **void) -> HRESULT #cpp_method;
+}
+ID3D12VideoDevice3_CreateVideoEncoder :: inline (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_DESC, riid: *IID, ppVideoEncoder: **void) -> HRESULT { return this.id3d12videodevice3_vtable.CreateVideoEncoder(this, pDesc, riid, ppVideoEncoder); }
+ID3D12VideoDevice3_CreateVideoEncoderHeap :: inline (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_HEAP_DESC, riid: *IID, ppVideoEncoderHeap: **void) -> HRESULT { return this.id3d12videodevice3_vtable.CreateVideoEncoderHeap(this, pDesc, riid, ppVideoEncoderHeap); }
+
+vtable :: (obj: *ID3D12VideoDevice3) -> *ID3D12VideoDevice3_VTable { return obj.id3d12videodevice3_vtable; }
+
+
+/* interface __MIDL_itf_d3d12video_0000_0025 */
+/* [local] */
+D3D12_VIDEO_ENCODER_FRAME_TYPE_H264 :: enum s32 {
+    I_FRAME   :: 0;
+    P_FRAME   :: 1;
+    B_FRAME   :: 2;
+    IDR_FRAME :: 3;
+
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_H264_I_FRAME   :: I_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_H264_P_FRAME   :: P_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_H264_B_FRAME   :: B_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_H264_IDR_FRAME :: IDR_FRAME;
+}
+
+D3D12_VIDEO_ENCODER_REFERENCE_PICTURE_DESCRIPTOR_H264 :: struct {
+    ReconstructedPictureResourceIndex: u32;
+    IsLongTermReference:               BOOL;
+    LongTermPictureIdx:                u32;
+    PictureOrderCountNumber:           u32;
+    FrameDecodingOrderNumber:          u32;
+    TemporalLayerIndex:                u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_FLAGS :: enum_flags u32 {
+    NONE                             :: 0x0;
+    REQUEST_INTRA_CONSTRAINED_SLICES :: 0x1;
+
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_FLAG_NONE                             :: NONE;
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_FLAG_REQUEST_INTRA_CONSTRAINED_SLICES :: REQUEST_INTRA_CONSTRAINED_SLICES;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_MARKING_OPERATION :: struct {
+    memory_management_control_operation: UCHAR;
+    difference_of_pic_nums_minus1:       u32;
+    long_term_pic_num:                   u32;
+    long_term_frame_idx:                 u32;
+    max_long_term_frame_idx_plus1:       u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_LIST_MODIFICATION_OPERATION :: struct {
+    modification_of_pic_nums_idc: UCHAR;
+    abs_diff_pic_num_minus1:      u32;
+    long_term_pic_num:            u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264 :: struct {
+    Flags:                                       D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_FLAGS;
+    FrameType:                                   D3D12_VIDEO_ENCODER_FRAME_TYPE_H264;
+    pic_parameter_set_id:                        u32;
+    idr_pic_id:                                  u32;
+    PictureOrderCountNumber:                     u32;
+    FrameDecodingOrderNumber:                    u32;
+    TemporalLayerIndex:                          u32;
+    List0ReferenceFramesCount:                   u32;
+    pList0ReferenceFrames:                       *u32;
+    List1ReferenceFramesCount:                   u32;
+    pList1ReferenceFrames:                       *u32;
+    ReferenceFramesReconPictureDescriptorsCount: u32;
+    pReferenceFramesReconPictureDescriptors:     *D3D12_VIDEO_ENCODER_REFERENCE_PICTURE_DESCRIPTOR_H264;
+    adaptive_ref_pic_marking_mode_flag:          UCHAR;
+    RefPicMarkingOperationsCommandsCount:        u32;
+    pRefPicMarkingOperationsCommands:            *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_MARKING_OPERATION;
+    List0RefPicModificationsCount:               u32;
+    pList0RefPicModifications:                   *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_LIST_MODIFICATION_OPERATION;
+    List1RefPicModificationsCount:               u32;
+    pList1RefPicModifications:                   *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_LIST_MODIFICATION_OPERATION;
+    QPMapValuesCount:                            u32;
+    pRateControlQPMap:                           *s8;
+}
+
+D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC :: enum s32 {
+    I_FRAME   :: 0;
+    P_FRAME   :: 1;
+    B_FRAME   :: 2;
+    IDR_FRAME :: 3;
+
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC_I_FRAME   :: I_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC_P_FRAME   :: P_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC_B_FRAME   :: B_FRAME;
+    D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC_IDR_FRAME :: IDR_FRAME;
+}
+
+D3D12_VIDEO_ENCODER_REFERENCE_PICTURE_DESCRIPTOR_HEVC :: struct {
+    ReconstructedPictureResourceIndex: u32;
+    IsRefUsedByCurrentPic:             BOOL;
+    IsLongTermReference:               BOOL;
+    PictureOrderCountNumber:           u32;
+    TemporalLayerIndex:                u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC_FLAGS :: enum_flags u32 {
+    NONE                             :: 0x0;
+    REQUEST_INTRA_CONSTRAINED_SLICES :: 0x1;
+
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC_FLAG_NONE                             :: NONE;
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC_FLAG_REQUEST_INTRA_CONSTRAINED_SLICES :: REQUEST_INTRA_CONSTRAINED_SLICES;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC :: struct {
+    Flags:                                       D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC_FLAGS;
+    FrameType:                                   D3D12_VIDEO_ENCODER_FRAME_TYPE_HEVC;
+    slice_pic_parameter_set_id:                  u32;
+    PictureOrderCountNumber:                     u32;
+    TemporalLayerIndex:                          u32;
+    List0ReferenceFramesCount:                   u32;
+    pList0ReferenceFrames:                       *u32;
+    List1ReferenceFramesCount:                   u32;
+    pList1ReferenceFrames:                       *u32;
+    ReferenceFramesReconPictureDescriptorsCount: u32;
+    pReferenceFramesReconPictureDescriptors:     *D3D12_VIDEO_ENCODER_REFERENCE_PICTURE_DESCRIPTOR_HEVC;
+    List0RefPicModificationsCount:               u32;
+    pList0RefPicModifications:                   *u32;
+    List1RefPicModificationsCount:               u32;
+    pList1RefPicModifications:                   *u32;
+    QPMapValuesCount:                            u32;
+    pRateControlQPMap:                           *s8;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA :: struct {
+    DataSize: u32;
+    union {
+        pH264PicData: *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264;
+        pHEVCPicData: *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_HEVC;
+    }
+}
+
+D3D12_VIDEO_ENCODE_REFERENCE_FRAMES :: struct {
+    NumTexture2Ds: u32;
+    ppTexture2Ds:  **ID3D12Resource;
+    pSubresources: *u32;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_FLAGS :: enum_flags u32 {
+    NONE                      :: 0x0;
+    USED_AS_REFERENCE_PICTURE :: 0x1;
+
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_FLAG_NONE                      :: NONE;
+    D3D12_VIDEO_ENCODER_PICTURE_CONTROL_FLAG_USED_AS_REFERENCE_PICTURE :: USED_AS_REFERENCE_PICTURE;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_DESC :: struct {
+    IntraRefreshFrameIndex:  u32;
+    Flags:                   D3D12_VIDEO_ENCODER_PICTURE_CONTROL_FLAGS;
+    PictureControlCodecData: D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA;
+    ReferenceFrames:         D3D12_VIDEO_ENCODE_REFERENCE_FRAMES;
+}
+
+D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAGS :: enum_flags u32 {
+    NONE                    :: 0x0;
+    RESOLUTION_CHANGE       :: 0x1;
+    RATE_CONTROL_CHANGE     :: 0x2;
+    SUBREGION_LAYOUT_CHANGE :: 0x4;
+    REQUEST_INTRA_REFRESH   :: 0x8;
+    GOP_SEQUENCE_CHANGE     :: 0x10;
+
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_NONE                    :: NONE;
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_RESOLUTION_CHANGE       :: RESOLUTION_CHANGE;
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_RATE_CONTROL_CHANGE     :: RATE_CONTROL_CHANGE;
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_SUBREGION_LAYOUT_CHANGE :: SUBREGION_LAYOUT_CHANGE;
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_REQUEST_INTRA_REFRESH   :: REQUEST_INTRA_REFRESH;
+    D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAG_GOP_SEQUENCE_CHANGE     :: GOP_SEQUENCE_CHANGE;
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_SLICES :: struct {
+    union {
+        MaxBytesPerSlice:            u32;
+        NumberOfCodingUnitsPerSlice: u32;
+        NumberOfRowsPerSlice:        u32;
+        NumberOfSlicesPerFrame:      u32;
+    }
+}
+
+D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA :: struct {
+    DataSize: u32;
+    union {
+        pSlicesPartition_H264: *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_SLICES;
+        pSlicesPartition_HEVC: *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA_SLICES;
+    }
+}
+
+D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_DESC :: struct {
+    Flags:                     D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_FLAGS;
+    IntraRefreshConfig:        D3D12_VIDEO_ENCODER_INTRA_REFRESH;
+    RateControl:               D3D12_VIDEO_ENCODER_RATE_CONTROL #align 8;
+    PictureTargetResolution:   D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    SelectedLayoutMode:        D3D12_VIDEO_ENCODER_FRAME_SUBREGION_LAYOUT_MODE;
+    FrameSubregionsLayoutData: D3D12_VIDEO_ENCODER_PICTURE_CONTROL_SUBREGIONS_LAYOUT_DATA #align 8;
+    CodecGopSequence:          D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE;
+}
+
+D3D12_VIDEO_ENCODER_ENCODEFRAME_INPUT_ARGUMENTS :: struct {
+    SequenceControlDesc:               D3D12_VIDEO_ENCODER_SEQUENCE_CONTROL_DESC;
+    PictureControlDesc:                D3D12_VIDEO_ENCODER_PICTURE_CONTROL_DESC;
+    pInputFrame:                       *ID3D12Resource;
+    InputFrameSubresource:             u32;
+    CurrentFrameBitstreamMetadataSize: u32;
+}
+
+D3D12_VIDEO_ENCODER_COMPRESSED_BITSTREAM :: struct {
+    pBuffer:          *ID3D12Resource;
+    FrameStartOffset: u64;
+}
+
+D3D12_VIDEO_ENCODER_RECONSTRUCTED_PICTURE :: struct {
+    pReconstructedPicture:           *ID3D12Resource;
+    ReconstructedPictureSubresource: u32;
+}
+
+D3D12_VIDEO_ENCODER_FRAME_SUBREGION_METADATA :: struct {
+    bSize:        u64;
+    bStartOffset: u64;
+    bHeaderSize:  u64;
+}
+
+D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAGS :: enum_flags u32 {
+    NO_ERROR                                     :: 0x0;
+    CODEC_PICTURE_CONTROL_NOT_SUPPORTED          :: 0x1;
+    SUBREGION_LAYOUT_CONFIGURATION_NOT_SUPPORTED :: 0x2;
+    INVALID_REFERENCE_PICTURES                   :: 0x4;
+    RECONFIGURATION_REQUEST_NOT_SUPPORTED        :: 0x8;
+    INVALID_METADATA_BUFFER_SOURCE               :: 0x10;
+
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_NO_ERROR                                     :: NO_ERROR;
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_CODEC_PICTURE_CONTROL_NOT_SUPPORTED          :: CODEC_PICTURE_CONTROL_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_SUBREGION_LAYOUT_CONFIGURATION_NOT_SUPPORTED :: SUBREGION_LAYOUT_CONFIGURATION_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_INVALID_REFERENCE_PICTURES                   :: INVALID_REFERENCE_PICTURES;
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_RECONFIGURATION_REQUEST_NOT_SUPPORTED        :: RECONFIGURATION_REQUEST_NOT_SUPPORTED;
+    D3D12_VIDEO_ENCODER_ENCODE_ERROR_FLAG_INVALID_METADATA_BUFFER_SOURCE               :: INVALID_METADATA_BUFFER_SOURCE;
+}
+
+D3D12_VIDEO_ENCODER_OUTPUT_METADATA_STATISTICS :: struct {
+    AverageQP:                         u64;
+    IntraCodingUnitsCount:             u64;
+    InterCodingUnitsCount:             u64;
+    SkipCodingUnitsCount:              u64;
+    AverageMotionEstimationXDirection: u64;
+    AverageMotionEstimationYDirection: u64;
+}
+
+D3D12_VIDEO_ENCODER_OUTPUT_METADATA :: struct {
+    EncodeErrorFlags:                  u64;
+    EncodeStats:                       D3D12_VIDEO_ENCODER_OUTPUT_METADATA_STATISTICS;
+    EncodedBitstreamWrittenBytesCount: u64;
+    WrittenSubregionsCount:            u64;
+}
+
+D3D12_VIDEO_ENCODER_ENCODE_OPERATION_METADATA_BUFFER :: struct {
+    pBuffer: *ID3D12Resource;
+    Offset:  u64;
+}
+
+D3D12_VIDEO_ENCODER_RESOLVE_METADATA_INPUT_ARGUMENTS :: struct {
+    EncoderCodec:                      D3D12_VIDEO_ENCODER_CODEC;
+    EncoderProfile:                    D3D12_VIDEO_ENCODER_PROFILE_DESC #align 8;
+    EncoderInputFormat:                DXGI_FORMAT;
+    EncodedPictureEffectiveResolution: D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC;
+    HWLayoutMetadata:                  D3D12_VIDEO_ENCODER_ENCODE_OPERATION_METADATA_BUFFER;
+}
+
+D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS :: struct {
+    ResolvedLayoutMetadata: D3D12_VIDEO_ENCODER_ENCODE_OPERATION_METADATA_BUFFER;
+}
+
+D3D12_VIDEO_ENCODER_ENCODEFRAME_OUTPUT_ARGUMENTS :: struct {
+    Bitstream:             D3D12_VIDEO_ENCODER_COMPRESSED_BITSTREAM;
+    ReconstructedPicture:  D3D12_VIDEO_ENCODER_RECONSTRUCTED_PICTURE;
+    EncoderOutputMetadata: D3D12_VIDEO_ENCODER_ENCODE_OPERATION_METADATA_BUFFER;
+}
+
+
+ID3D12VideoEncodeCommandList2_UUID :: "895491e2-e701-46a9-9a1f-8d3480ed867a";
+ID3D12VideoEncodeCommandList2 :: struct {
+    #as using id3d12videoencodecommandlist1: ID3D12VideoEncodeCommandList1;
+    #place vtable; id3d12videoencodecommandlist2_vtable: *ID3D12VideoEncodeCommandList2_VTable;
+}
+ID3D12VideoEncodeCommandList2_VTable :: struct #type_info_none {
+    using id3d12videoencodecommandlist1: ID3D12VideoEncodeCommandList1_VTable;
+    EncodeFrame: (this: *ID3D12VideoEncodeCommandList2, pEncoder: *ID3D12VideoEncoder, pHeap: *ID3D12VideoEncoderHeap, pInputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_OUTPUT_ARGUMENTS) -> void #cpp_method;
+    ResolveEncoderOutputMetadata: (this: *ID3D12VideoEncodeCommandList2, pInputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS) -> void #cpp_method;
+}
+ID3D12VideoEncodeCommandList2_EncodeFrame :: inline (this: *ID3D12VideoEncodeCommandList2, pEncoder: *ID3D12VideoEncoder, pHeap: *ID3D12VideoEncoderHeap, pInputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_OUTPUT_ARGUMENTS) { this.id3d12videoencodecommandlist2_vtable.EncodeFrame(this, pEncoder, pHeap, pInputArguments, pOutputArguments); }
+ID3D12VideoEncodeCommandList2_ResolveEncoderOutputMetadata :: inline (this: *ID3D12VideoEncodeCommandList2, pInputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS) { this.id3d12videoencodecommandlist2_vtable.ResolveEncoderOutputMetadata(this, pInputArguments, pOutputArguments); }
+
+vtable :: (obj: *ID3D12VideoEncodeCommandList2) -> *ID3D12VideoEncodeCommandList2_VTable { return obj.id3d12videoencodecommandlist2_vtable; }
+
+
+
+ID3D12VideoEncodeCommandList3_UUID :: "7f027b22-1515-4e85-aa0d-026486580576";
+ID3D12VideoEncodeCommandList3 :: struct {
+    #as using id3d12videoencodecommandlist2: ID3D12VideoEncodeCommandList2;
+    #place vtable; id3d12videoencodecommandlist3_vtable: *ID3D12VideoEncodeCommandList3_VTable;
+}
+ID3D12VideoEncodeCommandList3_VTable :: struct #type_info_none {
+    using id3d12videoencodecommandlist2: ID3D12VideoEncodeCommandList2_VTable;
+    Barrier: (this: *ID3D12VideoEncodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
+}
+ID3D12VideoEncodeCommandList3_Barrier :: inline (this: *ID3D12VideoEncodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videoencodecommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
+
+vtable :: (obj: *ID3D12VideoEncodeCommandList3) -> *ID3D12VideoEncodeCommandList3_VTable { return obj.id3d12videoencodecommandlist3_vtable; }
 
 
 #scope_file

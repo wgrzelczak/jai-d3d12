@@ -3,6 +3,7 @@
 #if USE_DEBUG #load "d3d12_bindings_debug.jai";
 
 LONG_PTR :: u64;
+UCHAR :: u8;
 
 WKPDID_D3DDebugObjectName :: "429b8c22-9188-4b0c-8742-acb0bf85c200";
 

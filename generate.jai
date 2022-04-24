@@ -1,21 +1,31 @@
 #assert(OS == .WINDOWS);
 
-DXGI  :: true;
-D3D12 :: true;
-DXC   :: true;
-PIX   :: true;
+USE_D3D12_AGILITY :: true;
+D3D12_AGILITY_SRC :: "d3d12_agility_src/build/native/";
+
+DXGI          :: true;
+D3D12         :: false;//true;
+DXC           :: false;//true;
+PIX           :: false;//true;
 
 #run {
     set_build_options_dc(.{do_output=false});
 
     if DXGI {
         opts := make_default_generator_options();
+        if USE_D3D12_AGILITY {
+            array_add(*opts.source_files, tprint("%include/%", D3D12_AGILITY_SRC, "dxgiformat.h"));
+        } else {
+            array_add(*opts.source_files,                               "dxgiformat.h");
+            array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "dxgiformat.h");
+        }
         dxgi_versions := string.["dxgi.h", "dxgi1_2.h", "dxgi1_3.h", "dxgi1_4.h", "dxgi1_5.h", "dxgi1_6.h"];
         array_add(*opts.libnames, "dxgi.dll");
         array_add(*opts.source_files,                               ..dxgi_versions);
         array_add(*opts.path_suffixes_to_treat_as_non_system_paths, ..dxgi_versions);
-        array_add(*opts.source_files,                               "dxgiformat.h", "dxgitype.h");
-        array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "dxgiformat.h", "dxgitype.h", "dxgicommon.h", "fwptypes.h");
+        array_add(*opts.source_files,                               "dxgitype.h");
+        array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "dxgitype.h", "dxgicommon.h", "fwptypes.h");
+
         generate_bindings("dxgi_bindings.jai", opts);
     }
 
@@ -30,8 +40,15 @@ PIX   :: true;
     if D3D12 {
         opts := make_default_generator_options();
         array_add(*opts.libnames, "d3d12.dll");
-        array_add(*opts.source_files,                               "d3d12.h", "d3dcommon.h");
-        array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "d3d12.h", "d3dcommon.h");
+        if USE_D3D12_AGILITY {
+            array_add(*opts.ignore_headers, "d3d12sdklayers.h", "d3d12shader.h", "dxgiformat.h");
+            array_add(*opts.source_files, tprint("%include/%", D3D12_AGILITY_SRC, "d3d12.h"));
+            array_add(*opts.source_files, tprint("%include/%", D3D12_AGILITY_SRC, "d3dcommon.h"));
+            array_add(*opts.source_files, tprint("%include/%", D3D12_AGILITY_SRC, "d3d12video.h"));
+        } else {
+            array_add(*opts.source_files,                               "d3d12.h", "d3dcommon.h", "d3d12video.h");
+            array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "d3d12.h", "d3dcommon.h", "d3d12video.h");
+        }
         generate_bindings("d3d12_bindings.jai", opts);
     }
     
@@ -39,8 +56,13 @@ PIX   :: true;
     if D3D12 {
         opts := make_default_generator_options();
         array_add(*opts.libnames, "d3d12.dll");
-        array_add(*opts.source_files,                               "d3d12sdklayers.h");
-        array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "d3d12sdklayers.h");
+        if USE_D3D12_AGILITY {
+            array_add(*opts.ignore_headers, "d3d12.h", "d3d12shader.h", "d3d12video.h", "d3dcommon.h", "dxgiformat.h");
+            array_add(*opts.source_files, tprint("%include/%", D3D12_AGILITY_SRC, "d3d12sdklayers.h"));
+        } else {
+            array_add(*opts.source_files,                               "d3d12sdklayers.h");
+            array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "d3d12sdklayers.h");
+        }
         generate_bindings("d3d12_bindings_debug.jai", opts);
     }
 
@@ -49,7 +71,13 @@ PIX   :: true;
         array_add(*opts.libpaths,      "dxc_src/lib/x64");
         array_add(*opts.libnames,      "dxcompiler");
         array_add(*opts.include_paths, "dxc_src/inc");
-        array_add(*opts.source_files,  "d3d12shader.h", "dxcapi.h");
+        if USE_D3D12_AGILITY {
+            array_add(*opts.ignore_headers, "d3d12.h", "d3d12sdklayers.h", "d3d12video.h", "d3dcommon.h", "dxgiformat.h");
+            array_add(*opts.source_files,  tprint("%include/%", D3D12_AGILITY_SRC, "d3d12shader.h"));
+        } else {
+            array_add(*opts.source_files,  "d3d12shader.h");
+        }
+        array_add(*opts.source_files,  "dxcapi.h");
         array_add(*opts.source_files,  "objidl.h"); //IMalloc, IStream...
         array_add(*opts.system_types_to_include, "IMalloc", "IStream", "ISequentialStream", "tagSTATSTG", "STATSTG");
         generate_bindings("dxc_bindings.jai", opts);

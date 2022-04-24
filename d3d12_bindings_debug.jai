@@ -23,6 +23,8 @@ ID3D12Debug_EnableDebugLayer :: inline (this: *ID3D12Debug) { this.id3d12debug_v
 vtable :: (obj: *ID3D12Debug) -> *ID3D12Debug_VTable { return obj.id3d12debug_vtable; }
 
 
+/* interface __MIDL_itf_d3d12sdklayers_0000_0001 */
+/* [local] */
 D3D12_GPU_BASED_VALIDATION_FLAGS :: enum_flags u32 {
     NONE                   :: 0x0;
     DISABLE_STATE_TRACKING :: 0x1;
@@ -112,6 +114,21 @@ ID3D12Debug5_VTable :: struct #type_info_none {
 ID3D12Debug5_SetEnableAutoName :: inline (this: *ID3D12Debug5, Enable: BOOL) { this.id3d12debug5_vtable.SetEnableAutoName(this, Enable); }
 
 vtable :: (obj: *ID3D12Debug5) -> *ID3D12Debug5_VTable { return obj.id3d12debug5_vtable; }
+
+
+
+ID3D12Debug6_UUID :: "82a816d6-5d01-4157-97d0-4975463fd1ed";
+ID3D12Debug6 :: struct {
+    #as using id3d12debug5: ID3D12Debug5;
+    #place vtable; id3d12debug6_vtable: *ID3D12Debug6_VTable;
+}
+ID3D12Debug6_VTable :: struct #type_info_none {
+    using id3d12debug5: ID3D12Debug5_VTable;
+    SetForceLegacyBarrierValidation: (this: *ID3D12Debug6, Enable: BOOL) -> void #cpp_method;
+}
+ID3D12Debug6_SetForceLegacyBarrierValidation :: inline (this: *ID3D12Debug6, Enable: BOOL) { this.id3d12debug6_vtable.SetForceLegacyBarrierValidation(this, Enable); }
+
+vtable :: (obj: *ID3D12Debug6) -> *ID3D12Debug6_VTable { return obj.id3d12debug6_vtable; }
 
 
 WKPDID_D3DAutoDebugObjectNameW: GUID;
@@ -256,6 +273,8 @@ ID3D12DebugCommandQueue_AssertResourceState :: inline (this: *ID3D12DebugCommand
 vtable :: (obj: *ID3D12DebugCommandQueue) -> *ID3D12DebugCommandQueue_VTable { return obj.id3d12debugcommandqueue_vtable; }
 
 
+/* interface __MIDL_itf_d3d12sdklayers_0000_0011 */
+/* [local] */
 D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE :: enum s32 {
     D3D12_DEBUG_COMMAND_LIST_PARAMETER_GPU_BASED_VALIDATION_SETTINGS :: 0;
 }
@@ -340,6 +359,8 @@ ID3D12SharingContract_EndCapturableWork :: inline (this: *ID3D12SharingContract,
 vtable :: (obj: *ID3D12SharingContract) -> *ID3D12SharingContract_VTable { return obj.id3d12sharingcontract_vtable; }
 
 
+/* interface __MIDL_itf_d3d12sdklayers_0000_0015 */
+/* [local] */
 D3D12_MESSAGE_CATEGORY :: enum s32 {
     APPLICATION_DEFINED   :: 0;
     MISCELLANEOUS         :: 1;
@@ -1265,7 +1286,30 @@ D3D12_MESSAGE_ID :: enum s32 {
     WRITE_COMBINE_PERFORMANCE_WARNING                                                             :: 1318;
     RESOLVE_QUERY_INVALID_QUERY_STATE                                                             :: 1319;
     SETPRIVATEDATA_NO_ACCESS                                                                      :: 1320;
-    D3D12_MESSAGES_END                                                                            :: 1321;
+    COMMAND_LIST_STATIC_DESCRIPTOR_SAMPLER_MODE_MISMATCH                                          :: 1321;
+    GETCOPYABLEFOOTPRINTS_UNSUPPORTED_BUFFER_WIDTH                                                :: 1322;
+    CREATEMESHSHADER_TOPOLOGY_MISMATCH                                                            :: 1323;
+    VRS_SUM_COMBINER_REQUIRES_CAPABILITY                                                          :: 1324;
+    SETTING_SHADING_RATE_FROM_MS_REQUIRES_CAPABILITY                                              :: 1325;
+    SHADERCACHESESSION_SHADERCACHEDELETE_NOTSUPPORTED                                             :: 1326;
+    SHADERCACHECONTROL_SHADERCACHECLEAR_NOTSUPPORTED                                              :: 1327;
+    CREATERESOURCE_STATE_IGNORED                                                                  :: 1328;
+    UNUSED_CROSS_EXECUTE_SPLIT_BARRIER                                                            :: 1329;
+    DEVICE_OPEN_SHARED_HANDLE_ACCESS_DENIED                                                       :: 1330;
+    INCOMPATIBLE_BARRIER_VALUES                                                                   :: 1331;
+    INCOMPATIBLE_BARRIER_ACCESS                                                                   :: 1332;
+    INCOMPATIBLE_BARRIER_SYNC                                                                     :: 1333;
+    INCOMPATIBLE_BARRIER_LAYOUT                                                                   :: 1334;
+    INCOMPATIBLE_BARRIER_TYPE                                                                     :: 1335;
+    OUT_OF_BOUNDS_BARRIER_SUBRESOURCE_RANGE                                                       :: 1336;
+    INCOMPATIBLE_BARRIER_RESOURCE_DIMENSION                                                       :: 1337;
+    SET_SCISSOR_RECTS_INVALID_RECT                                                                :: 1338;
+    SHADING_RATE_SOURCE_REQUIRES_DIMENSION_TEXTURE2D                                              :: 1339;
+    BUFFER_BARRIER_SUBREGION_OUT_OF_BOUNDS                                                        :: 1340;
+    UNSUPPORTED_BARRIER_LAYOUT                                                                    :: 1341;
+    CREATERESOURCEANDHEAP_INVALID_PARAMETERS                                                      :: 1342;
+    ENHANCED_BARRIERS_NOT_SUPPORTED                                                               :: 1343;
+    D3D12_MESSAGES_END                                                                            :: 1344;
 
     D3D12_MESSAGE_ID_UNKNOWN                                                                                       :: UNKNOWN;
     D3D12_MESSAGE_ID_STRING_FROM_APPLICATION                                                                       :: STRING_FROM_APPLICATION;
@@ -2151,6 +2195,29 @@ D3D12_MESSAGE_ID :: enum s32 {
     D3D12_MESSAGE_ID_WRITE_COMBINE_PERFORMANCE_WARNING                                                             :: WRITE_COMBINE_PERFORMANCE_WARNING;
     D3D12_MESSAGE_ID_RESOLVE_QUERY_INVALID_QUERY_STATE                                                             :: RESOLVE_QUERY_INVALID_QUERY_STATE;
     D3D12_MESSAGE_ID_SETPRIVATEDATA_NO_ACCESS                                                                      :: SETPRIVATEDATA_NO_ACCESS;
+    D3D12_MESSAGE_ID_COMMAND_LIST_STATIC_DESCRIPTOR_SAMPLER_MODE_MISMATCH                                          :: COMMAND_LIST_STATIC_DESCRIPTOR_SAMPLER_MODE_MISMATCH;
+    D3D12_MESSAGE_ID_GETCOPYABLEFOOTPRINTS_UNSUPPORTED_BUFFER_WIDTH                                                :: GETCOPYABLEFOOTPRINTS_UNSUPPORTED_BUFFER_WIDTH;
+    D3D12_MESSAGE_ID_CREATEMESHSHADER_TOPOLOGY_MISMATCH                                                            :: CREATEMESHSHADER_TOPOLOGY_MISMATCH;
+    D3D12_MESSAGE_ID_VRS_SUM_COMBINER_REQUIRES_CAPABILITY                                                          :: VRS_SUM_COMBINER_REQUIRES_CAPABILITY;
+    D3D12_MESSAGE_ID_SETTING_SHADING_RATE_FROM_MS_REQUIRES_CAPABILITY                                              :: SETTING_SHADING_RATE_FROM_MS_REQUIRES_CAPABILITY;
+    D3D12_MESSAGE_ID_SHADERCACHESESSION_SHADERCACHEDELETE_NOTSUPPORTED                                             :: SHADERCACHESESSION_SHADERCACHEDELETE_NOTSUPPORTED;
+    D3D12_MESSAGE_ID_SHADERCACHECONTROL_SHADERCACHECLEAR_NOTSUPPORTED                                              :: SHADERCACHECONTROL_SHADERCACHECLEAR_NOTSUPPORTED;
+    D3D12_MESSAGE_ID_CREATERESOURCE_STATE_IGNORED                                                                  :: CREATERESOURCE_STATE_IGNORED;
+    D3D12_MESSAGE_ID_UNUSED_CROSS_EXECUTE_SPLIT_BARRIER                                                            :: UNUSED_CROSS_EXECUTE_SPLIT_BARRIER;
+    D3D12_MESSAGE_ID_DEVICE_OPEN_SHARED_HANDLE_ACCESS_DENIED                                                       :: DEVICE_OPEN_SHARED_HANDLE_ACCESS_DENIED;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_VALUES                                                                   :: INCOMPATIBLE_BARRIER_VALUES;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_ACCESS                                                                   :: INCOMPATIBLE_BARRIER_ACCESS;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_SYNC                                                                     :: INCOMPATIBLE_BARRIER_SYNC;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_LAYOUT                                                                   :: INCOMPATIBLE_BARRIER_LAYOUT;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_TYPE                                                                     :: INCOMPATIBLE_BARRIER_TYPE;
+    D3D12_MESSAGE_ID_OUT_OF_BOUNDS_BARRIER_SUBRESOURCE_RANGE                                                       :: OUT_OF_BOUNDS_BARRIER_SUBRESOURCE_RANGE;
+    D3D12_MESSAGE_ID_INCOMPATIBLE_BARRIER_RESOURCE_DIMENSION                                                       :: INCOMPATIBLE_BARRIER_RESOURCE_DIMENSION;
+    D3D12_MESSAGE_ID_SET_SCISSOR_RECTS_INVALID_RECT                                                                :: SET_SCISSOR_RECTS_INVALID_RECT;
+    D3D12_MESSAGE_ID_SHADING_RATE_SOURCE_REQUIRES_DIMENSION_TEXTURE2D                                              :: SHADING_RATE_SOURCE_REQUIRES_DIMENSION_TEXTURE2D;
+    D3D12_MESSAGE_ID_BUFFER_BARRIER_SUBREGION_OUT_OF_BOUNDS                                                        :: BUFFER_BARRIER_SUBREGION_OUT_OF_BOUNDS;
+    D3D12_MESSAGE_ID_UNSUPPORTED_BARRIER_LAYOUT                                                                    :: UNSUPPORTED_BARRIER_LAYOUT;
+    D3D12_MESSAGE_ID_CREATERESOURCEANDHEAP_INVALID_PARAMETERS                                                      :: CREATERESOURCEANDHEAP_INVALID_PARAMETERS;
+    D3D12_MESSAGE_ID_ENHANCED_BARRIERS_NOT_SUPPORTED                                                               :: ENHANCED_BARRIERS_NOT_SUPPORTED;
     D3D12_MESSAGE_ID_D3D12_MESSAGES_END                                                                            :: D3D12_MESSAGES_END;
 }
 
@@ -2259,6 +2326,8 @@ ID3D12InfoQueue_GetMuteDebugOutput :: inline (this: *ID3D12InfoQueue) -> BOOL { 
 vtable :: (obj: *ID3D12InfoQueue) -> *ID3D12InfoQueue_VTable { return obj.id3d12infoqueue_vtable; }
 
 
+/* interface __MIDL_itf_d3d12sdklayers_0000_0016 */
+/* [local] */
 D3D12_MESSAGE_CALLBACK_FLAGS :: enum_flags u32 {
     FLAG_NONE      :: 0x0;
     IGNORE_FILTERS :: 0x1;
