@@ -4,9 +4,9 @@ USE_D3D12_AGILITY :: true;
 D3D12_AGILITY_SRC :: "d3d12_agility_src/build/native/";
 
 DXGI          :: true;
-D3D12         :: false;//true;
-DXC           :: false;//true;
-PIX           :: false;//true;
+D3D12         :: true;
+DXC           :: true;
+PIX           :: true;
 
 #run {
     set_build_options_dc(.{do_output=false});
