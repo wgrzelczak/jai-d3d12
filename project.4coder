@@ -1,0 +1,30 @@
+version(2);
+project_name = "jai-d3d12";
+patterns = {
+"*.jai",
+"*.bat",
+"*.sh",
+"*.4coder",
+"*hlsl",
+"*hlsli",
+};
+
+blacklist_patterns = {
+".*",
+};
+
+load_paths_base = {
+ { ".", .relative = true, .recursive = true, },
+};
+
+load_paths = {
+ .win = load_paths_base,
+};
+
+commands = {
+ .generate         = { .out = "*compilation*", .footer_panel = true, .save_dirty_files = true,  .win = "jai generate.jai"},
+};
+
+fkey_command = {
+.F1 = "generate",
+};
