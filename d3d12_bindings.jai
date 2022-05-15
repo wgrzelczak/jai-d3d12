@@ -1259,9 +1259,6 @@ ID3D10Blob_VTable :: struct #type_info_none {
     GetBufferPointer: (this: *ID3D10Blob) -> *void #cpp_method;
     GetBufferSize: (this: *ID3D10Blob) -> SIZE_T #cpp_method;
 }
-ID3D10Blob_GetBufferPointer :: inline (this: *ID3D10Blob) -> *void { return this.id3d10blob_vtable.GetBufferPointer(this); }
-ID3D10Blob_GetBufferSize :: inline (this: *ID3D10Blob) -> SIZE_T { return this.id3d10blob_vtable.GetBufferSize(this); }
-
 vtable :: (obj: *ID3D10Blob) -> *ID3D10Blob_VTable { return obj.id3d10blob_vtable; }
 
 
@@ -1280,9 +1277,6 @@ ID3DDestructionNotifier_VTable :: struct #type_info_none {
     RegisterDestructionCallback: (this: *ID3DDestructionNotifier, callbackFn: PFN_DESTRUCTION_CALLBACK, pData: *void, pCallbackID: *u32) -> HRESULT #cpp_method;
     UnregisterDestructionCallback: (this: *ID3DDestructionNotifier, callbackID: u32) -> HRESULT #cpp_method;
 }
-ID3DDestructionNotifier_RegisterDestructionCallback :: inline (this: *ID3DDestructionNotifier, callbackFn: PFN_DESTRUCTION_CALLBACK, pData: *void, pCallbackID: *u32) -> HRESULT { return this.id3ddestructionnotifier_vtable.RegisterDestructionCallback(this, callbackFn, pData, pCallbackID); }
-ID3DDestructionNotifier_UnregisterDestructionCallback :: inline (this: *ID3DDestructionNotifier, callbackID: u32) -> HRESULT { return this.id3ddestructionnotifier_vtable.UnregisterDestructionCallback(this, callbackID); }
-
 vtable :: (obj: *ID3DDestructionNotifier) -> *ID3DDestructionNotifier_VTable { return obj.id3ddestructionnotifier_vtable; }
 
 
@@ -1309,9 +1303,6 @@ ID3DInclude_VTable :: struct #type_info_none {
     Open: (this: *ID3DInclude, IncludeType: D3D_INCLUDE_TYPE, pFileName: *u8, pParentData: *void, ppData: **void, pBytes: *u32) -> HRESULT #cpp_method;
     Close: (this: *ID3DInclude, pData: *void) -> HRESULT #cpp_method;
 }
-ID3DInclude_Open :: inline (this: *ID3DInclude, IncludeType: D3D_INCLUDE_TYPE, pFileName: *u8, pParentData: *void, ppData: **void, pBytes: *u32) -> HRESULT { return this.vtable.Open(this, IncludeType, pFileName, pParentData, ppData, pBytes); }
-ID3DInclude_Close :: inline (this: *ID3DInclude, pData: *void) -> HRESULT { return this.vtable.Close(this, pData); }
-
 vtable :: (obj: *ID3DInclude) -> *ID3DInclude_VTable { return obj.vtable; }
 
 
@@ -2364,11 +2355,6 @@ ID3D12Object_VTable :: struct #type_info_none {
     SetPrivateDataInterface: (this: *ID3D12Object, guid: *GUID, pData: *IUnknown) -> HRESULT #cpp_method;
     SetName: (this: *ID3D12Object, Name: *s16) -> HRESULT #cpp_method;
 }
-ID3D12Object_GetPrivateData :: inline (this: *ID3D12Object, guid: *GUID, pDataSize: *u32, pData: *void) -> HRESULT { return this.id3d12object_vtable.GetPrivateData(this, guid, pDataSize, pData); }
-ID3D12Object_SetPrivateData :: inline (this: *ID3D12Object, guid: *GUID, DataSize: u32, pData: *void) -> HRESULT { return this.id3d12object_vtable.SetPrivateData(this, guid, DataSize, pData); }
-ID3D12Object_SetPrivateDataInterface :: inline (this: *ID3D12Object, guid: *GUID, pData: *IUnknown) -> HRESULT { return this.id3d12object_vtable.SetPrivateDataInterface(this, guid, pData); }
-ID3D12Object_SetName :: inline (this: *ID3D12Object, Name: *s16) -> HRESULT { return this.id3d12object_vtable.SetName(this, Name); }
-
 vtable :: (obj: *ID3D12Object) -> *ID3D12Object_VTable { return obj.id3d12object_vtable; }
 
 
@@ -2382,8 +2368,6 @@ ID3D12DeviceChild_VTable :: struct #type_info_none {
     using id3d12object: ID3D12Object_VTable;
     GetDevice: (this: *ID3D12DeviceChild, riid: *IID, ppvDevice: **void) -> HRESULT #cpp_method;
 }
-ID3D12DeviceChild_GetDevice :: inline (this: *ID3D12DeviceChild, riid: *IID, ppvDevice: **void) -> HRESULT { return this.id3d12devicechild_vtable.GetDevice(this, riid, ppvDevice); }
-
 vtable :: (obj: *ID3D12DeviceChild) -> *ID3D12DeviceChild_VTable { return obj.id3d12devicechild_vtable; }
 
 
@@ -4360,8 +4344,6 @@ ID3D12RootSignatureDeserializer_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     GetRootSignatureDesc: (this: *ID3D12RootSignatureDeserializer) -> *D3D12_ROOT_SIGNATURE_DESC #cpp_method;
 }
-ID3D12RootSignatureDeserializer_GetRootSignatureDesc :: inline (this: *ID3D12RootSignatureDeserializer) -> *D3D12_ROOT_SIGNATURE_DESC { return this.id3d12rootsignaturedeserializer_vtable.GetRootSignatureDesc(this); }
-
 vtable :: (obj: *ID3D12RootSignatureDeserializer) -> *ID3D12RootSignatureDeserializer_VTable { return obj.id3d12rootsignaturedeserializer_vtable; }
 
 
@@ -4376,9 +4358,6 @@ ID3D12VersionedRootSignatureDeserializer_VTable :: struct #type_info_none {
     GetRootSignatureDescAtVersion: (this: *ID3D12VersionedRootSignatureDeserializer, convertToVersion: D3D_ROOT_SIGNATURE_VERSION, ppDesc: **D3D12_VERSIONED_ROOT_SIGNATURE_DESC) -> HRESULT #cpp_method;
     GetUnconvertedRootSignatureDesc: (this: *ID3D12VersionedRootSignatureDeserializer) -> *D3D12_VERSIONED_ROOT_SIGNATURE_DESC #cpp_method;
 }
-ID3D12VersionedRootSignatureDeserializer_GetRootSignatureDescAtVersion :: inline (this: *ID3D12VersionedRootSignatureDeserializer, convertToVersion: D3D_ROOT_SIGNATURE_VERSION, ppDesc: **D3D12_VERSIONED_ROOT_SIGNATURE_DESC) -> HRESULT { return this.id3d12versionedrootsignaturedeserializer_vtable.GetRootSignatureDescAtVersion(this, convertToVersion, ppDesc); }
-ID3D12VersionedRootSignatureDeserializer_GetUnconvertedRootSignatureDesc :: inline (this: *ID3D12VersionedRootSignatureDeserializer) -> *D3D12_VERSIONED_ROOT_SIGNATURE_DESC { return this.id3d12versionedrootsignaturedeserializer_vtable.GetUnconvertedRootSignatureDesc(this); }
-
 vtable :: (obj: *ID3D12VersionedRootSignatureDeserializer) -> *ID3D12VersionedRootSignatureDeserializer_VTable { return obj.id3d12versionedrootsignaturedeserializer_vtable; }
 
 
@@ -4630,8 +4609,6 @@ ID3D12Heap_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetDesc: (this: *ID3D12Heap) -> D3D12_HEAP_DESC #cpp_method;
 }
-ID3D12Heap_GetDesc :: inline (this: *ID3D12Heap) -> D3D12_HEAP_DESC { return this.id3d12heap_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12Heap) -> *ID3D12Heap_VTable { return obj.id3d12heap_vtable; }
 
 
@@ -4651,14 +4628,6 @@ ID3D12Resource_VTable :: struct #type_info_none {
     ReadFromSubresource: (this: *ID3D12Resource, pDstData: *void, DstRowPitch: u32, DstDepthPitch: u32, SrcSubresource: u32, pSrcBox: *D3D12_BOX) -> HRESULT #cpp_method;
     GetHeapProperties: (this: *ID3D12Resource, pHeapProperties: *D3D12_HEAP_PROPERTIES, pHeapFlags: *D3D12_HEAP_FLAGS) -> HRESULT #cpp_method;
 }
-ID3D12Resource_Map :: inline (this: *ID3D12Resource, Subresource: u32, pReadRange: *D3D12_RANGE, ppData: **void) -> HRESULT { return this.id3d12resource_vtable.Map(this, Subresource, pReadRange, ppData); }
-ID3D12Resource_Unmap :: inline (this: *ID3D12Resource, Subresource: u32, pWrittenRange: *D3D12_RANGE) { this.id3d12resource_vtable.Unmap(this, Subresource, pWrittenRange); }
-ID3D12Resource_GetDesc :: inline (this: *ID3D12Resource) -> D3D12_RESOURCE_DESC { return this.id3d12resource_vtable.GetDesc(this); }
-ID3D12Resource_GetGPUVirtualAddress :: inline (this: *ID3D12Resource) -> D3D12_GPU_VIRTUAL_ADDRESS { return this.id3d12resource_vtable.GetGPUVirtualAddress(this); }
-ID3D12Resource_WriteToSubresource :: inline (this: *ID3D12Resource, DstSubresource: u32, pDstBox: *D3D12_BOX, pSrcData: *void, SrcRowPitch: u32, SrcDepthPitch: u32) -> HRESULT { return this.id3d12resource_vtable.WriteToSubresource(this, DstSubresource, pDstBox, pSrcData, SrcRowPitch, SrcDepthPitch); }
-ID3D12Resource_ReadFromSubresource :: inline (this: *ID3D12Resource, pDstData: *void, DstRowPitch: u32, DstDepthPitch: u32, SrcSubresource: u32, pSrcBox: *D3D12_BOX) -> HRESULT { return this.id3d12resource_vtable.ReadFromSubresource(this, pDstData, DstRowPitch, DstDepthPitch, SrcSubresource, pSrcBox); }
-ID3D12Resource_GetHeapProperties :: inline (this: *ID3D12Resource, pHeapProperties: *D3D12_HEAP_PROPERTIES, pHeapFlags: *D3D12_HEAP_FLAGS) -> HRESULT { return this.id3d12resource_vtable.GetHeapProperties(this, pHeapProperties, pHeapFlags); }
-
 vtable :: (obj: *ID3D12Resource) -> *ID3D12Resource_VTable { return obj.id3d12resource_vtable; }
 
 
@@ -4672,8 +4641,6 @@ ID3D12CommandAllocator_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     Reset: (this: *ID3D12CommandAllocator) -> HRESULT #cpp_method;
 }
-ID3D12CommandAllocator_Reset :: inline (this: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12commandallocator_vtable.Reset(this); }
-
 vtable :: (obj: *ID3D12CommandAllocator) -> *ID3D12CommandAllocator_VTable { return obj.id3d12commandallocator_vtable; }
 
 
@@ -4689,10 +4656,6 @@ ID3D12Fence_VTable :: struct #type_info_none {
     SetEventOnCompletion: (this: *ID3D12Fence, Value: u64, hEvent: HANDLE) -> HRESULT #cpp_method;
     Signal: (this: *ID3D12Fence, Value: u64) -> HRESULT #cpp_method;
 }
-ID3D12Fence_GetCompletedValue :: inline (this: *ID3D12Fence) -> u64 { return this.id3d12fence_vtable.GetCompletedValue(this); }
-ID3D12Fence_SetEventOnCompletion :: inline (this: *ID3D12Fence, Value: u64, hEvent: HANDLE) -> HRESULT { return this.id3d12fence_vtable.SetEventOnCompletion(this, Value, hEvent); }
-ID3D12Fence_Signal :: inline (this: *ID3D12Fence, Value: u64) -> HRESULT { return this.id3d12fence_vtable.Signal(this, Value); }
-
 vtable :: (obj: *ID3D12Fence) -> *ID3D12Fence_VTable { return obj.id3d12fence_vtable; }
 
 
@@ -4706,8 +4669,6 @@ ID3D12Fence1_VTable :: struct #type_info_none {
     using id3d12fence: ID3D12Fence_VTable;
     GetCreationFlags: (this: *ID3D12Fence1) -> D3D12_FENCE_FLAGS #cpp_method;
 }
-ID3D12Fence1_GetCreationFlags :: inline (this: *ID3D12Fence1) -> D3D12_FENCE_FLAGS { return this.id3d12fence1_vtable.GetCreationFlags(this); }
-
 vtable :: (obj: *ID3D12Fence1) -> *ID3D12Fence1_VTable { return obj.id3d12fence1_vtable; }
 
 
@@ -4721,8 +4682,6 @@ ID3D12PipelineState_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetCachedBlob: (this: *ID3D12PipelineState, ppBlob: **ID3DBlob) -> HRESULT #cpp_method;
 }
-ID3D12PipelineState_GetCachedBlob :: inline (this: *ID3D12PipelineState, ppBlob: **ID3DBlob) -> HRESULT { return this.id3d12pipelinestate_vtable.GetCachedBlob(this, ppBlob); }
-
 vtable :: (obj: *ID3D12PipelineState) -> *ID3D12PipelineState_VTable { return obj.id3d12pipelinestate_vtable; }
 
 
@@ -4738,10 +4697,6 @@ ID3D12DescriptorHeap_VTable :: struct #type_info_none {
     GetCPUDescriptorHandleForHeapStart: (this: *ID3D12DescriptorHeap) -> D3D12_CPU_DESCRIPTOR_HANDLE #cpp_method;
     GetGPUDescriptorHandleForHeapStart: (this: *ID3D12DescriptorHeap) -> D3D12_GPU_DESCRIPTOR_HANDLE #cpp_method;
 }
-ID3D12DescriptorHeap_GetDesc :: inline (this: *ID3D12DescriptorHeap) -> D3D12_DESCRIPTOR_HEAP_DESC { return this.id3d12descriptorheap_vtable.GetDesc(this); }
-ID3D12DescriptorHeap_GetCPUDescriptorHandleForHeapStart :: inline (this: *ID3D12DescriptorHeap) -> D3D12_CPU_DESCRIPTOR_HANDLE { return this.id3d12descriptorheap_vtable.GetCPUDescriptorHandleForHeapStart(this); }
-ID3D12DescriptorHeap_GetGPUDescriptorHandleForHeapStart :: inline (this: *ID3D12DescriptorHeap) -> D3D12_GPU_DESCRIPTOR_HANDLE { return this.id3d12descriptorheap_vtable.GetGPUDescriptorHandleForHeapStart(this); }
-
 vtable :: (obj: *ID3D12DescriptorHeap) -> *ID3D12DescriptorHeap_VTable { return obj.id3d12descriptorheap_vtable; }
 
 
@@ -4767,8 +4722,6 @@ ID3D12CommandList_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetType: (this: *ID3D12CommandList) -> D3D12_COMMAND_LIST_TYPE #cpp_method;
 }
-ID3D12CommandList_GetType :: inline (this: *ID3D12CommandList) -> D3D12_COMMAND_LIST_TYPE { return this.id3d12commandlist_vtable.GetType(this); }
-
 vtable :: (obj: *ID3D12CommandList) -> *ID3D12CommandList_VTable { return obj.id3d12commandlist_vtable; }
 
 
@@ -4832,58 +4785,6 @@ ID3D12GraphicsCommandList_VTable :: struct #type_info_none {
     EndEvent: (this: *ID3D12GraphicsCommandList) -> void #cpp_method;
     ExecuteIndirect: (this: *ID3D12GraphicsCommandList, pCommandSignature: *ID3D12CommandSignature, MaxCommandCount: u32, pArgumentBuffer: *ID3D12Resource, ArgumentBufferOffset: u64, pCountBuffer: *ID3D12Resource, CountBufferOffset: u64) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList_Close :: inline (this: *ID3D12GraphicsCommandList) -> HRESULT { return this.id3d12graphicscommandlist_vtable.Close(this); }
-ID3D12GraphicsCommandList_Reset :: inline (this: *ID3D12GraphicsCommandList, pAllocator: *ID3D12CommandAllocator, pInitialState: *ID3D12PipelineState) -> HRESULT { return this.id3d12graphicscommandlist_vtable.Reset(this, pAllocator, pInitialState); }
-ID3D12GraphicsCommandList_ClearState :: inline (this: *ID3D12GraphicsCommandList, pPipelineState: *ID3D12PipelineState) { this.id3d12graphicscommandlist_vtable.ClearState(this, pPipelineState); }
-ID3D12GraphicsCommandList_DrawInstanced :: inline (this: *ID3D12GraphicsCommandList, VertexCountPerInstance: u32, InstanceCount: u32, StartVertexLocation: u32, StartInstanceLocation: u32) { this.id3d12graphicscommandlist_vtable.DrawInstanced(this, VertexCountPerInstance, InstanceCount, StartVertexLocation, StartInstanceLocation); }
-ID3D12GraphicsCommandList_DrawIndexedInstanced :: inline (this: *ID3D12GraphicsCommandList, IndexCountPerInstance: u32, InstanceCount: u32, StartIndexLocation: u32, BaseVertexLocation: s32, StartInstanceLocation: u32) { this.id3d12graphicscommandlist_vtable.DrawIndexedInstanced(this, IndexCountPerInstance, InstanceCount, StartIndexLocation, BaseVertexLocation, StartInstanceLocation); }
-ID3D12GraphicsCommandList_Dispatch :: inline (this: *ID3D12GraphicsCommandList, ThreadGroupCountX: u32, ThreadGroupCountY: u32, ThreadGroupCountZ: u32) { this.id3d12graphicscommandlist_vtable.Dispatch(this, ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ); }
-ID3D12GraphicsCommandList_CopyBufferRegion :: inline (this: *ID3D12GraphicsCommandList, pDstBuffer: *ID3D12Resource, DstOffset: u64, pSrcBuffer: *ID3D12Resource, SrcOffset: u64, NumBytes: u64) { this.id3d12graphicscommandlist_vtable.CopyBufferRegion(this, pDstBuffer, DstOffset, pSrcBuffer, SrcOffset, NumBytes); }
-ID3D12GraphicsCommandList_CopyTextureRegion :: inline (this: *ID3D12GraphicsCommandList, pDst: *D3D12_TEXTURE_COPY_LOCATION, DstX: u32, DstY: u32, DstZ: u32, pSrc: *D3D12_TEXTURE_COPY_LOCATION, pSrcBox: *D3D12_BOX) { this.id3d12graphicscommandlist_vtable.CopyTextureRegion(this, pDst, DstX, DstY, DstZ, pSrc, pSrcBox); }
-ID3D12GraphicsCommandList_CopyResource :: inline (this: *ID3D12GraphicsCommandList, pDstResource: *ID3D12Resource, pSrcResource: *ID3D12Resource) { this.id3d12graphicscommandlist_vtable.CopyResource(this, pDstResource, pSrcResource); }
-ID3D12GraphicsCommandList_CopyTiles :: inline (this: *ID3D12GraphicsCommandList, pTiledResource: *ID3D12Resource, pTileRegionStartCoordinate: *D3D12_TILED_RESOURCE_COORDINATE, pTileRegionSize: *D3D12_TILE_REGION_SIZE, pBuffer: *ID3D12Resource, BufferStartOffsetInBytes: u64, Flags: D3D12_TILE_COPY_FLAGS) { this.id3d12graphicscommandlist_vtable.CopyTiles(this, pTiledResource, pTileRegionStartCoordinate, pTileRegionSize, pBuffer, BufferStartOffsetInBytes, Flags); }
-ID3D12GraphicsCommandList_ResolveSubresource :: inline (this: *ID3D12GraphicsCommandList, pDstResource: *ID3D12Resource, DstSubresource: u32, pSrcResource: *ID3D12Resource, SrcSubresource: u32, Format: DXGI_FORMAT) { this.id3d12graphicscommandlist_vtable.ResolveSubresource(this, pDstResource, DstSubresource, pSrcResource, SrcSubresource, Format); }
-ID3D12GraphicsCommandList_IASetPrimitiveTopology :: inline (this: *ID3D12GraphicsCommandList, PrimitiveTopology: D3D12_PRIMITIVE_TOPOLOGY) { this.id3d12graphicscommandlist_vtable.IASetPrimitiveTopology(this, PrimitiveTopology); }
-ID3D12GraphicsCommandList_RSSetViewports :: inline (this: *ID3D12GraphicsCommandList, NumViewports: u32, pViewports: *D3D12_VIEWPORT) { this.id3d12graphicscommandlist_vtable.RSSetViewports(this, NumViewports, pViewports); }
-ID3D12GraphicsCommandList_RSSetScissorRects :: inline (this: *ID3D12GraphicsCommandList, NumRects: u32, pRects: *D3D12_RECT) { this.id3d12graphicscommandlist_vtable.RSSetScissorRects(this, NumRects, pRects); }
-ID3D12GraphicsCommandList_OMSetBlendFactor :: inline (this: *ID3D12GraphicsCommandList, BlendFactor: *[4] float) { this.id3d12graphicscommandlist_vtable.OMSetBlendFactor(this, BlendFactor); }
-ID3D12GraphicsCommandList_OMSetStencilRef :: inline (this: *ID3D12GraphicsCommandList, StencilRef: u32) { this.id3d12graphicscommandlist_vtable.OMSetStencilRef(this, StencilRef); }
-ID3D12GraphicsCommandList_SetPipelineState :: inline (this: *ID3D12GraphicsCommandList, pPipelineState: *ID3D12PipelineState) { this.id3d12graphicscommandlist_vtable.SetPipelineState(this, pPipelineState); }
-ID3D12GraphicsCommandList_ResourceBarrier :: inline (this: *ID3D12GraphicsCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12graphicscommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
-ID3D12GraphicsCommandList_ExecuteBundle :: inline (this: *ID3D12GraphicsCommandList, pCommandList: *ID3D12GraphicsCommandList) { this.id3d12graphicscommandlist_vtable.ExecuteBundle(this, pCommandList); }
-ID3D12GraphicsCommandList_SetDescriptorHeaps :: inline (this: *ID3D12GraphicsCommandList, NumDescriptorHeaps: u32, ppDescriptorHeaps: **ID3D12DescriptorHeap) { this.id3d12graphicscommandlist_vtable.SetDescriptorHeaps(this, NumDescriptorHeaps, ppDescriptorHeaps); }
-ID3D12GraphicsCommandList_SetComputeRootSignature :: inline (this: *ID3D12GraphicsCommandList, pRootSignature: *ID3D12RootSignature) { this.id3d12graphicscommandlist_vtable.SetComputeRootSignature(this, pRootSignature); }
-ID3D12GraphicsCommandList_SetGraphicsRootSignature :: inline (this: *ID3D12GraphicsCommandList, pRootSignature: *ID3D12RootSignature) { this.id3d12graphicscommandlist_vtable.SetGraphicsRootSignature(this, pRootSignature); }
-ID3D12GraphicsCommandList_SetComputeRootDescriptorTable :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE) { this.id3d12graphicscommandlist_vtable.SetComputeRootDescriptorTable(this, RootParameterIndex, BaseDescriptor); }
-ID3D12GraphicsCommandList_SetGraphicsRootDescriptorTable :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BaseDescriptor: D3D12_GPU_DESCRIPTOR_HANDLE) { this.id3d12graphicscommandlist_vtable.SetGraphicsRootDescriptorTable(this, RootParameterIndex, BaseDescriptor); }
-ID3D12GraphicsCommandList_SetComputeRoot32BitConstant :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, SrcData: u32, DestOffsetIn32BitValues: u32) { this.id3d12graphicscommandlist_vtable.SetComputeRoot32BitConstant(this, RootParameterIndex, SrcData, DestOffsetIn32BitValues); }
-ID3D12GraphicsCommandList_SetGraphicsRoot32BitConstant :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, SrcData: u32, DestOffsetIn32BitValues: u32) { this.id3d12graphicscommandlist_vtable.SetGraphicsRoot32BitConstant(this, RootParameterIndex, SrcData, DestOffsetIn32BitValues); }
-ID3D12GraphicsCommandList_SetComputeRoot32BitConstants :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, Num32BitValuesToSet: u32, pSrcData: *void, DestOffsetIn32BitValues: u32) { this.id3d12graphicscommandlist_vtable.SetComputeRoot32BitConstants(this, RootParameterIndex, Num32BitValuesToSet, pSrcData, DestOffsetIn32BitValues); }
-ID3D12GraphicsCommandList_SetGraphicsRoot32BitConstants :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, Num32BitValuesToSet: u32, pSrcData: *void, DestOffsetIn32BitValues: u32) { this.id3d12graphicscommandlist_vtable.SetGraphicsRoot32BitConstants(this, RootParameterIndex, Num32BitValuesToSet, pSrcData, DestOffsetIn32BitValues); }
-ID3D12GraphicsCommandList_SetComputeRootConstantBufferView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetComputeRootConstantBufferView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_SetGraphicsRootConstantBufferView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetGraphicsRootConstantBufferView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_SetComputeRootShaderResourceView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetComputeRootShaderResourceView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_SetGraphicsRootShaderResourceView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetGraphicsRootShaderResourceView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_SetComputeRootUnorderedAccessView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetComputeRootUnorderedAccessView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_SetGraphicsRootUnorderedAccessView :: inline (this: *ID3D12GraphicsCommandList, RootParameterIndex: u32, BufferLocation: D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist_vtable.SetGraphicsRootUnorderedAccessView(this, RootParameterIndex, BufferLocation); }
-ID3D12GraphicsCommandList_IASetIndexBuffer :: inline (this: *ID3D12GraphicsCommandList, pView: *D3D12_INDEX_BUFFER_VIEW) { this.id3d12graphicscommandlist_vtable.IASetIndexBuffer(this, pView); }
-ID3D12GraphicsCommandList_IASetVertexBuffers :: inline (this: *ID3D12GraphicsCommandList, StartSlot: u32, NumViews: u32, pViews: *D3D12_VERTEX_BUFFER_VIEW) { this.id3d12graphicscommandlist_vtable.IASetVertexBuffers(this, StartSlot, NumViews, pViews); }
-ID3D12GraphicsCommandList_SOSetTargets :: inline (this: *ID3D12GraphicsCommandList, StartSlot: u32, NumViews: u32, pViews: *D3D12_STREAM_OUTPUT_BUFFER_VIEW) { this.id3d12graphicscommandlist_vtable.SOSetTargets(this, StartSlot, NumViews, pViews); }
-ID3D12GraphicsCommandList_OMSetRenderTargets :: inline (this: *ID3D12GraphicsCommandList, NumRenderTargetDescriptors: u32, pRenderTargetDescriptors: *D3D12_CPU_DESCRIPTOR_HANDLE, RTsSingleHandleToDescriptorRange: BOOL, pDepthStencilDescriptor: *D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12graphicscommandlist_vtable.OMSetRenderTargets(this, NumRenderTargetDescriptors, pRenderTargetDescriptors, RTsSingleHandleToDescriptorRange, pDepthStencilDescriptor); }
-ID3D12GraphicsCommandList_ClearDepthStencilView :: inline (this: *ID3D12GraphicsCommandList, DepthStencilView: D3D12_CPU_DESCRIPTOR_HANDLE, ClearFlags: D3D12_CLEAR_FLAGS, Depth: float, Stencil: u8, NumRects: u32, pRects: *D3D12_RECT) { this.id3d12graphicscommandlist_vtable.ClearDepthStencilView(this, DepthStencilView, ClearFlags, Depth, Stencil, NumRects, pRects); }
-ID3D12GraphicsCommandList_ClearRenderTargetView :: inline (this: *ID3D12GraphicsCommandList, RenderTargetView: D3D12_CPU_DESCRIPTOR_HANDLE, ColorRGBA: *[4] float, NumRects: u32, pRects: *D3D12_RECT) { this.id3d12graphicscommandlist_vtable.ClearRenderTargetView(this, RenderTargetView, ColorRGBA, NumRects, pRects); }
-ID3D12GraphicsCommandList_ClearUnorderedAccessViewUint :: inline (this: *ID3D12GraphicsCommandList, ViewGPUHandleInCurrentHeap: D3D12_GPU_DESCRIPTOR_HANDLE, ViewCPUHandle: D3D12_CPU_DESCRIPTOR_HANDLE, pResource: *ID3D12Resource, Values: *[4] u32, NumRects: u32, pRects: *D3D12_RECT) { this.id3d12graphicscommandlist_vtable.ClearUnorderedAccessViewUint(this, ViewGPUHandleInCurrentHeap, ViewCPUHandle, pResource, Values, NumRects, pRects); }
-ID3D12GraphicsCommandList_ClearUnorderedAccessViewFloat :: inline (this: *ID3D12GraphicsCommandList, ViewGPUHandleInCurrentHeap: D3D12_GPU_DESCRIPTOR_HANDLE, ViewCPUHandle: D3D12_CPU_DESCRIPTOR_HANDLE, pResource: *ID3D12Resource, Values: *[4] float, NumRects: u32, pRects: *D3D12_RECT) { this.id3d12graphicscommandlist_vtable.ClearUnorderedAccessViewFloat(this, ViewGPUHandleInCurrentHeap, ViewCPUHandle, pResource, Values, NumRects, pRects); }
-ID3D12GraphicsCommandList_DiscardResource :: inline (this: *ID3D12GraphicsCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12graphicscommandlist_vtable.DiscardResource(this, pResource, pRegion); }
-ID3D12GraphicsCommandList_BeginQuery :: inline (this: *ID3D12GraphicsCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12graphicscommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
-ID3D12GraphicsCommandList_EndQuery :: inline (this: *ID3D12GraphicsCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12graphicscommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
-ID3D12GraphicsCommandList_ResolveQueryData :: inline (this: *ID3D12GraphicsCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12graphicscommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
-ID3D12GraphicsCommandList_SetPredication :: inline (this: *ID3D12GraphicsCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12graphicscommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
-ID3D12GraphicsCommandList_SetMarker :: inline (this: *ID3D12GraphicsCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12graphicscommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
-ID3D12GraphicsCommandList_BeginEvent :: inline (this: *ID3D12GraphicsCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12graphicscommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
-ID3D12GraphicsCommandList_EndEvent :: inline (this: *ID3D12GraphicsCommandList) { this.id3d12graphicscommandlist_vtable.EndEvent(this); }
-ID3D12GraphicsCommandList_ExecuteIndirect :: inline (this: *ID3D12GraphicsCommandList, pCommandSignature: *ID3D12CommandSignature, MaxCommandCount: u32, pArgumentBuffer: *ID3D12Resource, ArgumentBufferOffset: u64, pCountBuffer: *ID3D12Resource, CountBufferOffset: u64) { this.id3d12graphicscommandlist_vtable.ExecuteIndirect(this, pCommandSignature, MaxCommandCount, pArgumentBuffer, ArgumentBufferOffset, pCountBuffer, CountBufferOffset); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList) -> *ID3D12GraphicsCommandList_VTable { return obj.id3d12graphicscommandlist_vtable; }
 
 
@@ -4902,13 +4803,6 @@ ID3D12GraphicsCommandList1_VTable :: struct #type_info_none {
     ResolveSubresourceRegion: (this: *ID3D12GraphicsCommandList1, pDstResource: *ID3D12Resource, DstSubresource: u32, DstX: u32, DstY: u32, pSrcResource: *ID3D12Resource, SrcSubresource: u32, pSrcRect: *D3D12_RECT, Format: DXGI_FORMAT, ResolveMode: D3D12_RESOLVE_MODE) -> void #cpp_method;
     SetViewInstanceMask: (this: *ID3D12GraphicsCommandList1, Mask: u32) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList1_AtomicCopyBufferUINT :: inline (this: *ID3D12GraphicsCommandList1, pDstBuffer: *ID3D12Resource, DstOffset: u64, pSrcBuffer: *ID3D12Resource, SrcOffset: u64, Dependencies: u32, ppDependentResources: **ID3D12Resource, pDependentSubresourceRanges: *D3D12_SUBRESOURCE_RANGE_UINT64) { this.id3d12graphicscommandlist1_vtable.AtomicCopyBufferUINT(this, pDstBuffer, DstOffset, pSrcBuffer, SrcOffset, Dependencies, ppDependentResources, pDependentSubresourceRanges); }
-ID3D12GraphicsCommandList1_AtomicCopyBufferUINT64 :: inline (this: *ID3D12GraphicsCommandList1, pDstBuffer: *ID3D12Resource, DstOffset: u64, pSrcBuffer: *ID3D12Resource, SrcOffset: u64, Dependencies: u32, ppDependentResources: **ID3D12Resource, pDependentSubresourceRanges: *D3D12_SUBRESOURCE_RANGE_UINT64) { this.id3d12graphicscommandlist1_vtable.AtomicCopyBufferUINT64(this, pDstBuffer, DstOffset, pSrcBuffer, SrcOffset, Dependencies, ppDependentResources, pDependentSubresourceRanges); }
-ID3D12GraphicsCommandList1_OMSetDepthBounds :: inline (this: *ID3D12GraphicsCommandList1, Min: float, Max: float) { this.id3d12graphicscommandlist1_vtable.OMSetDepthBounds(this, Min, Max); }
-ID3D12GraphicsCommandList1_SetSamplePositions :: inline (this: *ID3D12GraphicsCommandList1, NumSamplesPerPixel: u32, NumPixels: u32, pSamplePositions: *D3D12_SAMPLE_POSITION) { this.id3d12graphicscommandlist1_vtable.SetSamplePositions(this, NumSamplesPerPixel, NumPixels, pSamplePositions); }
-ID3D12GraphicsCommandList1_ResolveSubresourceRegion :: inline (this: *ID3D12GraphicsCommandList1, pDstResource: *ID3D12Resource, DstSubresource: u32, DstX: u32, DstY: u32, pSrcResource: *ID3D12Resource, SrcSubresource: u32, pSrcRect: *D3D12_RECT, Format: DXGI_FORMAT, ResolveMode: D3D12_RESOLVE_MODE) { this.id3d12graphicscommandlist1_vtable.ResolveSubresourceRegion(this, pDstResource, DstSubresource, DstX, DstY, pSrcResource, SrcSubresource, pSrcRect, Format, ResolveMode); }
-ID3D12GraphicsCommandList1_SetViewInstanceMask :: inline (this: *ID3D12GraphicsCommandList1, Mask: u32) { this.id3d12graphicscommandlist1_vtable.SetViewInstanceMask(this, Mask); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList1) -> *ID3D12GraphicsCommandList1_VTable { return obj.id3d12graphicscommandlist1_vtable; }
 
 
@@ -4939,8 +4833,6 @@ ID3D12GraphicsCommandList2_VTable :: struct #type_info_none {
     using id3d12graphicscommandlist1: ID3D12GraphicsCommandList1_VTable;
     WriteBufferImmediate: (this: *ID3D12GraphicsCommandList2, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList2_WriteBufferImmediate :: inline (this: *ID3D12GraphicsCommandList2, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12graphicscommandlist2_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList2) -> *ID3D12GraphicsCommandList2_VTable { return obj.id3d12graphicscommandlist2_vtable; }
 
 
@@ -4964,18 +4856,6 @@ ID3D12CommandQueue_VTable :: struct #type_info_none {
     GetClockCalibration: (this: *ID3D12CommandQueue, pGpuTimestamp: *u64, pCpuTimestamp: *u64) -> HRESULT #cpp_method;
     GetDesc: (this: *ID3D12CommandQueue) -> D3D12_COMMAND_QUEUE_DESC #cpp_method;
 }
-ID3D12CommandQueue_UpdateTileMappings :: inline (this: *ID3D12CommandQueue, pResource: *ID3D12Resource, NumResourceRegions: u32, pResourceRegionStartCoordinates: *D3D12_TILED_RESOURCE_COORDINATE, pResourceRegionSizes: *D3D12_TILE_REGION_SIZE, pHeap: *ID3D12Heap, NumRanges: u32, pRangeFlags: *D3D12_TILE_RANGE_FLAGS, pHeapRangeStartOffsets: *u32, pRangeTileCounts: *u32, Flags: D3D12_TILE_MAPPING_FLAGS) { this.id3d12commandqueue_vtable.UpdateTileMappings(this, pResource, NumResourceRegions, pResourceRegionStartCoordinates, pResourceRegionSizes, pHeap, NumRanges, pRangeFlags, pHeapRangeStartOffsets, pRangeTileCounts, Flags); }
-ID3D12CommandQueue_CopyTileMappings :: inline (this: *ID3D12CommandQueue, pDstResource: *ID3D12Resource, pDstRegionStartCoordinate: *D3D12_TILED_RESOURCE_COORDINATE, pSrcResource: *ID3D12Resource, pSrcRegionStartCoordinate: *D3D12_TILED_RESOURCE_COORDINATE, pRegionSize: *D3D12_TILE_REGION_SIZE, Flags: D3D12_TILE_MAPPING_FLAGS) { this.id3d12commandqueue_vtable.CopyTileMappings(this, pDstResource, pDstRegionStartCoordinate, pSrcResource, pSrcRegionStartCoordinate, pRegionSize, Flags); }
-ID3D12CommandQueue_ExecuteCommandLists :: inline (this: *ID3D12CommandQueue, NumCommandLists: u32, ppCommandLists: **ID3D12CommandList) { this.id3d12commandqueue_vtable.ExecuteCommandLists(this, NumCommandLists, ppCommandLists); }
-ID3D12CommandQueue_SetMarker :: inline (this: *ID3D12CommandQueue, Metadata: u32, pData: *void, Size: u32) { this.id3d12commandqueue_vtable.SetMarker(this, Metadata, pData, Size); }
-ID3D12CommandQueue_BeginEvent :: inline (this: *ID3D12CommandQueue, Metadata: u32, pData: *void, Size: u32) { this.id3d12commandqueue_vtable.BeginEvent(this, Metadata, pData, Size); }
-ID3D12CommandQueue_EndEvent :: inline (this: *ID3D12CommandQueue) { this.id3d12commandqueue_vtable.EndEvent(this); }
-ID3D12CommandQueue_Signal :: inline (this: *ID3D12CommandQueue, pFence: *ID3D12Fence, Value: u64) -> HRESULT { return this.id3d12commandqueue_vtable.Signal(this, pFence, Value); }
-ID3D12CommandQueue_Wait :: inline (this: *ID3D12CommandQueue, pFence: *ID3D12Fence, Value: u64) -> HRESULT { return this.id3d12commandqueue_vtable.Wait(this, pFence, Value); }
-ID3D12CommandQueue_GetTimestampFrequency :: inline (this: *ID3D12CommandQueue, pFrequency: *u64) -> HRESULT { return this.id3d12commandqueue_vtable.GetTimestampFrequency(this, pFrequency); }
-ID3D12CommandQueue_GetClockCalibration :: inline (this: *ID3D12CommandQueue, pGpuTimestamp: *u64, pCpuTimestamp: *u64) -> HRESULT { return this.id3d12commandqueue_vtable.GetClockCalibration(this, pGpuTimestamp, pCpuTimestamp); }
-ID3D12CommandQueue_GetDesc :: inline (this: *ID3D12CommandQueue) -> D3D12_COMMAND_QUEUE_DESC { return this.id3d12commandqueue_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12CommandQueue) -> *ID3D12CommandQueue_VTable { return obj.id3d12commandqueue_vtable; }
 
 
@@ -5025,44 +4905,6 @@ ID3D12Device_VTable :: struct #type_info_none {
     GetResourceTiling: (this: *ID3D12Device, pTiledResource: *ID3D12Resource, pNumTilesForEntireResource: *u32, pPackedMipDesc: *D3D12_PACKED_MIP_INFO, pStandardTileShapeForNonPackedMips: *D3D12_TILE_SHAPE, pNumSubresourceTilings: *u32, FirstSubresourceTilingToGet: u32, pSubresourceTilingsForNonPackedMips: *D3D12_SUBRESOURCE_TILING) -> void #cpp_method;
     GetAdapterLuid: (this: *ID3D12Device) -> LUID #cpp_method;
 }
-ID3D12Device_GetNodeCount :: inline (this: *ID3D12Device) -> u32 { return this.id3d12device_vtable.GetNodeCount(this); }
-ID3D12Device_CreateCommandQueue :: inline (this: *ID3D12Device, pDesc: *D3D12_COMMAND_QUEUE_DESC, riid: *IID, ppCommandQueue: **void) -> HRESULT { return this.id3d12device_vtable.CreateCommandQueue(this, pDesc, riid, ppCommandQueue); }
-ID3D12Device_CreateCommandAllocator :: inline (this: *ID3D12Device, type: D3D12_COMMAND_LIST_TYPE, riid: *IID, ppCommandAllocator: **void) -> HRESULT { return this.id3d12device_vtable.CreateCommandAllocator(this, type, riid, ppCommandAllocator); }
-ID3D12Device_CreateGraphicsPipelineState :: inline (this: *ID3D12Device, pDesc: *D3D12_GRAPHICS_PIPELINE_STATE_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12device_vtable.CreateGraphicsPipelineState(this, pDesc, riid, ppPipelineState); }
-ID3D12Device_CreateComputePipelineState :: inline (this: *ID3D12Device, pDesc: *D3D12_COMPUTE_PIPELINE_STATE_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12device_vtable.CreateComputePipelineState(this, pDesc, riid, ppPipelineState); }
-ID3D12Device_CreateCommandList :: inline (this: *ID3D12Device, nodeMask: u32, type: D3D12_COMMAND_LIST_TYPE, pCommandAllocator: *ID3D12CommandAllocator, pInitialState: *ID3D12PipelineState, riid: *IID, ppCommandList: **void) -> HRESULT { return this.id3d12device_vtable.CreateCommandList(this, nodeMask, type, pCommandAllocator, pInitialState, riid, ppCommandList); }
-ID3D12Device_CheckFeatureSupport :: inline (this: *ID3D12Device, Feature: D3D12_FEATURE, pFeatureSupportData: *void, FeatureSupportDataSize: u32) -> HRESULT { return this.id3d12device_vtable.CheckFeatureSupport(this, Feature, pFeatureSupportData, FeatureSupportDataSize); }
-ID3D12Device_CreateDescriptorHeap :: inline (this: *ID3D12Device, pDescriptorHeapDesc: *D3D12_DESCRIPTOR_HEAP_DESC, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device_vtable.CreateDescriptorHeap(this, pDescriptorHeapDesc, riid, ppvHeap); }
-ID3D12Device_GetDescriptorHandleIncrementSize :: inline (this: *ID3D12Device, DescriptorHeapType: D3D12_DESCRIPTOR_HEAP_TYPE) -> u32 { return this.id3d12device_vtable.GetDescriptorHandleIncrementSize(this, DescriptorHeapType); }
-ID3D12Device_CreateRootSignature :: inline (this: *ID3D12Device, nodeMask: u32, pBlobWithRootSignature: *void, blobLengthInBytes: SIZE_T, riid: *IID, ppvRootSignature: **void) -> HRESULT { return this.id3d12device_vtable.CreateRootSignature(this, nodeMask, pBlobWithRootSignature, blobLengthInBytes, riid, ppvRootSignature); }
-ID3D12Device_CreateConstantBufferView :: inline (this: *ID3D12Device, pDesc: *D3D12_CONSTANT_BUFFER_VIEW_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateConstantBufferView(this, pDesc, DestDescriptor); }
-ID3D12Device_CreateShaderResourceView :: inline (this: *ID3D12Device, pResource: *ID3D12Resource, pDesc: *D3D12_SHADER_RESOURCE_VIEW_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateShaderResourceView(this, pResource, pDesc, DestDescriptor); }
-ID3D12Device_CreateUnorderedAccessView :: inline (this: *ID3D12Device, pResource: *ID3D12Resource, pCounterResource: *ID3D12Resource, pDesc: *D3D12_UNORDERED_ACCESS_VIEW_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateUnorderedAccessView(this, pResource, pCounterResource, pDesc, DestDescriptor); }
-ID3D12Device_CreateRenderTargetView :: inline (this: *ID3D12Device, pResource: *ID3D12Resource, pDesc: *D3D12_RENDER_TARGET_VIEW_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateRenderTargetView(this, pResource, pDesc, DestDescriptor); }
-ID3D12Device_CreateDepthStencilView :: inline (this: *ID3D12Device, pResource: *ID3D12Resource, pDesc: *D3D12_DEPTH_STENCIL_VIEW_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateDepthStencilView(this, pResource, pDesc, DestDescriptor); }
-ID3D12Device_CreateSampler :: inline (this: *ID3D12Device, pDesc: *D3D12_SAMPLER_DESC, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device_vtable.CreateSampler(this, pDesc, DestDescriptor); }
-ID3D12Device_CopyDescriptors :: inline (this: *ID3D12Device, NumDestDescriptorRanges: u32, pDestDescriptorRangeStarts: *D3D12_CPU_DESCRIPTOR_HANDLE, pDestDescriptorRangeSizes: *u32, NumSrcDescriptorRanges: u32, pSrcDescriptorRangeStarts: *D3D12_CPU_DESCRIPTOR_HANDLE, pSrcDescriptorRangeSizes: *u32, DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE) { this.id3d12device_vtable.CopyDescriptors(this, NumDestDescriptorRanges, pDestDescriptorRangeStarts, pDestDescriptorRangeSizes, NumSrcDescriptorRanges, pSrcDescriptorRangeStarts, pSrcDescriptorRangeSizes, DescriptorHeapsType); }
-ID3D12Device_CopyDescriptorsSimple :: inline (this: *ID3D12Device, NumDescriptors: u32, DestDescriptorRangeStart: D3D12_CPU_DESCRIPTOR_HANDLE, SrcDescriptorRangeStart: D3D12_CPU_DESCRIPTOR_HANDLE, DescriptorHeapsType: D3D12_DESCRIPTOR_HEAP_TYPE) { this.id3d12device_vtable.CopyDescriptorsSimple(this, NumDescriptors, DestDescriptorRangeStart, SrcDescriptorRangeStart, DescriptorHeapsType); }
-ID3D12Device_GetResourceAllocationInfo :: inline (this: *ID3D12Device, visibleMask: u32, numResourceDescs: u32, pResourceDescs: *D3D12_RESOURCE_DESC) -> D3D12_RESOURCE_ALLOCATION_INFO { return this.id3d12device_vtable.GetResourceAllocationInfo(this, visibleMask, numResourceDescs, pResourceDescs); }
-ID3D12Device_GetCustomHeapProperties :: inline (this: *ID3D12Device, nodeMask: u32, heapType: D3D12_HEAP_TYPE) -> D3D12_HEAP_PROPERTIES { return this.id3d12device_vtable.GetCustomHeapProperties(this, nodeMask, heapType); }
-ID3D12Device_CreateCommittedResource :: inline (this: *ID3D12Device, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC, InitialResourceState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, riidResource: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device_vtable.CreateCommittedResource(this, pHeapProperties, HeapFlags, pDesc, InitialResourceState, pOptimizedClearValue, riidResource, ppvResource); }
-ID3D12Device_CreateHeap :: inline (this: *ID3D12Device, pDesc: *D3D12_HEAP_DESC, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device_vtable.CreateHeap(this, pDesc, riid, ppvHeap); }
-ID3D12Device_CreatePlacedResource :: inline (this: *ID3D12Device, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC, InitialState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device_vtable.CreatePlacedResource(this, pHeap, HeapOffset, pDesc, InitialState, pOptimizedClearValue, riid, ppvResource); }
-ID3D12Device_CreateReservedResource :: inline (this: *ID3D12Device, pDesc: *D3D12_RESOURCE_DESC, InitialState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device_vtable.CreateReservedResource(this, pDesc, InitialState, pOptimizedClearValue, riid, ppvResource); }
-ID3D12Device_CreateSharedHandle :: inline (this: *ID3D12Device, pObject: *ID3D12DeviceChild, pAttributes: *SECURITY_ATTRIBUTES, Access: u32, Name: *s16, pHandle: *HANDLE) -> HRESULT { return this.id3d12device_vtable.CreateSharedHandle(this, pObject, pAttributes, Access, Name, pHandle); }
-ID3D12Device_OpenSharedHandle :: inline (this: *ID3D12Device, NTHandle: HANDLE, riid: *IID, ppvObj: **void) -> HRESULT { return this.id3d12device_vtable.OpenSharedHandle(this, NTHandle, riid, ppvObj); }
-ID3D12Device_OpenSharedHandleByName :: inline (this: *ID3D12Device, Name: *s16, Access: u32, pNTHandle: *HANDLE) -> HRESULT { return this.id3d12device_vtable.OpenSharedHandleByName(this, Name, Access, pNTHandle); }
-ID3D12Device_MakeResident :: inline (this: *ID3D12Device, NumObjects: u32, ppObjects: **ID3D12Pageable) -> HRESULT { return this.id3d12device_vtable.MakeResident(this, NumObjects, ppObjects); }
-ID3D12Device_Evict :: inline (this: *ID3D12Device, NumObjects: u32, ppObjects: **ID3D12Pageable) -> HRESULT { return this.id3d12device_vtable.Evict(this, NumObjects, ppObjects); }
-ID3D12Device_CreateFence :: inline (this: *ID3D12Device, InitialValue: u64, Flags: D3D12_FENCE_FLAGS, riid: *IID, ppFence: **void) -> HRESULT { return this.id3d12device_vtable.CreateFence(this, InitialValue, Flags, riid, ppFence); }
-ID3D12Device_GetDeviceRemovedReason :: inline (this: *ID3D12Device) -> HRESULT { return this.id3d12device_vtable.GetDeviceRemovedReason(this); }
-ID3D12Device_GetCopyableFootprints :: inline (this: *ID3D12Device, pResourceDesc: *D3D12_RESOURCE_DESC, FirstSubresource: u32, NumSubresources: u32, BaseOffset: u64, pLayouts: *D3D12_PLACED_SUBRESOURCE_FOOTPRINT, pNumRows: *u32, pRowSizeInBytes: *u64, pTotalBytes: *u64) { this.id3d12device_vtable.GetCopyableFootprints(this, pResourceDesc, FirstSubresource, NumSubresources, BaseOffset, pLayouts, pNumRows, pRowSizeInBytes, pTotalBytes); }
-ID3D12Device_CreateQueryHeap :: inline (this: *ID3D12Device, pDesc: *D3D12_QUERY_HEAP_DESC, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device_vtable.CreateQueryHeap(this, pDesc, riid, ppvHeap); }
-ID3D12Device_SetStablePowerState :: inline (this: *ID3D12Device, Enable: BOOL) -> HRESULT { return this.id3d12device_vtable.SetStablePowerState(this, Enable); }
-ID3D12Device_CreateCommandSignature :: inline (this: *ID3D12Device, pDesc: *D3D12_COMMAND_SIGNATURE_DESC, pRootSignature: *ID3D12RootSignature, riid: *IID, ppvCommandSignature: **void) -> HRESULT { return this.id3d12device_vtable.CreateCommandSignature(this, pDesc, pRootSignature, riid, ppvCommandSignature); }
-ID3D12Device_GetResourceTiling :: inline (this: *ID3D12Device, pTiledResource: *ID3D12Resource, pNumTilesForEntireResource: *u32, pPackedMipDesc: *D3D12_PACKED_MIP_INFO, pStandardTileShapeForNonPackedMips: *D3D12_TILE_SHAPE, pNumSubresourceTilings: *u32, FirstSubresourceTilingToGet: u32, pSubresourceTilingsForNonPackedMips: *D3D12_SUBRESOURCE_TILING) { this.id3d12device_vtable.GetResourceTiling(this, pTiledResource, pNumTilesForEntireResource, pPackedMipDesc, pStandardTileShapeForNonPackedMips, pNumSubresourceTilings, FirstSubresourceTilingToGet, pSubresourceTilingsForNonPackedMips); }
-ID3D12Device_GetAdapterLuid :: inline (this: *ID3D12Device) -> LUID { return this.id3d12device_vtable.GetAdapterLuid(this); }
-
 vtable :: (obj: *ID3D12Device) -> *ID3D12Device_VTable { return obj.id3d12device_vtable; }
 
 
@@ -5080,12 +4922,6 @@ ID3D12PipelineLibrary_VTable :: struct #type_info_none {
     GetSerializedSize: (this: *ID3D12PipelineLibrary) -> SIZE_T #cpp_method;
     Serialize: (this: *ID3D12PipelineLibrary, pData: *void, DataSizeInBytes: SIZE_T) -> HRESULT #cpp_method;
 }
-ID3D12PipelineLibrary_StorePipeline :: inline (this: *ID3D12PipelineLibrary, pName: *s16, pPipeline: *ID3D12PipelineState) -> HRESULT { return this.id3d12pipelinelibrary_vtable.StorePipeline(this, pName, pPipeline); }
-ID3D12PipelineLibrary_LoadGraphicsPipeline :: inline (this: *ID3D12PipelineLibrary, pName: *s16, pDesc: *D3D12_GRAPHICS_PIPELINE_STATE_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12pipelinelibrary_vtable.LoadGraphicsPipeline(this, pName, pDesc, riid, ppPipelineState); }
-ID3D12PipelineLibrary_LoadComputePipeline :: inline (this: *ID3D12PipelineLibrary, pName: *s16, pDesc: *D3D12_COMPUTE_PIPELINE_STATE_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12pipelinelibrary_vtable.LoadComputePipeline(this, pName, pDesc, riid, ppPipelineState); }
-ID3D12PipelineLibrary_GetSerializedSize :: inline (this: *ID3D12PipelineLibrary) -> SIZE_T { return this.id3d12pipelinelibrary_vtable.GetSerializedSize(this); }
-ID3D12PipelineLibrary_Serialize :: inline (this: *ID3D12PipelineLibrary, pData: *void, DataSizeInBytes: SIZE_T) -> HRESULT { return this.id3d12pipelinelibrary_vtable.Serialize(this, pData, DataSizeInBytes); }
-
 vtable :: (obj: *ID3D12PipelineLibrary) -> *ID3D12PipelineLibrary_VTable { return obj.id3d12pipelinelibrary_vtable; }
 
 
@@ -5099,8 +4935,6 @@ ID3D12PipelineLibrary1_VTable :: struct #type_info_none {
     using id3d12pipelinelibrary: ID3D12PipelineLibrary_VTable;
     LoadPipeline: (this: *ID3D12PipelineLibrary1, pName: *s16, pDesc: *D3D12_PIPELINE_STATE_STREAM_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT #cpp_method;
 }
-ID3D12PipelineLibrary1_LoadPipeline :: inline (this: *ID3D12PipelineLibrary1, pName: *s16, pDesc: *D3D12_PIPELINE_STATE_STREAM_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12pipelinelibrary1_vtable.LoadPipeline(this, pName, pDesc, riid, ppPipelineState); }
-
 vtable :: (obj: *ID3D12PipelineLibrary1) -> *ID3D12PipelineLibrary1_VTable { return obj.id3d12pipelinelibrary1_vtable; }
 
 
@@ -5142,10 +4976,6 @@ ID3D12Device1_VTable :: struct #type_info_none {
     SetEventOnMultipleFenceCompletion: (this: *ID3D12Device1, ppFences: **ID3D12Fence, pFenceValues: *u64, NumFences: u32, Flags: D3D12_MULTIPLE_FENCE_WAIT_FLAGS, hEvent: HANDLE) -> HRESULT #cpp_method;
     SetResidencyPriority: (this: *ID3D12Device1, NumObjects: u32, ppObjects: **ID3D12Pageable, pPriorities: *D3D12_RESIDENCY_PRIORITY) -> HRESULT #cpp_method;
 }
-ID3D12Device1_CreatePipelineLibrary :: inline (this: *ID3D12Device1, pLibraryBlob: *void, BlobLength: SIZE_T, riid: *IID, ppPipelineLibrary: **void) -> HRESULT { return this.id3d12device1_vtable.CreatePipelineLibrary(this, pLibraryBlob, BlobLength, riid, ppPipelineLibrary); }
-ID3D12Device1_SetEventOnMultipleFenceCompletion :: inline (this: *ID3D12Device1, ppFences: **ID3D12Fence, pFenceValues: *u64, NumFences: u32, Flags: D3D12_MULTIPLE_FENCE_WAIT_FLAGS, hEvent: HANDLE) -> HRESULT { return this.id3d12device1_vtable.SetEventOnMultipleFenceCompletion(this, ppFences, pFenceValues, NumFences, Flags, hEvent); }
-ID3D12Device1_SetResidencyPriority :: inline (this: *ID3D12Device1, NumObjects: u32, ppObjects: **ID3D12Pageable, pPriorities: *D3D12_RESIDENCY_PRIORITY) -> HRESULT { return this.id3d12device1_vtable.SetResidencyPriority(this, NumObjects, ppObjects, pPriorities); }
-
 vtable :: (obj: *ID3D12Device1) -> *ID3D12Device1_VTable { return obj.id3d12device1_vtable; }
 
 
@@ -5159,8 +4989,6 @@ ID3D12Device2_VTable :: struct #type_info_none {
     using id3d12device1: ID3D12Device1_VTable;
     CreatePipelineState: (this: *ID3D12Device2, pDesc: *D3D12_PIPELINE_STATE_STREAM_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT #cpp_method;
 }
-ID3D12Device2_CreatePipelineState :: inline (this: *ID3D12Device2, pDesc: *D3D12_PIPELINE_STATE_STREAM_DESC, riid: *IID, ppPipelineState: **void) -> HRESULT { return this.id3d12device2_vtable.CreatePipelineState(this, pDesc, riid, ppPipelineState); }
-
 vtable :: (obj: *ID3D12Device2) -> *ID3D12Device2_VTable { return obj.id3d12device2_vtable; }
 
 
@@ -5186,10 +5014,6 @@ ID3D12Device3_VTable :: struct #type_info_none {
     OpenExistingHeapFromFileMapping: (this: *ID3D12Device3, hFileMapping: HANDLE, riid: *IID, ppvHeap: **void) -> HRESULT #cpp_method;
     EnqueueMakeResident: (this: *ID3D12Device3, Flags: D3D12_RESIDENCY_FLAGS, NumObjects: u32, ppObjects: **ID3D12Pageable, pFenceToSignal: *ID3D12Fence, FenceValueToSignal: u64) -> HRESULT #cpp_method;
 }
-ID3D12Device3_OpenExistingHeapFromAddress :: inline (this: *ID3D12Device3, pAddress: *void, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device3_vtable.OpenExistingHeapFromAddress(this, pAddress, riid, ppvHeap); }
-ID3D12Device3_OpenExistingHeapFromFileMapping :: inline (this: *ID3D12Device3, hFileMapping: HANDLE, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device3_vtable.OpenExistingHeapFromFileMapping(this, hFileMapping, riid, ppvHeap); }
-ID3D12Device3_EnqueueMakeResident :: inline (this: *ID3D12Device3, Flags: D3D12_RESIDENCY_FLAGS, NumObjects: u32, ppObjects: **ID3D12Pageable, pFenceToSignal: *ID3D12Fence, FenceValueToSignal: u64) -> HRESULT { return this.id3d12device3_vtable.EnqueueMakeResident(this, Flags, NumObjects, ppObjects, pFenceToSignal, FenceValueToSignal); }
-
 vtable :: (obj: *ID3D12Device3) -> *ID3D12Device3_VTable { return obj.id3d12device3_vtable; }
 
 
@@ -5226,9 +5050,6 @@ ID3D12ProtectedSession_VTable :: struct #type_info_none {
     GetStatusFence: (this: *ID3D12ProtectedSession, riid: *IID, ppFence: **void) -> HRESULT #cpp_method;
     GetSessionStatus: (this: *ID3D12ProtectedSession) -> D3D12_PROTECTED_SESSION_STATUS #cpp_method;
 }
-ID3D12ProtectedSession_GetStatusFence :: inline (this: *ID3D12ProtectedSession, riid: *IID, ppFence: **void) -> HRESULT { return this.id3d12protectedsession_vtable.GetStatusFence(this, riid, ppFence); }
-ID3D12ProtectedSession_GetSessionStatus :: inline (this: *ID3D12ProtectedSession) -> D3D12_PROTECTED_SESSION_STATUS { return this.id3d12protectedsession_vtable.GetSessionStatus(this); }
-
 vtable :: (obj: *ID3D12ProtectedSession) -> *ID3D12ProtectedSession_VTable { return obj.id3d12protectedsession_vtable; }
 
 
@@ -5266,8 +5087,6 @@ ID3D12ProtectedResourceSession_VTable :: struct #type_info_none {
     using id3d12protectedsession: ID3D12ProtectedSession_VTable;
     GetDesc: (this: *ID3D12ProtectedResourceSession) -> D3D12_PROTECTED_RESOURCE_SESSION_DESC #cpp_method;
 }
-ID3D12ProtectedResourceSession_GetDesc :: inline (this: *ID3D12ProtectedResourceSession) -> D3D12_PROTECTED_RESOURCE_SESSION_DESC { return this.id3d12protectedresourcesession_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12ProtectedResourceSession) -> *ID3D12ProtectedResourceSession_VTable { return obj.id3d12protectedresourcesession_vtable; }
 
 
@@ -5286,13 +5105,6 @@ ID3D12Device4_VTable :: struct #type_info_none {
     CreateReservedResource1: (this: *ID3D12Device4, pDesc: *D3D12_RESOURCE_DESC, InitialState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, riid: *IID, ppvResource: **void) -> HRESULT #cpp_method;
     GetResourceAllocationInfo1: (this: *ID3D12Device4, visibleMask: u32, numResourceDescs: u32, pResourceDescs: *D3D12_RESOURCE_DESC, pResourceAllocationInfo1: *D3D12_RESOURCE_ALLOCATION_INFO1) -> D3D12_RESOURCE_ALLOCATION_INFO #cpp_method;
 }
-ID3D12Device4_CreateCommandList1 :: inline (this: *ID3D12Device4, nodeMask: u32, type: D3D12_COMMAND_LIST_TYPE, flags: D3D12_COMMAND_LIST_FLAGS, riid: *IID, ppCommandList: **void) -> HRESULT { return this.id3d12device4_vtable.CreateCommandList1(this, nodeMask, type, flags, riid, ppCommandList); }
-ID3D12Device4_CreateProtectedResourceSession :: inline (this: *ID3D12Device4, pDesc: *D3D12_PROTECTED_RESOURCE_SESSION_DESC, riid: *IID, ppSession: **void) -> HRESULT { return this.id3d12device4_vtable.CreateProtectedResourceSession(this, pDesc, riid, ppSession); }
-ID3D12Device4_CreateCommittedResource1 :: inline (this: *ID3D12Device4, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC, InitialResourceState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, riidResource: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device4_vtable.CreateCommittedResource1(this, pHeapProperties, HeapFlags, pDesc, InitialResourceState, pOptimizedClearValue, pProtectedSession, riidResource, ppvResource); }
-ID3D12Device4_CreateHeap1 :: inline (this: *ID3D12Device4, pDesc: *D3D12_HEAP_DESC, pProtectedSession: *ID3D12ProtectedResourceSession, riid: *IID, ppvHeap: **void) -> HRESULT { return this.id3d12device4_vtable.CreateHeap1(this, pDesc, pProtectedSession, riid, ppvHeap); }
-ID3D12Device4_CreateReservedResource1 :: inline (this: *ID3D12Device4, pDesc: *D3D12_RESOURCE_DESC, InitialState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device4_vtable.CreateReservedResource1(this, pDesc, InitialState, pOptimizedClearValue, pProtectedSession, riid, ppvResource); }
-ID3D12Device4_GetResourceAllocationInfo1 :: inline (this: *ID3D12Device4, visibleMask: u32, numResourceDescs: u32, pResourceDescs: *D3D12_RESOURCE_DESC, pResourceAllocationInfo1: *D3D12_RESOURCE_ALLOCATION_INFO1) -> D3D12_RESOURCE_ALLOCATION_INFO { return this.id3d12device4_vtable.GetResourceAllocationInfo1(this, visibleMask, numResourceDescs, pResourceDescs, pResourceAllocationInfo1); }
-
 vtable :: (obj: *ID3D12Device4) -> *ID3D12Device4_VTable { return obj.id3d12device4_vtable; }
 
 
@@ -5316,8 +5128,6 @@ ID3D12LifetimeOwner_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     LifetimeStateUpdated: (this: *ID3D12LifetimeOwner, NewState: D3D12_LIFETIME_STATE) -> void #cpp_method;
 }
-ID3D12LifetimeOwner_LifetimeStateUpdated :: inline (this: *ID3D12LifetimeOwner, NewState: D3D12_LIFETIME_STATE) { this.id3d12lifetimeowner_vtable.LifetimeStateUpdated(this, NewState); }
-
 vtable :: (obj: *ID3D12LifetimeOwner) -> *ID3D12LifetimeOwner_VTable { return obj.id3d12lifetimeowner_vtable; }
 
 
@@ -5334,11 +5144,6 @@ ID3D12SwapChainAssistant_VTable :: struct #type_info_none {
     GetCurrentResourceAndCommandQueue: (this: *ID3D12SwapChainAssistant, riidResource: *IID, ppvResource: **void, riidQueue: *IID, ppvQueue: **void) -> HRESULT #cpp_method;
     InsertImplicitSync: (this: *ID3D12SwapChainAssistant) -> HRESULT #cpp_method;
 }
-ID3D12SwapChainAssistant_GetLUID :: inline (this: *ID3D12SwapChainAssistant) -> LUID { return this.id3d12swapchainassistant_vtable.GetLUID(this); }
-ID3D12SwapChainAssistant_GetSwapChainObject :: inline (this: *ID3D12SwapChainAssistant, riid: *IID, ppv: **void) -> HRESULT { return this.id3d12swapchainassistant_vtable.GetSwapChainObject(this, riid, ppv); }
-ID3D12SwapChainAssistant_GetCurrentResourceAndCommandQueue :: inline (this: *ID3D12SwapChainAssistant, riidResource: *IID, ppvResource: **void, riidQueue: *IID, ppvQueue: **void) -> HRESULT { return this.id3d12swapchainassistant_vtable.GetCurrentResourceAndCommandQueue(this, riidResource, ppvResource, riidQueue, ppvQueue); }
-ID3D12SwapChainAssistant_InsertImplicitSync :: inline (this: *ID3D12SwapChainAssistant) -> HRESULT { return this.id3d12swapchainassistant_vtable.InsertImplicitSync(this); }
-
 vtable :: (obj: *ID3D12SwapChainAssistant) -> *ID3D12SwapChainAssistant_VTable { return obj.id3d12swapchainassistant_vtable; }
 
 
@@ -5352,8 +5157,6 @@ ID3D12LifetimeTracker_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     DestroyOwnedObject: (this: *ID3D12LifetimeTracker, pObject: *ID3D12DeviceChild) -> HRESULT #cpp_method;
 }
-ID3D12LifetimeTracker_DestroyOwnedObject :: inline (this: *ID3D12LifetimeTracker, pObject: *ID3D12DeviceChild) -> HRESULT { return this.id3d12lifetimetracker_vtable.DestroyOwnedObject(this, pObject); }
-
 vtable :: (obj: *ID3D12LifetimeTracker) -> *ID3D12LifetimeTracker_VTable { return obj.id3d12lifetimetracker_vtable; }
 
 
@@ -5465,11 +5268,6 @@ ID3D12StateObjectProperties_VTable :: struct #type_info_none {
     GetPipelineStackSize: (this: *ID3D12StateObjectProperties) -> u64 #cpp_method;
     SetPipelineStackSize: (this: *ID3D12StateObjectProperties, PipelineStackSizeInBytes: u64) -> void #cpp_method;
 }
-ID3D12StateObjectProperties_GetShaderIdentifier :: inline (this: *ID3D12StateObjectProperties, pExportName: *s16) -> *void { return this.id3d12stateobjectproperties_vtable.GetShaderIdentifier(this, pExportName); }
-ID3D12StateObjectProperties_GetShaderStackSize :: inline (this: *ID3D12StateObjectProperties, pExportName: *s16) -> u64 { return this.id3d12stateobjectproperties_vtable.GetShaderStackSize(this, pExportName); }
-ID3D12StateObjectProperties_GetPipelineStackSize :: inline (this: *ID3D12StateObjectProperties) -> u64 { return this.id3d12stateobjectproperties_vtable.GetPipelineStackSize(this); }
-ID3D12StateObjectProperties_SetPipelineStackSize :: inline (this: *ID3D12StateObjectProperties, PipelineStackSizeInBytes: u64) { this.id3d12stateobjectproperties_vtable.SetPipelineStackSize(this, PipelineStackSizeInBytes); }
-
 vtable :: (obj: *ID3D12StateObjectProperties) -> *ID3D12StateObjectProperties_VTable { return obj.id3d12stateobjectproperties_vtable; }
 
 
@@ -5914,15 +5712,6 @@ ID3D12Device5_VTable :: struct #type_info_none {
     GetRaytracingAccelerationStructurePrebuildInfo: (this: *ID3D12Device5, pDesc: *D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS, pInfo: *D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO) -> void #cpp_method;
     CheckDriverMatchingIdentifier: (this: *ID3D12Device5, SerializedDataType: D3D12_SERIALIZED_DATA_TYPE, pIdentifierToCheck: *D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER) -> D3D12_DRIVER_MATCHING_IDENTIFIER_STATUS #cpp_method;
 }
-ID3D12Device5_CreateLifetimeTracker :: inline (this: *ID3D12Device5, pOwner: *ID3D12LifetimeOwner, riid: *IID, ppvTracker: **void) -> HRESULT { return this.id3d12device5_vtable.CreateLifetimeTracker(this, pOwner, riid, ppvTracker); }
-ID3D12Device5_RemoveDevice :: inline (this: *ID3D12Device5) { this.id3d12device5_vtable.RemoveDevice(this); }
-ID3D12Device5_EnumerateMetaCommands :: inline (this: *ID3D12Device5, pNumMetaCommands: *u32, pDescs: *D3D12_META_COMMAND_DESC) -> HRESULT { return this.id3d12device5_vtable.EnumerateMetaCommands(this, pNumMetaCommands, pDescs); }
-ID3D12Device5_EnumerateMetaCommandParameters :: inline (this: *ID3D12Device5, CommandId: *GUID, Stage: D3D12_META_COMMAND_PARAMETER_STAGE, pTotalStructureSizeInBytes: *u32, pParameterCount: *u32, pParameterDescs: *D3D12_META_COMMAND_PARAMETER_DESC) -> HRESULT { return this.id3d12device5_vtable.EnumerateMetaCommandParameters(this, CommandId, Stage, pTotalStructureSizeInBytes, pParameterCount, pParameterDescs); }
-ID3D12Device5_CreateMetaCommand :: inline (this: *ID3D12Device5, CommandId: *GUID, NodeMask: u32, pCreationParametersData: *void, CreationParametersDataSizeInBytes: SIZE_T, riid: *IID, ppMetaCommand: **void) -> HRESULT { return this.id3d12device5_vtable.CreateMetaCommand(this, CommandId, NodeMask, pCreationParametersData, CreationParametersDataSizeInBytes, riid, ppMetaCommand); }
-ID3D12Device5_CreateStateObject :: inline (this: *ID3D12Device5, pDesc: *D3D12_STATE_OBJECT_DESC, riid: *IID, ppStateObject: **void) -> HRESULT { return this.id3d12device5_vtable.CreateStateObject(this, pDesc, riid, ppStateObject); }
-ID3D12Device5_GetRaytracingAccelerationStructurePrebuildInfo :: inline (this: *ID3D12Device5, pDesc: *D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS, pInfo: *D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO) { this.id3d12device5_vtable.GetRaytracingAccelerationStructurePrebuildInfo(this, pDesc, pInfo); }
-ID3D12Device5_CheckDriverMatchingIdentifier :: inline (this: *ID3D12Device5, SerializedDataType: D3D12_SERIALIZED_DATA_TYPE, pIdentifierToCheck: *D3D12_SERIALIZED_DATA_DRIVER_MATCHING_IDENTIFIER) -> D3D12_DRIVER_MATCHING_IDENTIFIER_STATUS { return this.id3d12device5_vtable.CheckDriverMatchingIdentifier(this, SerializedDataType, pIdentifierToCheck); }
-
 vtable :: (obj: *ID3D12Device5) -> *ID3D12Device5_VTable { return obj.id3d12device5_vtable; }
 
 
@@ -6254,10 +6043,6 @@ ID3D12DeviceRemovedExtendedDataSettings_VTable :: struct #type_info_none {
     SetPageFaultEnablement: (this: *ID3D12DeviceRemovedExtendedDataSettings, Enablement: D3D12_DRED_ENABLEMENT) -> void #cpp_method;
     SetWatsonDumpEnablement: (this: *ID3D12DeviceRemovedExtendedDataSettings, Enablement: D3D12_DRED_ENABLEMENT) -> void #cpp_method;
 }
-ID3D12DeviceRemovedExtendedDataSettings_SetAutoBreadcrumbsEnablement :: inline (this: *ID3D12DeviceRemovedExtendedDataSettings, Enablement: D3D12_DRED_ENABLEMENT) { this.id3d12deviceremovedextendeddatasettings_vtable.SetAutoBreadcrumbsEnablement(this, Enablement); }
-ID3D12DeviceRemovedExtendedDataSettings_SetPageFaultEnablement :: inline (this: *ID3D12DeviceRemovedExtendedDataSettings, Enablement: D3D12_DRED_ENABLEMENT) { this.id3d12deviceremovedextendeddatasettings_vtable.SetPageFaultEnablement(this, Enablement); }
-ID3D12DeviceRemovedExtendedDataSettings_SetWatsonDumpEnablement :: inline (this: *ID3D12DeviceRemovedExtendedDataSettings, Enablement: D3D12_DRED_ENABLEMENT) { this.id3d12deviceremovedextendeddatasettings_vtable.SetWatsonDumpEnablement(this, Enablement); }
-
 vtable :: (obj: *ID3D12DeviceRemovedExtendedDataSettings) -> *ID3D12DeviceRemovedExtendedDataSettings_VTable { return obj.id3d12deviceremovedextendeddatasettings_vtable; }
 
 
@@ -6271,8 +6056,6 @@ ID3D12DeviceRemovedExtendedDataSettings1_VTable :: struct #type_info_none {
     using id3d12deviceremovedextendeddatasettings: ID3D12DeviceRemovedExtendedDataSettings_VTable;
     SetBreadcrumbContextEnablement: (this: *ID3D12DeviceRemovedExtendedDataSettings1, Enablement: D3D12_DRED_ENABLEMENT) -> void #cpp_method;
 }
-ID3D12DeviceRemovedExtendedDataSettings1_SetBreadcrumbContextEnablement :: inline (this: *ID3D12DeviceRemovedExtendedDataSettings1, Enablement: D3D12_DRED_ENABLEMENT) { this.id3d12deviceremovedextendeddatasettings1_vtable.SetBreadcrumbContextEnablement(this, Enablement); }
-
 vtable :: (obj: *ID3D12DeviceRemovedExtendedDataSettings1) -> *ID3D12DeviceRemovedExtendedDataSettings1_VTable { return obj.id3d12deviceremovedextendeddatasettings1_vtable; }
 
 
@@ -6287,9 +6070,6 @@ ID3D12DeviceRemovedExtendedData_VTable :: struct #type_info_none {
     GetAutoBreadcrumbsOutput: (this: *ID3D12DeviceRemovedExtendedData, pOutput: *D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT) -> HRESULT #cpp_method;
     GetPageFaultAllocationOutput: (this: *ID3D12DeviceRemovedExtendedData, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT) -> HRESULT #cpp_method;
 }
-ID3D12DeviceRemovedExtendedData_GetAutoBreadcrumbsOutput :: inline (this: *ID3D12DeviceRemovedExtendedData, pOutput: *D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT) -> HRESULT { return this.id3d12deviceremovedextendeddata_vtable.GetAutoBreadcrumbsOutput(this, pOutput); }
-ID3D12DeviceRemovedExtendedData_GetPageFaultAllocationOutput :: inline (this: *ID3D12DeviceRemovedExtendedData, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT) -> HRESULT { return this.id3d12deviceremovedextendeddata_vtable.GetPageFaultAllocationOutput(this, pOutput); }
-
 vtable :: (obj: *ID3D12DeviceRemovedExtendedData) -> *ID3D12DeviceRemovedExtendedData_VTable { return obj.id3d12deviceremovedextendeddata_vtable; }
 
 
@@ -6304,9 +6084,6 @@ ID3D12DeviceRemovedExtendedData1_VTable :: struct #type_info_none {
     GetAutoBreadcrumbsOutput1: (this: *ID3D12DeviceRemovedExtendedData1, pOutput: *D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT1) -> HRESULT #cpp_method;
     GetPageFaultAllocationOutput1: (this: *ID3D12DeviceRemovedExtendedData1, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT1) -> HRESULT #cpp_method;
 }
-ID3D12DeviceRemovedExtendedData1_GetAutoBreadcrumbsOutput1 :: inline (this: *ID3D12DeviceRemovedExtendedData1, pOutput: *D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT1) -> HRESULT { return this.id3d12deviceremovedextendeddata1_vtable.GetAutoBreadcrumbsOutput1(this, pOutput); }
-ID3D12DeviceRemovedExtendedData1_GetPageFaultAllocationOutput1 :: inline (this: *ID3D12DeviceRemovedExtendedData1, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT1) -> HRESULT { return this.id3d12deviceremovedextendeddata1_vtable.GetPageFaultAllocationOutput1(this, pOutput); }
-
 vtable :: (obj: *ID3D12DeviceRemovedExtendedData1) -> *ID3D12DeviceRemovedExtendedData1_VTable { return obj.id3d12deviceremovedextendeddata1_vtable; }
 
 
@@ -6321,9 +6098,6 @@ ID3D12DeviceRemovedExtendedData2_VTable :: struct #type_info_none {
     GetPageFaultAllocationOutput2: (this: *ID3D12DeviceRemovedExtendedData2, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT2) -> HRESULT #cpp_method;
     GetDeviceState: (this: *ID3D12DeviceRemovedExtendedData2) -> D3D12_DRED_DEVICE_STATE #cpp_method;
 }
-ID3D12DeviceRemovedExtendedData2_GetPageFaultAllocationOutput2 :: inline (this: *ID3D12DeviceRemovedExtendedData2, pOutput: *D3D12_DRED_PAGE_FAULT_OUTPUT2) -> HRESULT { return this.id3d12deviceremovedextendeddata2_vtable.GetPageFaultAllocationOutput2(this, pOutput); }
-ID3D12DeviceRemovedExtendedData2_GetDeviceState :: inline (this: *ID3D12DeviceRemovedExtendedData2) -> D3D12_DRED_DEVICE_STATE { return this.id3d12deviceremovedextendeddata2_vtable.GetDeviceState(this); }
-
 vtable :: (obj: *ID3D12DeviceRemovedExtendedData2) -> *ID3D12DeviceRemovedExtendedData2_VTable { return obj.id3d12deviceremovedextendeddata2_vtable; }
 
 
@@ -6363,8 +6137,6 @@ ID3D12Device6_VTable :: struct #type_info_none {
     using id3d12device5: ID3D12Device5_VTable;
     SetBackgroundProcessingMode: (this: *ID3D12Device6, Mode: D3D12_BACKGROUND_PROCESSING_MODE, MeasurementsAction: D3D12_MEASUREMENTS_ACTION, hEventToSignalUponCompletion: HANDLE, pbFurtherMeasurementsDesired: *BOOL) -> HRESULT #cpp_method;
 }
-ID3D12Device6_SetBackgroundProcessingMode :: inline (this: *ID3D12Device6, Mode: D3D12_BACKGROUND_PROCESSING_MODE, MeasurementsAction: D3D12_MEASUREMENTS_ACTION, hEventToSignalUponCompletion: HANDLE, pbFurtherMeasurementsDesired: *BOOL) -> HRESULT { return this.id3d12device6_vtable.SetBackgroundProcessingMode(this, Mode, MeasurementsAction, hEventToSignalUponCompletion, pbFurtherMeasurementsDesired); }
-
 vtable :: (obj: *ID3D12Device6) -> *ID3D12Device6_VTable { return obj.id3d12device6_vtable; }
 
 
@@ -6396,8 +6168,6 @@ ID3D12ProtectedResourceSession1_VTable :: struct #type_info_none {
     using id3d12protectedresourcesession: ID3D12ProtectedResourceSession_VTable;
     GetDesc1: (this: *ID3D12ProtectedResourceSession1) -> D3D12_PROTECTED_RESOURCE_SESSION_DESC1 #cpp_method;
 }
-ID3D12ProtectedResourceSession1_GetDesc1 :: inline (this: *ID3D12ProtectedResourceSession1) -> D3D12_PROTECTED_RESOURCE_SESSION_DESC1 { return this.id3d12protectedresourcesession1_vtable.GetDesc1(this); }
-
 vtable :: (obj: *ID3D12ProtectedResourceSession1) -> *ID3D12ProtectedResourceSession1_VTable { return obj.id3d12protectedresourcesession1_vtable; }
 
 
@@ -6412,9 +6182,6 @@ ID3D12Device7_VTable :: struct #type_info_none {
     AddToStateObject: (this: *ID3D12Device7, pAddition: *D3D12_STATE_OBJECT_DESC, pStateObjectToGrowFrom: *ID3D12StateObject, riid: *IID, ppNewStateObject: **void) -> HRESULT #cpp_method;
     CreateProtectedResourceSession1: (this: *ID3D12Device7, pDesc: *D3D12_PROTECTED_RESOURCE_SESSION_DESC1, riid: *IID, ppSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12Device7_AddToStateObject :: inline (this: *ID3D12Device7, pAddition: *D3D12_STATE_OBJECT_DESC, pStateObjectToGrowFrom: *ID3D12StateObject, riid: *IID, ppNewStateObject: **void) -> HRESULT { return this.id3d12device7_vtable.AddToStateObject(this, pAddition, pStateObjectToGrowFrom, riid, ppNewStateObject); }
-ID3D12Device7_CreateProtectedResourceSession1 :: inline (this: *ID3D12Device7, pDesc: *D3D12_PROTECTED_RESOURCE_SESSION_DESC1, riid: *IID, ppSession: **void) -> HRESULT { return this.id3d12device7_vtable.CreateProtectedResourceSession1(this, pDesc, riid, ppSession); }
-
 vtable :: (obj: *ID3D12Device7) -> *ID3D12Device7_VTable { return obj.id3d12device7_vtable; }
 
 
@@ -6432,12 +6199,6 @@ ID3D12Device8_VTable :: struct #type_info_none {
     CreateSamplerFeedbackUnorderedAccessView: (this: *ID3D12Device8, pTargetedResource: *ID3D12Resource, pFeedbackResource: *ID3D12Resource, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) -> void #cpp_method;
     GetCopyableFootprints1: (this: *ID3D12Device8, pResourceDesc: *D3D12_RESOURCE_DESC1, FirstSubresource: u32, NumSubresources: u32, BaseOffset: u64, pLayouts: *D3D12_PLACED_SUBRESOURCE_FOOTPRINT, pNumRows: *u32, pRowSizeInBytes: *u64, pTotalBytes: *u64) -> void #cpp_method;
 }
-ID3D12Device8_GetResourceAllocationInfo2 :: inline (this: *ID3D12Device8, visibleMask: u32, numResourceDescs: u32, pResourceDescs: *D3D12_RESOURCE_DESC1, pResourceAllocationInfo1: *D3D12_RESOURCE_ALLOCATION_INFO1) -> D3D12_RESOURCE_ALLOCATION_INFO { return this.id3d12device8_vtable.GetResourceAllocationInfo2(this, visibleMask, numResourceDescs, pResourceDescs, pResourceAllocationInfo1); }
-ID3D12Device8_CreateCommittedResource2 :: inline (this: *ID3D12Device8, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC1, InitialResourceState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, riidResource: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device8_vtable.CreateCommittedResource2(this, pHeapProperties, HeapFlags, pDesc, InitialResourceState, pOptimizedClearValue, pProtectedSession, riidResource, ppvResource); }
-ID3D12Device8_CreatePlacedResource1 :: inline (this: *ID3D12Device8, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC1, InitialState: D3D12_RESOURCE_STATES, pOptimizedClearValue: *D3D12_CLEAR_VALUE, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device8_vtable.CreatePlacedResource1(this, pHeap, HeapOffset, pDesc, InitialState, pOptimizedClearValue, riid, ppvResource); }
-ID3D12Device8_CreateSamplerFeedbackUnorderedAccessView :: inline (this: *ID3D12Device8, pTargetedResource: *ID3D12Resource, pFeedbackResource: *ID3D12Resource, DestDescriptor: D3D12_CPU_DESCRIPTOR_HANDLE) { this.id3d12device8_vtable.CreateSamplerFeedbackUnorderedAccessView(this, pTargetedResource, pFeedbackResource, DestDescriptor); }
-ID3D12Device8_GetCopyableFootprints1 :: inline (this: *ID3D12Device8, pResourceDesc: *D3D12_RESOURCE_DESC1, FirstSubresource: u32, NumSubresources: u32, BaseOffset: u64, pLayouts: *D3D12_PLACED_SUBRESOURCE_FOOTPRINT, pNumRows: *u32, pRowSizeInBytes: *u64, pTotalBytes: *u64) { this.id3d12device8_vtable.GetCopyableFootprints1(this, pResourceDesc, FirstSubresource, NumSubresources, BaseOffset, pLayouts, pNumRows, pRowSizeInBytes, pTotalBytes); }
-
 vtable :: (obj: *ID3D12Device8) -> *ID3D12Device8_VTable { return obj.id3d12device8_vtable; }
 
 
@@ -6451,8 +6212,6 @@ ID3D12Resource1_VTable :: struct #type_info_none {
     using id3d12resource: ID3D12Resource_VTable;
     GetProtectedResourceSession: (this: *ID3D12Resource1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12Resource1_GetProtectedResourceSession :: inline (this: *ID3D12Resource1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12resource1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12Resource1) -> *ID3D12Resource1_VTable { return obj.id3d12resource1_vtable; }
 
 
@@ -6466,8 +6225,6 @@ ID3D12Resource2_VTable :: struct #type_info_none {
     using id3d12resource1: ID3D12Resource1_VTable;
     GetDesc1: (this: *ID3D12Resource2) -> D3D12_RESOURCE_DESC1 #cpp_method;
 }
-ID3D12Resource2_GetDesc1 :: inline (this: *ID3D12Resource2) -> D3D12_RESOURCE_DESC1 { return this.id3d12resource2_vtable.GetDesc1(this); }
-
 vtable :: (obj: *ID3D12Resource2) -> *ID3D12Resource2_VTable { return obj.id3d12resource2_vtable; }
 
 
@@ -6481,8 +6238,6 @@ ID3D12Heap1_VTable :: struct #type_info_none {
     using id3d12heap: ID3D12Heap_VTable;
     GetProtectedResourceSession: (this: *ID3D12Heap1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12Heap1_GetProtectedResourceSession :: inline (this: *ID3D12Heap1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12heap1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12Heap1) -> *ID3D12Heap1_VTable { return obj.id3d12heap1_vtable; }
 
 
@@ -6496,8 +6251,6 @@ ID3D12GraphicsCommandList3_VTable :: struct #type_info_none {
     using id3d12graphicscommandlist2: ID3D12GraphicsCommandList2_VTable;
     SetProtectedResourceSession: (this: *ID3D12GraphicsCommandList3, pProtectedResourceSession: *ID3D12ProtectedResourceSession) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList3_SetProtectedResourceSession :: inline (this: *ID3D12GraphicsCommandList3, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12graphicscommandlist3_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList3) -> *ID3D12GraphicsCommandList3_VTable { return obj.id3d12graphicscommandlist3_vtable; }
 
 
@@ -6599,8 +6352,6 @@ ID3D12MetaCommand_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetRequiredParameterResourceSize: (this: *ID3D12MetaCommand, Stage: D3D12_META_COMMAND_PARAMETER_STAGE, ParameterIndex: u32) -> u64 #cpp_method;
 }
-ID3D12MetaCommand_GetRequiredParameterResourceSize :: inline (this: *ID3D12MetaCommand, Stage: D3D12_META_COMMAND_PARAMETER_STAGE, ParameterIndex: u32) -> u64 { return this.id3d12metacommand_vtable.GetRequiredParameterResourceSize(this, Stage, ParameterIndex); }
-
 vtable :: (obj: *ID3D12MetaCommand) -> *ID3D12MetaCommand_VTable { return obj.id3d12metacommand_vtable; }
 
 
@@ -6634,16 +6385,6 @@ ID3D12GraphicsCommandList4_VTable :: struct #type_info_none {
     SetPipelineState1: (this: *ID3D12GraphicsCommandList4, pStateObject: *ID3D12StateObject) -> void #cpp_method;
     DispatchRays: (this: *ID3D12GraphicsCommandList4, pDesc: *D3D12_DISPATCH_RAYS_DESC) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList4_BeginRenderPass :: inline (this: *ID3D12GraphicsCommandList4, NumRenderTargets: u32, pRenderTargets: *D3D12_RENDER_PASS_RENDER_TARGET_DESC, pDepthStencil: *D3D12_RENDER_PASS_DEPTH_STENCIL_DESC, Flags: D3D12_RENDER_PASS_FLAGS) { this.id3d12graphicscommandlist4_vtable.BeginRenderPass(this, NumRenderTargets, pRenderTargets, pDepthStencil, Flags); }
-ID3D12GraphicsCommandList4_EndRenderPass :: inline (this: *ID3D12GraphicsCommandList4) { this.id3d12graphicscommandlist4_vtable.EndRenderPass(this); }
-ID3D12GraphicsCommandList4_InitializeMetaCommand :: inline (this: *ID3D12GraphicsCommandList4, pMetaCommand: *ID3D12MetaCommand, pInitializationParametersData: *void, InitializationParametersDataSizeInBytes: SIZE_T) { this.id3d12graphicscommandlist4_vtable.InitializeMetaCommand(this, pMetaCommand, pInitializationParametersData, InitializationParametersDataSizeInBytes); }
-ID3D12GraphicsCommandList4_ExecuteMetaCommand :: inline (this: *ID3D12GraphicsCommandList4, pMetaCommand: *ID3D12MetaCommand, pExecutionParametersData: *void, ExecutionParametersDataSizeInBytes: SIZE_T) { this.id3d12graphicscommandlist4_vtable.ExecuteMetaCommand(this, pMetaCommand, pExecutionParametersData, ExecutionParametersDataSizeInBytes); }
-ID3D12GraphicsCommandList4_BuildRaytracingAccelerationStructure :: inline (this: *ID3D12GraphicsCommandList4, pDesc: *D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_DESC, NumPostbuildInfoDescs: u32, pPostbuildInfoDescs: *D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_DESC) { this.id3d12graphicscommandlist4_vtable.BuildRaytracingAccelerationStructure(this, pDesc, NumPostbuildInfoDescs, pPostbuildInfoDescs); }
-ID3D12GraphicsCommandList4_EmitRaytracingAccelerationStructurePostbuildInfo :: inline (this: *ID3D12GraphicsCommandList4, pDesc: *D3D12_RAYTRACING_ACCELERATION_STRUCTURE_POSTBUILD_INFO_DESC, NumSourceAccelerationStructures: u32, pSourceAccelerationStructureData: *D3D12_GPU_VIRTUAL_ADDRESS) { this.id3d12graphicscommandlist4_vtable.EmitRaytracingAccelerationStructurePostbuildInfo(this, pDesc, NumSourceAccelerationStructures, pSourceAccelerationStructureData); }
-ID3D12GraphicsCommandList4_CopyRaytracingAccelerationStructure :: inline (this: *ID3D12GraphicsCommandList4, DestAccelerationStructureData: D3D12_GPU_VIRTUAL_ADDRESS, SourceAccelerationStructureData: D3D12_GPU_VIRTUAL_ADDRESS, Mode: D3D12_RAYTRACING_ACCELERATION_STRUCTURE_COPY_MODE) { this.id3d12graphicscommandlist4_vtable.CopyRaytracingAccelerationStructure(this, DestAccelerationStructureData, SourceAccelerationStructureData, Mode); }
-ID3D12GraphicsCommandList4_SetPipelineState1 :: inline (this: *ID3D12GraphicsCommandList4, pStateObject: *ID3D12StateObject) { this.id3d12graphicscommandlist4_vtable.SetPipelineState1(this, pStateObject); }
-ID3D12GraphicsCommandList4_DispatchRays :: inline (this: *ID3D12GraphicsCommandList4, pDesc: *D3D12_DISPATCH_RAYS_DESC) { this.id3d12graphicscommandlist4_vtable.DispatchRays(this, pDesc); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList4) -> *ID3D12GraphicsCommandList4_VTable { return obj.id3d12graphicscommandlist4_vtable; }
 
 
@@ -6942,11 +6683,6 @@ ID3D12ShaderCacheSession_VTable :: struct #type_info_none {
     SetDeleteOnDestroy: (this: *ID3D12ShaderCacheSession) -> void #cpp_method;
     GetDesc: (this: *ID3D12ShaderCacheSession) -> D3D12_SHADER_CACHE_SESSION_DESC #cpp_method;
 }
-ID3D12ShaderCacheSession_FindValue :: inline (this: *ID3D12ShaderCacheSession, pKey: *void, KeySize: u32, pValue: *void, pValueSize: *u32) -> HRESULT { return this.id3d12shadercachesession_vtable.FindValue(this, pKey, KeySize, pValue, pValueSize); }
-ID3D12ShaderCacheSession_StoreValue :: inline (this: *ID3D12ShaderCacheSession, pKey: *void, KeySize: u32, pValue: *void, ValueSize: u32) -> HRESULT { return this.id3d12shadercachesession_vtable.StoreValue(this, pKey, KeySize, pValue, ValueSize); }
-ID3D12ShaderCacheSession_SetDeleteOnDestroy :: inline (this: *ID3D12ShaderCacheSession) { this.id3d12shadercachesession_vtable.SetDeleteOnDestroy(this); }
-ID3D12ShaderCacheSession_GetDesc :: inline (this: *ID3D12ShaderCacheSession) -> D3D12_SHADER_CACHE_SESSION_DESC { return this.id3d12shadercachesession_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12ShaderCacheSession) -> *ID3D12ShaderCacheSession_VTable { return obj.id3d12shadercachesession_vtable; }
 
 
@@ -6986,10 +6722,6 @@ ID3D12Device9_VTable :: struct #type_info_none {
     ShaderCacheControl: (this: *ID3D12Device9, Kinds: D3D12_SHADER_CACHE_KIND_FLAGS, Control: D3D12_SHADER_CACHE_CONTROL_FLAGS) -> HRESULT #cpp_method;
     CreateCommandQueue1: (this: *ID3D12Device9, pDesc: *D3D12_COMMAND_QUEUE_DESC, CreatorID: *IID, riid: *IID, ppCommandQueue: **void) -> HRESULT #cpp_method;
 }
-ID3D12Device9_CreateShaderCacheSession :: inline (this: *ID3D12Device9, pDesc: *D3D12_SHADER_CACHE_SESSION_DESC, riid: *IID, ppvSession: **void) -> HRESULT { return this.id3d12device9_vtable.CreateShaderCacheSession(this, pDesc, riid, ppvSession); }
-ID3D12Device9_ShaderCacheControl :: inline (this: *ID3D12Device9, Kinds: D3D12_SHADER_CACHE_KIND_FLAGS, Control: D3D12_SHADER_CACHE_CONTROL_FLAGS) -> HRESULT { return this.id3d12device9_vtable.ShaderCacheControl(this, Kinds, Control); }
-ID3D12Device9_CreateCommandQueue1 :: inline (this: *ID3D12Device9, pDesc: *D3D12_COMMAND_QUEUE_DESC, CreatorID: *IID, riid: *IID, ppCommandQueue: **void) -> HRESULT { return this.id3d12device9_vtable.CreateCommandQueue1(this, pDesc, CreatorID, riid, ppCommandQueue); }
-
 vtable :: (obj: *ID3D12Device9) -> *ID3D12Device9_VTable { return obj.id3d12device9_vtable; }
 
 
@@ -7005,10 +6737,6 @@ ID3D12Device10_VTable :: struct #type_info_none {
     CreatePlacedResource2: (this: *ID3D12Device10, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT #cpp_method;
     CreateReservedResource2: (this: *ID3D12Device10, pDesc: *D3D12_RESOURCE_DESC, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT #cpp_method;
 }
-ID3D12Device10_CreateCommittedResource3 :: inline (this: *ID3D12Device10, pHeapProperties: *D3D12_HEAP_PROPERTIES, HeapFlags: D3D12_HEAP_FLAGS, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riidResource: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreateCommittedResource3(this, pHeapProperties, HeapFlags, pDesc, InitialLayout, pOptimizedClearValue, pProtectedSession, NumCastableFormats, pCastableFormats, riidResource, ppvResource); }
-ID3D12Device10_CreatePlacedResource2 :: inline (this: *ID3D12Device10, pHeap: *ID3D12Heap, HeapOffset: u64, pDesc: *D3D12_RESOURCE_DESC1, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreatePlacedResource2(this, pHeap, HeapOffset, pDesc, InitialLayout, pOptimizedClearValue, NumCastableFormats, pCastableFormats, riid, ppvResource); }
-ID3D12Device10_CreateReservedResource2 :: inline (this: *ID3D12Device10, pDesc: *D3D12_RESOURCE_DESC, InitialLayout: D3D12_BARRIER_LAYOUT, pOptimizedClearValue: *D3D12_CLEAR_VALUE, pProtectedSession: *ID3D12ProtectedResourceSession, NumCastableFormats: u32, pCastableFormats: *DXGI_FORMAT, riid: *IID, ppvResource: **void) -> HRESULT { return this.id3d12device10_vtable.CreateReservedResource2(this, pDesc, InitialLayout, pOptimizedClearValue, pProtectedSession, NumCastableFormats, pCastableFormats, riid, ppvResource); }
-
 vtable :: (obj: *ID3D12Device10) -> *ID3D12Device10_VTable { return obj.id3d12device10_vtable; }
 
 
@@ -7023,9 +6751,6 @@ ID3D12VirtualizationGuestDevice_VTable :: struct #type_info_none {
     ShareWithHost: (this: *ID3D12VirtualizationGuestDevice, pObject: *ID3D12DeviceChild, pHandle: *HANDLE) -> HRESULT #cpp_method;
     CreateFenceFd: (this: *ID3D12VirtualizationGuestDevice, pFence: *ID3D12Fence, FenceValue: u64, pFenceFd: *s32) -> HRESULT #cpp_method;
 }
-ID3D12VirtualizationGuestDevice_ShareWithHost :: inline (this: *ID3D12VirtualizationGuestDevice, pObject: *ID3D12DeviceChild, pHandle: *HANDLE) -> HRESULT { return this.id3d12virtualizationguestdevice_vtable.ShareWithHost(this, pObject, pHandle); }
-ID3D12VirtualizationGuestDevice_CreateFenceFd :: inline (this: *ID3D12VirtualizationGuestDevice, pFence: *ID3D12Fence, FenceValue: u64, pFenceFd: *s32) -> HRESULT { return this.id3d12virtualizationguestdevice_vtable.CreateFenceFd(this, pFence, FenceValue, pFenceFd); }
-
 vtable :: (obj: *ID3D12VirtualizationGuestDevice) -> *ID3D12VirtualizationGuestDevice_VTable { return obj.id3d12virtualizationguestdevice_vtable; }
 
 
@@ -7040,9 +6765,6 @@ ID3D12Tools_VTable :: struct #type_info_none {
     EnableShaderInstrumentation: (this: *ID3D12Tools, bEnable: BOOL) -> void #cpp_method;
     ShaderInstrumentationEnabled: (this: *ID3D12Tools) -> BOOL #cpp_method;
 }
-ID3D12Tools_EnableShaderInstrumentation :: inline (this: *ID3D12Tools, bEnable: BOOL) { this.id3d12tools_vtable.EnableShaderInstrumentation(this, bEnable); }
-ID3D12Tools_ShaderInstrumentationEnabled :: inline (this: *ID3D12Tools) -> BOOL { return this.id3d12tools_vtable.ShaderInstrumentationEnabled(this); }
-
 vtable :: (obj: *ID3D12Tools) -> *ID3D12Tools_VTable { return obj.id3d12tools_vtable; }
 
 
@@ -7149,8 +6871,6 @@ ID3D12SDKConfiguration_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     SetSDKVersion: (this: *ID3D12SDKConfiguration, SDKVersion: u32, SDKPath: *u8) -> HRESULT #cpp_method;
 }
-ID3D12SDKConfiguration_SetSDKVersion :: inline (this: *ID3D12SDKConfiguration, SDKVersion: u32, SDKPath: *u8) -> HRESULT { return this.id3d12sdkconfiguration_vtable.SetSDKVersion(this, SDKVersion, SDKPath); }
-
 vtable :: (obj: *ID3D12SDKConfiguration) -> *ID3D12SDKConfiguration_VTable { return obj.id3d12sdkconfiguration_vtable; }
 
 
@@ -7209,9 +6929,6 @@ ID3D12GraphicsCommandList5_VTable :: struct #type_info_none {
     RSSetShadingRate: (this: *ID3D12GraphicsCommandList5, baseShadingRate: D3D12_SHADING_RATE, combiners: *D3D12_SHADING_RATE_COMBINER) -> void #cpp_method;
     RSSetShadingRateImage: (this: *ID3D12GraphicsCommandList5, shadingRateImage: *ID3D12Resource) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList5_RSSetShadingRate :: inline (this: *ID3D12GraphicsCommandList5, baseShadingRate: D3D12_SHADING_RATE, combiners: *D3D12_SHADING_RATE_COMBINER) { this.id3d12graphicscommandlist5_vtable.RSSetShadingRate(this, baseShadingRate, combiners); }
-ID3D12GraphicsCommandList5_RSSetShadingRateImage :: inline (this: *ID3D12GraphicsCommandList5, shadingRateImage: *ID3D12Resource) { this.id3d12graphicscommandlist5_vtable.RSSetShadingRateImage(this, shadingRateImage); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList5) -> *ID3D12GraphicsCommandList5_VTable { return obj.id3d12graphicscommandlist5_vtable; }
 
 
@@ -7233,8 +6950,6 @@ ID3D12GraphicsCommandList6_VTable :: struct #type_info_none {
     using id3d12graphicscommandlist5: ID3D12GraphicsCommandList5_VTable;
     DispatchMesh: (this: *ID3D12GraphicsCommandList6, ThreadGroupCountX: u32, ThreadGroupCountY: u32, ThreadGroupCountZ: u32) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList6_DispatchMesh :: inline (this: *ID3D12GraphicsCommandList6, ThreadGroupCountX: u32, ThreadGroupCountY: u32, ThreadGroupCountZ: u32) { this.id3d12graphicscommandlist6_vtable.DispatchMesh(this, ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList6) -> *ID3D12GraphicsCommandList6_VTable { return obj.id3d12graphicscommandlist6_vtable; }
 
 
@@ -7248,8 +6963,6 @@ ID3D12GraphicsCommandList7_VTable :: struct #type_info_none {
     using id3d12graphicscommandlist6: ID3D12GraphicsCommandList6_VTable;
     Barrier: (this: *ID3D12GraphicsCommandList7, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
 }
-ID3D12GraphicsCommandList7_Barrier :: inline (this: *ID3D12GraphicsCommandList7, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12graphicscommandlist7_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
-
 vtable :: (obj: *ID3D12GraphicsCommandList7) -> *ID3D12GraphicsCommandList7_VTable { return obj.id3d12graphicscommandlist7_vtable; }
 
 
@@ -7529,8 +7242,6 @@ ID3D12VideoDecoderHeap_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetDesc: (this: *ID3D12VideoDecoderHeap) -> D3D12_VIDEO_DECODER_HEAP_DESC #cpp_method;
 }
-ID3D12VideoDecoderHeap_GetDesc :: inline (this: *ID3D12VideoDecoderHeap) -> D3D12_VIDEO_DECODER_HEAP_DESC { return this.id3d12videodecoderheap_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12VideoDecoderHeap) -> *ID3D12VideoDecoderHeap_VTable { return obj.id3d12videodecoderheap_vtable; }
 
 
@@ -7547,11 +7258,6 @@ ID3D12VideoDevice_VTable :: struct #type_info_none {
     CreateVideoDecoderHeap: (this: *ID3D12VideoDevice, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT #cpp_method;
     CreateVideoProcessor: (this: *ID3D12VideoDevice, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, riid: *IID, ppVideoProcessor: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoDevice_CheckFeatureSupport :: inline (this: *ID3D12VideoDevice, FeatureVideo: D3D12_FEATURE_VIDEO, pFeatureSupportData: *void, FeatureSupportDataSize: u32) -> HRESULT { return this.id3d12videodevice_vtable.CheckFeatureSupport(this, FeatureVideo, pFeatureSupportData, FeatureSupportDataSize); }
-ID3D12VideoDevice_CreateVideoDecoder :: inline (this: *ID3D12VideoDevice, pDesc: *D3D12_VIDEO_DECODER_DESC, riid: *IID, ppVideoDecoder: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoDecoder(this, pDesc, riid, ppVideoDecoder); }
-ID3D12VideoDevice_CreateVideoDecoderHeap :: inline (this: *ID3D12VideoDevice, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoDecoderHeap(this, pVideoDecoderHeapDesc, riid, ppVideoDecoderHeap); }
-ID3D12VideoDevice_CreateVideoProcessor :: inline (this: *ID3D12VideoDevice, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, riid: *IID, ppVideoProcessor: **void) -> HRESULT { return this.id3d12videodevice_vtable.CreateVideoProcessor(this, NodeMask, pOutputStreamDesc, NumInputStreamDescs, pInputStreamDescs, riid, ppVideoProcessor); }
-
 vtable :: (obj: *ID3D12VideoDevice) -> *ID3D12VideoDevice_VTable { return obj.id3d12videodevice_vtable; }
 
 
@@ -7565,8 +7271,6 @@ ID3D12VideoDecoder_VTable :: struct #type_info_none {
     using id3d12devicechild: ID3D12DeviceChild_VTable;
     GetDesc: (this: *ID3D12VideoDecoder) -> D3D12_VIDEO_DECODER_DESC #cpp_method;
 }
-ID3D12VideoDecoder_GetDesc :: inline (this: *ID3D12VideoDecoder) -> D3D12_VIDEO_DECODER_DESC { return this.id3d12videodecoder_vtable.GetDesc(this); }
-
 vtable :: (obj: *ID3D12VideoDecoder) -> *ID3D12VideoDecoder_VTable { return obj.id3d12videodecoder_vtable; }
 
 
@@ -7832,11 +7536,6 @@ ID3D12VideoProcessor_VTable :: struct #type_info_none {
     GetInputStreamDescs: (this: *ID3D12VideoProcessor, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC) -> HRESULT #cpp_method;
     GetOutputStreamDesc: (this: *ID3D12VideoProcessor) -> D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC #cpp_method;
 }
-ID3D12VideoProcessor_GetNodeMask :: inline (this: *ID3D12VideoProcessor) -> u32 { return this.id3d12videoprocessor_vtable.GetNodeMask(this); }
-ID3D12VideoProcessor_GetNumInputStreamDescs :: inline (this: *ID3D12VideoProcessor) -> u32 { return this.id3d12videoprocessor_vtable.GetNumInputStreamDescs(this); }
-ID3D12VideoProcessor_GetInputStreamDescs :: inline (this: *ID3D12VideoProcessor, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC) -> HRESULT { return this.id3d12videoprocessor_vtable.GetInputStreamDescs(this, NumInputStreamDescs, pInputStreamDescs); }
-ID3D12VideoProcessor_GetOutputStreamDesc :: inline (this: *ID3D12VideoProcessor) -> D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC { return this.id3d12videoprocessor_vtable.GetOutputStreamDesc(this); }
-
 vtable :: (obj: *ID3D12VideoProcessor) -> *ID3D12VideoProcessor_VTable { return obj.id3d12videoprocessor_vtable; }
 
 
@@ -8034,21 +7733,6 @@ ID3D12VideoDecodeCommandList_VTable :: struct #type_info_none {
     DecodeFrame: (this: *ID3D12VideoDecodeCommandList, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
     WriteBufferImmediate: (this: *ID3D12VideoDecodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
 }
-ID3D12VideoDecodeCommandList_Close :: inline (this: *ID3D12VideoDecodeCommandList) -> HRESULT { return this.id3d12videodecodecommandlist_vtable.Close(this); }
-ID3D12VideoDecodeCommandList_Reset :: inline (this: *ID3D12VideoDecodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videodecodecommandlist_vtable.Reset(this, pAllocator); }
-ID3D12VideoDecodeCommandList_ClearState :: inline (this: *ID3D12VideoDecodeCommandList) { this.id3d12videodecodecommandlist_vtable.ClearState(this); }
-ID3D12VideoDecodeCommandList_ResourceBarrier :: inline (this: *ID3D12VideoDecodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videodecodecommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
-ID3D12VideoDecodeCommandList_DiscardResource :: inline (this: *ID3D12VideoDecodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videodecodecommandlist_vtable.DiscardResource(this, pResource, pRegion); }
-ID3D12VideoDecodeCommandList_BeginQuery :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videodecodecommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoDecodeCommandList_EndQuery :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videodecodecommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoDecodeCommandList_ResolveQueryData :: inline (this: *ID3D12VideoDecodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videodecodecommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
-ID3D12VideoDecodeCommandList_SetPredication :: inline (this: *ID3D12VideoDecodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videodecodecommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
-ID3D12VideoDecodeCommandList_SetMarker :: inline (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videodecodecommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
-ID3D12VideoDecodeCommandList_BeginEvent :: inline (this: *ID3D12VideoDecodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videodecodecommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
-ID3D12VideoDecodeCommandList_EndEvent :: inline (this: *ID3D12VideoDecodeCommandList) { this.id3d12videodecodecommandlist_vtable.EndEvent(this); }
-ID3D12VideoDecodeCommandList_DecodeFrame :: inline (this: *ID3D12VideoDecodeCommandList, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) { this.id3d12videodecodecommandlist_vtable.DecodeFrame(this, pDecoder, pOutputArguments, pInputArguments); }
-ID3D12VideoDecodeCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoDecodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videodecodecommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
-
 vtable :: (obj: *ID3D12VideoDecodeCommandList) -> *ID3D12VideoDecodeCommandList_VTable { return obj.id3d12videodecodecommandlist_vtable; }
 
 
@@ -8075,21 +7759,6 @@ ID3D12VideoProcessCommandList_VTable :: struct #type_info_none {
     ProcessFrames: (this: *ID3D12VideoProcessCommandList, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
     WriteBufferImmediate: (this: *ID3D12VideoProcessCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
 }
-ID3D12VideoProcessCommandList_Close :: inline (this: *ID3D12VideoProcessCommandList) -> HRESULT { return this.id3d12videoprocesscommandlist_vtable.Close(this); }
-ID3D12VideoProcessCommandList_Reset :: inline (this: *ID3D12VideoProcessCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videoprocesscommandlist_vtable.Reset(this, pAllocator); }
-ID3D12VideoProcessCommandList_ClearState :: inline (this: *ID3D12VideoProcessCommandList) { this.id3d12videoprocesscommandlist_vtable.ClearState(this); }
-ID3D12VideoProcessCommandList_ResourceBarrier :: inline (this: *ID3D12VideoProcessCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videoprocesscommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
-ID3D12VideoProcessCommandList_DiscardResource :: inline (this: *ID3D12VideoProcessCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videoprocesscommandlist_vtable.DiscardResource(this, pResource, pRegion); }
-ID3D12VideoProcessCommandList_BeginQuery :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoprocesscommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoProcessCommandList_EndQuery :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoprocesscommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoProcessCommandList_ResolveQueryData :: inline (this: *ID3D12VideoProcessCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videoprocesscommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
-ID3D12VideoProcessCommandList_SetPredication :: inline (this: *ID3D12VideoProcessCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videoprocesscommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
-ID3D12VideoProcessCommandList_SetMarker :: inline (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoprocesscommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
-ID3D12VideoProcessCommandList_BeginEvent :: inline (this: *ID3D12VideoProcessCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoprocesscommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
-ID3D12VideoProcessCommandList_EndEvent :: inline (this: *ID3D12VideoProcessCommandList) { this.id3d12videoprocesscommandlist_vtable.EndEvent(this); }
-ID3D12VideoProcessCommandList_ProcessFrames :: inline (this: *ID3D12VideoProcessCommandList, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS) { this.id3d12videoprocesscommandlist_vtable.ProcessFrames(this, pVideoProcessor, pOutputArguments, NumInputStreams, pInputArguments); }
-ID3D12VideoProcessCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoProcessCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videoprocesscommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
-
 vtable :: (obj: *ID3D12VideoProcessCommandList) -> *ID3D12VideoProcessCommandList_VTable { return obj.id3d12videoprocesscommandlist_vtable; }
 
 
@@ -8127,8 +7796,6 @@ ID3D12VideoDecodeCommandList1_VTable :: struct #type_info_none {
     using id3d12videodecodecommandlist: ID3D12VideoDecodeCommandList_VTable;
     DecodeFrame1: (this: *ID3D12VideoDecodeCommandList1, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS1, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) -> void #cpp_method;
 }
-ID3D12VideoDecodeCommandList1_DecodeFrame1 :: inline (this: *ID3D12VideoDecodeCommandList1, pDecoder: *ID3D12VideoDecoder, pOutputArguments: *D3D12_VIDEO_DECODE_OUTPUT_STREAM_ARGUMENTS1, pInputArguments: *D3D12_VIDEO_DECODE_INPUT_STREAM_ARGUMENTS) { this.id3d12videodecodecommandlist1_vtable.DecodeFrame1(this, pDecoder, pOutputArguments, pInputArguments); }
-
 vtable :: (obj: *ID3D12VideoDecodeCommandList1) -> *ID3D12VideoDecodeCommandList1_VTable { return obj.id3d12videodecodecommandlist1_vtable; }
 
 
@@ -8154,8 +7821,6 @@ ID3D12VideoProcessCommandList1_VTable :: struct #type_info_none {
     using id3d12videoprocesscommandlist: ID3D12VideoProcessCommandList_VTable;
     ProcessFrames1: (this: *ID3D12VideoProcessCommandList1, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1) -> void #cpp_method;
 }
-ID3D12VideoProcessCommandList1_ProcessFrames1 :: inline (this: *ID3D12VideoProcessCommandList1, pVideoProcessor: *ID3D12VideoProcessor, pOutputArguments: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_ARGUMENTS, NumInputStreams: u32, pInputArguments: *D3D12_VIDEO_PROCESS_INPUT_STREAM_ARGUMENTS1) { this.id3d12videoprocesscommandlist1_vtable.ProcessFrames1(this, pVideoProcessor, pOutputArguments, NumInputStreams, pInputArguments); }
-
 vtable :: (obj: *ID3D12VideoProcessCommandList1) -> *ID3D12VideoProcessCommandList1_VTable { return obj.id3d12videoprocesscommandlist1_vtable; }
 
 
@@ -8239,9 +7904,6 @@ ID3D12VideoMotionEstimator_VTable :: struct #type_info_none {
     GetDesc: (this: *ID3D12VideoMotionEstimator) -> D3D12_VIDEO_MOTION_ESTIMATOR_DESC #cpp_method;
     GetProtectedResourceSession: (this: *ID3D12VideoMotionEstimator, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoMotionEstimator_GetDesc :: inline (this: *ID3D12VideoMotionEstimator) -> D3D12_VIDEO_MOTION_ESTIMATOR_DESC { return this.id3d12videomotionestimator_vtable.GetDesc(this); }
-ID3D12VideoMotionEstimator_GetProtectedResourceSession :: inline (this: *ID3D12VideoMotionEstimator, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videomotionestimator_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoMotionEstimator) -> *ID3D12VideoMotionEstimator_VTable { return obj.id3d12videomotionestimator_vtable; }
 
 
@@ -8266,9 +7928,6 @@ ID3D12VideoMotionVectorHeap_VTable :: struct #type_info_none {
     GetDesc: (this: *ID3D12VideoMotionVectorHeap) -> D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC #cpp_method;
     GetProtectedResourceSession: (this: *ID3D12VideoMotionVectorHeap, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoMotionVectorHeap_GetDesc :: inline (this: *ID3D12VideoMotionVectorHeap) -> D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC { return this.id3d12videomotionvectorheap_vtable.GetDesc(this); }
-ID3D12VideoMotionVectorHeap_GetProtectedResourceSession :: inline (this: *ID3D12VideoMotionVectorHeap, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videomotionvectorheap_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoMotionVectorHeap) -> *ID3D12VideoMotionVectorHeap_VTable { return obj.id3d12videomotionvectorheap_vtable; }
 
 
@@ -8283,9 +7942,6 @@ ID3D12VideoDevice1_VTable :: struct #type_info_none {
     CreateVideoMotionEstimator: (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_ESTIMATOR_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionEstimator: **void) -> HRESULT #cpp_method;
     CreateVideoMotionVectorHeap: (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionVectorHeap: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoDevice1_CreateVideoMotionEstimator :: inline (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_ESTIMATOR_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionEstimator: **void) -> HRESULT { return this.id3d12videodevice1_vtable.CreateVideoMotionEstimator(this, pDesc, pProtectedResourceSession, riid, ppVideoMotionEstimator); }
-ID3D12VideoDevice1_CreateVideoMotionVectorHeap :: inline (this: *ID3D12VideoDevice1, pDesc: *D3D12_VIDEO_MOTION_VECTOR_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoMotionVectorHeap: **void) -> HRESULT { return this.id3d12videodevice1_vtable.CreateVideoMotionVectorHeap(this, pDesc, pProtectedResourceSession, riid, ppVideoMotionVectorHeap); }
-
 vtable :: (obj: *ID3D12VideoDevice1) -> *ID3D12VideoDevice1_VTable { return obj.id3d12videodevice1_vtable; }
 
 
@@ -8346,23 +8002,6 @@ ID3D12VideoEncodeCommandList_VTable :: struct #type_info_none {
     WriteBufferImmediate: (this: *ID3D12VideoEncodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) -> void #cpp_method;
     SetProtectedResourceSession: (this: *ID3D12VideoEncodeCommandList, pProtectedResourceSession: *ID3D12ProtectedResourceSession) -> void #cpp_method;
 }
-ID3D12VideoEncodeCommandList_Close :: inline (this: *ID3D12VideoEncodeCommandList) -> HRESULT { return this.id3d12videoencodecommandlist_vtable.Close(this); }
-ID3D12VideoEncodeCommandList_Reset :: inline (this: *ID3D12VideoEncodeCommandList, pAllocator: *ID3D12CommandAllocator) -> HRESULT { return this.id3d12videoencodecommandlist_vtable.Reset(this, pAllocator); }
-ID3D12VideoEncodeCommandList_ClearState :: inline (this: *ID3D12VideoEncodeCommandList) { this.id3d12videoencodecommandlist_vtable.ClearState(this); }
-ID3D12VideoEncodeCommandList_ResourceBarrier :: inline (this: *ID3D12VideoEncodeCommandList, NumBarriers: u32, pBarriers: *D3D12_RESOURCE_BARRIER) { this.id3d12videoencodecommandlist_vtable.ResourceBarrier(this, NumBarriers, pBarriers); }
-ID3D12VideoEncodeCommandList_DiscardResource :: inline (this: *ID3D12VideoEncodeCommandList, pResource: *ID3D12Resource, pRegion: *D3D12_DISCARD_REGION) { this.id3d12videoencodecommandlist_vtable.DiscardResource(this, pResource, pRegion); }
-ID3D12VideoEncodeCommandList_BeginQuery :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoencodecommandlist_vtable.BeginQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoEncodeCommandList_EndQuery :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, Index: u32) { this.id3d12videoencodecommandlist_vtable.EndQuery(this, pQueryHeap, Type, Index); }
-ID3D12VideoEncodeCommandList_ResolveQueryData :: inline (this: *ID3D12VideoEncodeCommandList, pQueryHeap: *ID3D12QueryHeap, Type: D3D12_QUERY_TYPE, StartIndex: u32, NumQueries: u32, pDestinationBuffer: *ID3D12Resource, AlignedDestinationBufferOffset: u64) { this.id3d12videoencodecommandlist_vtable.ResolveQueryData(this, pQueryHeap, Type, StartIndex, NumQueries, pDestinationBuffer, AlignedDestinationBufferOffset); }
-ID3D12VideoEncodeCommandList_SetPredication :: inline (this: *ID3D12VideoEncodeCommandList, pBuffer: *ID3D12Resource, AlignedBufferOffset: u64, Operation: D3D12_PREDICATION_OP) { this.id3d12videoencodecommandlist_vtable.SetPredication(this, pBuffer, AlignedBufferOffset, Operation); }
-ID3D12VideoEncodeCommandList_SetMarker :: inline (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoencodecommandlist_vtable.SetMarker(this, Metadata, pData, Size); }
-ID3D12VideoEncodeCommandList_BeginEvent :: inline (this: *ID3D12VideoEncodeCommandList, Metadata: u32, pData: *void, Size: u32) { this.id3d12videoencodecommandlist_vtable.BeginEvent(this, Metadata, pData, Size); }
-ID3D12VideoEncodeCommandList_EndEvent :: inline (this: *ID3D12VideoEncodeCommandList) { this.id3d12videoencodecommandlist_vtable.EndEvent(this); }
-ID3D12VideoEncodeCommandList_EstimateMotion :: inline (this: *ID3D12VideoEncodeCommandList, pMotionEstimator: *ID3D12VideoMotionEstimator, pOutputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_OUTPUT, pInputArguments: *D3D12_VIDEO_MOTION_ESTIMATOR_INPUT) { this.id3d12videoencodecommandlist_vtable.EstimateMotion(this, pMotionEstimator, pOutputArguments, pInputArguments); }
-ID3D12VideoEncodeCommandList_ResolveMotionVectorHeap :: inline (this: *ID3D12VideoEncodeCommandList, pOutputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_OUTPUT, pInputArguments: *D3D12_RESOLVE_VIDEO_MOTION_VECTOR_HEAP_INPUT) { this.id3d12videoencodecommandlist_vtable.ResolveMotionVectorHeap(this, pOutputArguments, pInputArguments); }
-ID3D12VideoEncodeCommandList_WriteBufferImmediate :: inline (this: *ID3D12VideoEncodeCommandList, Count: u32, pParams: *D3D12_WRITEBUFFERIMMEDIATE_PARAMETER, pModes: *D3D12_WRITEBUFFERIMMEDIATE_MODE) { this.id3d12videoencodecommandlist_vtable.WriteBufferImmediate(this, Count, pParams, pModes); }
-ID3D12VideoEncodeCommandList_SetProtectedResourceSession :: inline (this: *ID3D12VideoEncodeCommandList, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videoencodecommandlist_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
-
 vtable :: (obj: *ID3D12VideoEncodeCommandList) -> *ID3D12VideoEncodeCommandList_VTable { return obj.id3d12videoencodecommandlist_vtable; }
 
 
@@ -8533,8 +8172,6 @@ ID3D12VideoDecoder1_VTable :: struct #type_info_none {
     using id3d12videodecoder: ID3D12VideoDecoder_VTable;
     GetProtectedResourceSession: (this: *ID3D12VideoDecoder1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoDecoder1_GetProtectedResourceSession :: inline (this: *ID3D12VideoDecoder1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videodecoder1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoDecoder1) -> *ID3D12VideoDecoder1_VTable { return obj.id3d12videodecoder1_vtable; }
 
 
@@ -8548,8 +8185,6 @@ ID3D12VideoDecoderHeap1_VTable :: struct #type_info_none {
     using id3d12videodecoderheap: ID3D12VideoDecoderHeap_VTable;
     GetProtectedResourceSession: (this: *ID3D12VideoDecoderHeap1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoDecoderHeap1_GetProtectedResourceSession :: inline (this: *ID3D12VideoDecoderHeap1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videodecoderheap1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoDecoderHeap1) -> *ID3D12VideoDecoderHeap1_VTable { return obj.id3d12videodecoderheap1_vtable; }
 
 
@@ -8563,8 +8198,6 @@ ID3D12VideoProcessor1_VTable :: struct #type_info_none {
     using id3d12videoprocessor: ID3D12VideoProcessor_VTable;
     GetProtectedResourceSession: (this: *ID3D12VideoProcessor1, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoProcessor1_GetProtectedResourceSession :: inline (this: *ID3D12VideoProcessor1, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videoprocessor1_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoProcessor1) -> *ID3D12VideoProcessor1_VTable { return obj.id3d12videoprocessor1_vtable; }
 
 
@@ -8579,9 +8212,6 @@ ID3D12VideoExtensionCommand_VTable :: struct #type_info_none {
     GetDesc: (this: *ID3D12VideoExtensionCommand) -> D3D12_VIDEO_EXTENSION_COMMAND_DESC #cpp_method;
     GetProtectedResourceSession: (this: *ID3D12VideoExtensionCommand, riid: *IID, ppProtectedSession: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoExtensionCommand_GetDesc :: inline (this: *ID3D12VideoExtensionCommand) -> D3D12_VIDEO_EXTENSION_COMMAND_DESC { return this.id3d12videoextensioncommand_vtable.GetDesc(this); }
-ID3D12VideoExtensionCommand_GetProtectedResourceSession :: inline (this: *ID3D12VideoExtensionCommand, riid: *IID, ppProtectedSession: **void) -> HRESULT { return this.id3d12videoextensioncommand_vtable.GetProtectedResourceSession(this, riid, ppProtectedSession); }
-
 vtable :: (obj: *ID3D12VideoExtensionCommand) -> *ID3D12VideoExtensionCommand_VTable { return obj.id3d12videoextensioncommand_vtable; }
 
 
@@ -8599,12 +8229,6 @@ ID3D12VideoDevice2_VTable :: struct #type_info_none {
     CreateVideoExtensionCommand: (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_EXTENSION_COMMAND_DESC, pCreationParameters: *void, CreationParametersDataSizeInBytes: SIZE_T, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoExtensionCommand: **void) -> HRESULT #cpp_method;
     ExecuteExtensionCommand: (this: *ID3D12VideoDevice2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T, pOutputData: *void, OutputDataSizeInBytes: SIZE_T) -> HRESULT #cpp_method;
 }
-ID3D12VideoDevice2_CreateVideoDecoder1 :: inline (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_DECODER_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoder: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoDecoder1(this, pDesc, pProtectedResourceSession, riid, ppVideoDecoder); }
-ID3D12VideoDevice2_CreateVideoDecoderHeap1 :: inline (this: *ID3D12VideoDevice2, pVideoDecoderHeapDesc: *D3D12_VIDEO_DECODER_HEAP_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoDecoderHeap: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoDecoderHeap1(this, pVideoDecoderHeapDesc, pProtectedResourceSession, riid, ppVideoDecoderHeap); }
-ID3D12VideoDevice2_CreateVideoProcessor1 :: inline (this: *ID3D12VideoDevice2, NodeMask: u32, pOutputStreamDesc: *D3D12_VIDEO_PROCESS_OUTPUT_STREAM_DESC, NumInputStreamDescs: u32, pInputStreamDescs: *D3D12_VIDEO_PROCESS_INPUT_STREAM_DESC, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoProcessor: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoProcessor1(this, NodeMask, pOutputStreamDesc, NumInputStreamDescs, pInputStreamDescs, pProtectedResourceSession, riid, ppVideoProcessor); }
-ID3D12VideoDevice2_CreateVideoExtensionCommand :: inline (this: *ID3D12VideoDevice2, pDesc: *D3D12_VIDEO_EXTENSION_COMMAND_DESC, pCreationParameters: *void, CreationParametersDataSizeInBytes: SIZE_T, pProtectedResourceSession: *ID3D12ProtectedResourceSession, riid: *IID, ppVideoExtensionCommand: **void) -> HRESULT { return this.id3d12videodevice2_vtable.CreateVideoExtensionCommand(this, pDesc, pCreationParameters, CreationParametersDataSizeInBytes, pProtectedResourceSession, riid, ppVideoExtensionCommand); }
-ID3D12VideoDevice2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoDevice2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T, pOutputData: *void, OutputDataSizeInBytes: SIZE_T) -> HRESULT { return this.id3d12videodevice2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes, pOutputData, OutputDataSizeInBytes); }
-
 vtable :: (obj: *ID3D12VideoDevice2) -> *ID3D12VideoDevice2_VTable { return obj.id3d12videodevice2_vtable; }
 
 
@@ -8620,10 +8244,6 @@ ID3D12VideoDecodeCommandList2_VTable :: struct #type_info_none {
     InitializeExtensionCommand: (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
     ExecuteExtensionCommand: (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
 }
-ID3D12VideoDecodeCommandList2_SetProtectedResourceSession :: inline (this: *ID3D12VideoDecodeCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videodecodecommandlist2_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
-ID3D12VideoDecodeCommandList2_InitializeExtensionCommand :: inline (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videodecodecommandlist2_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
-ID3D12VideoDecodeCommandList2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoDecodeCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videodecodecommandlist2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
-
 vtable :: (obj: *ID3D12VideoDecodeCommandList2) -> *ID3D12VideoDecodeCommandList2_VTable { return obj.id3d12videodecodecommandlist2_vtable; }
 
 
@@ -8637,8 +8257,6 @@ ID3D12VideoDecodeCommandList3_VTable :: struct #type_info_none {
     using id3d12videodecodecommandlist2: ID3D12VideoDecodeCommandList2_VTable;
     Barrier: (this: *ID3D12VideoDecodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
 }
-ID3D12VideoDecodeCommandList3_Barrier :: inline (this: *ID3D12VideoDecodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videodecodecommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
-
 vtable :: (obj: *ID3D12VideoDecodeCommandList3) -> *ID3D12VideoDecodeCommandList3_VTable { return obj.id3d12videodecodecommandlist3_vtable; }
 
 
@@ -8654,10 +8272,6 @@ ID3D12VideoProcessCommandList2_VTable :: struct #type_info_none {
     InitializeExtensionCommand: (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
     ExecuteExtensionCommand: (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
 }
-ID3D12VideoProcessCommandList2_SetProtectedResourceSession :: inline (this: *ID3D12VideoProcessCommandList2, pProtectedResourceSession: *ID3D12ProtectedResourceSession) { this.id3d12videoprocesscommandlist2_vtable.SetProtectedResourceSession(this, pProtectedResourceSession); }
-ID3D12VideoProcessCommandList2_InitializeExtensionCommand :: inline (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videoprocesscommandlist2_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
-ID3D12VideoProcessCommandList2_ExecuteExtensionCommand :: inline (this: *ID3D12VideoProcessCommandList2, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videoprocesscommandlist2_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
-
 vtable :: (obj: *ID3D12VideoProcessCommandList2) -> *ID3D12VideoProcessCommandList2_VTable { return obj.id3d12videoprocesscommandlist2_vtable; }
 
 
@@ -8671,8 +8285,6 @@ ID3D12VideoProcessCommandList3_VTable :: struct #type_info_none {
     using id3d12videoprocesscommandlist2: ID3D12VideoProcessCommandList2_VTable;
     Barrier: (this: *ID3D12VideoProcessCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
 }
-ID3D12VideoProcessCommandList3_Barrier :: inline (this: *ID3D12VideoProcessCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videoprocesscommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
-
 vtable :: (obj: *ID3D12VideoProcessCommandList3) -> *ID3D12VideoProcessCommandList3_VTable { return obj.id3d12videoprocesscommandlist3_vtable; }
 
 
@@ -8687,9 +8299,6 @@ ID3D12VideoEncodeCommandList1_VTable :: struct #type_info_none {
     InitializeExtensionCommand: (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) -> void #cpp_method;
     ExecuteExtensionCommand: (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) -> void #cpp_method;
 }
-ID3D12VideoEncodeCommandList1_InitializeExtensionCommand :: inline (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pInitializationParameters: *void, InitializationParametersSizeInBytes: SIZE_T) { this.id3d12videoencodecommandlist1_vtable.InitializeExtensionCommand(this, pExtensionCommand, pInitializationParameters, InitializationParametersSizeInBytes); }
-ID3D12VideoEncodeCommandList1_ExecuteExtensionCommand :: inline (this: *ID3D12VideoEncodeCommandList1, pExtensionCommand: *ID3D12VideoExtensionCommand, pExecutionParameters: *void, ExecutionParametersSizeInBytes: SIZE_T) { this.id3d12videoencodecommandlist1_vtable.ExecuteExtensionCommand(this, pExtensionCommand, pExecutionParameters, ExecutionParametersSizeInBytes); }
-
 vtable :: (obj: *ID3D12VideoEncodeCommandList1) -> *ID3D12VideoEncodeCommandList1_VTable { return obj.id3d12videoencodecommandlist1_vtable; }
 
 
@@ -9448,14 +9057,6 @@ ID3D12VideoEncoder_VTable :: struct #type_info_none {
     GetInputFormat: (this: *ID3D12VideoEncoder) -> DXGI_FORMAT #cpp_method;
     GetMaxMotionEstimationPrecision: (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE #cpp_method;
 }
-ID3D12VideoEncoder_GetNodeMask :: inline (this: *ID3D12VideoEncoder) -> u32 { return this.id3d12videoencoder_vtable.GetNodeMask(this); }
-ID3D12VideoEncoder_GetEncoderFlags :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_FLAGS { return this.id3d12videoencoder_vtable.GetEncoderFlags(this); }
-ID3D12VideoEncoder_GetCodec :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_CODEC { return this.id3d12videoencoder_vtable.GetCodec(this); }
-ID3D12VideoEncoder_GetCodecProfile :: inline (this: *ID3D12VideoEncoder, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT { return this.id3d12videoencoder_vtable.GetCodecProfile(this, dstProfile); }
-ID3D12VideoEncoder_GetCodecConfiguration :: inline (this: *ID3D12VideoEncoder, dstCodecConfig: D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION) -> HRESULT { return this.id3d12videoencoder_vtable.GetCodecConfiguration(this, dstCodecConfig); }
-ID3D12VideoEncoder_GetInputFormat :: inline (this: *ID3D12VideoEncoder) -> DXGI_FORMAT { return this.id3d12videoencoder_vtable.GetInputFormat(this); }
-ID3D12VideoEncoder_GetMaxMotionEstimationPrecision :: inline (this: *ID3D12VideoEncoder) -> D3D12_VIDEO_ENCODER_MOTION_ESTIMATION_PRECISION_MODE { return this.id3d12videoencoder_vtable.GetMaxMotionEstimationPrecision(this); }
-
 vtable :: (obj: *ID3D12VideoEncoder) -> *ID3D12VideoEncoder_VTable { return obj.id3d12videoencoder_vtable; }
 
 
@@ -9475,14 +9076,6 @@ ID3D12VideoEncoderHeap_VTable :: struct #type_info_none {
     GetResolutionListCount: (this: *ID3D12VideoEncoderHeap) -> u32 #cpp_method;
     GetResolutionList: (this: *ID3D12VideoEncoderHeap, ResolutionsListCount: u32, pResolutionList: *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC) -> HRESULT #cpp_method;
 }
-ID3D12VideoEncoderHeap_GetNodeMask :: inline (this: *ID3D12VideoEncoderHeap) -> u32 { return this.id3d12videoencoderheap_vtable.GetNodeMask(this); }
-ID3D12VideoEncoderHeap_GetEncoderHeapFlags :: inline (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_HEAP_FLAGS { return this.id3d12videoencoderheap_vtable.GetEncoderHeapFlags(this); }
-ID3D12VideoEncoderHeap_GetCodec :: inline (this: *ID3D12VideoEncoderHeap) -> D3D12_VIDEO_ENCODER_CODEC { return this.id3d12videoencoderheap_vtable.GetCodec(this); }
-ID3D12VideoEncoderHeap_GetCodecProfile :: inline (this: *ID3D12VideoEncoderHeap, dstProfile: D3D12_VIDEO_ENCODER_PROFILE_DESC) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetCodecProfile(this, dstProfile); }
-ID3D12VideoEncoderHeap_GetCodecLevel :: inline (this: *ID3D12VideoEncoderHeap, dstLevel: D3D12_VIDEO_ENCODER_LEVEL_SETTING) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetCodecLevel(this, dstLevel); }
-ID3D12VideoEncoderHeap_GetResolutionListCount :: inline (this: *ID3D12VideoEncoderHeap) -> u32 { return this.id3d12videoencoderheap_vtable.GetResolutionListCount(this); }
-ID3D12VideoEncoderHeap_GetResolutionList :: inline (this: *ID3D12VideoEncoderHeap, ResolutionsListCount: u32, pResolutionList: *D3D12_VIDEO_ENCODER_PICTURE_RESOLUTION_DESC) -> HRESULT { return this.id3d12videoencoderheap_vtable.GetResolutionList(this, ResolutionsListCount, pResolutionList); }
-
 vtable :: (obj: *ID3D12VideoEncoderHeap) -> *ID3D12VideoEncoderHeap_VTable { return obj.id3d12videoencoderheap_vtable; }
 
 
@@ -9497,9 +9090,6 @@ ID3D12VideoDevice3_VTable :: struct #type_info_none {
     CreateVideoEncoder: (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_DESC, riid: *IID, ppVideoEncoder: **void) -> HRESULT #cpp_method;
     CreateVideoEncoderHeap: (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_HEAP_DESC, riid: *IID, ppVideoEncoderHeap: **void) -> HRESULT #cpp_method;
 }
-ID3D12VideoDevice3_CreateVideoEncoder :: inline (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_DESC, riid: *IID, ppVideoEncoder: **void) -> HRESULT { return this.id3d12videodevice3_vtable.CreateVideoEncoder(this, pDesc, riid, ppVideoEncoder); }
-ID3D12VideoDevice3_CreateVideoEncoderHeap :: inline (this: *ID3D12VideoDevice3, pDesc: *D3D12_VIDEO_ENCODER_HEAP_DESC, riid: *IID, ppVideoEncoderHeap: **void) -> HRESULT { return this.id3d12videodevice3_vtable.CreateVideoEncoderHeap(this, pDesc, riid, ppVideoEncoderHeap); }
-
 vtable :: (obj: *ID3D12VideoDevice3) -> *ID3D12VideoDevice3_VTable { return obj.id3d12videodevice3_vtable; }
 
 
@@ -9783,9 +9373,6 @@ ID3D12VideoEncodeCommandList2_VTable :: struct #type_info_none {
     EncodeFrame: (this: *ID3D12VideoEncodeCommandList2, pEncoder: *ID3D12VideoEncoder, pHeap: *ID3D12VideoEncoderHeap, pInputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_OUTPUT_ARGUMENTS) -> void #cpp_method;
     ResolveEncoderOutputMetadata: (this: *ID3D12VideoEncodeCommandList2, pInputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS) -> void #cpp_method;
 }
-ID3D12VideoEncodeCommandList2_EncodeFrame :: inline (this: *ID3D12VideoEncodeCommandList2, pEncoder: *ID3D12VideoEncoder, pHeap: *ID3D12VideoEncoderHeap, pInputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_ENCODEFRAME_OUTPUT_ARGUMENTS) { this.id3d12videoencodecommandlist2_vtable.EncodeFrame(this, pEncoder, pHeap, pInputArguments, pOutputArguments); }
-ID3D12VideoEncodeCommandList2_ResolveEncoderOutputMetadata :: inline (this: *ID3D12VideoEncodeCommandList2, pInputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_INPUT_ARGUMENTS, pOutputArguments: *D3D12_VIDEO_ENCODER_RESOLVE_METADATA_OUTPUT_ARGUMENTS) { this.id3d12videoencodecommandlist2_vtable.ResolveEncoderOutputMetadata(this, pInputArguments, pOutputArguments); }
-
 vtable :: (obj: *ID3D12VideoEncodeCommandList2) -> *ID3D12VideoEncodeCommandList2_VTable { return obj.id3d12videoencodecommandlist2_vtable; }
 
 
@@ -9799,8 +9386,6 @@ ID3D12VideoEncodeCommandList3_VTable :: struct #type_info_none {
     using id3d12videoencodecommandlist2: ID3D12VideoEncodeCommandList2_VTable;
     Barrier: (this: *ID3D12VideoEncodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) -> void #cpp_method;
 }
-ID3D12VideoEncodeCommandList3_Barrier :: inline (this: *ID3D12VideoEncodeCommandList3, NumBarrierGroups: u32, pBarrierGroups: *D3D12_BARRIER_GROUP) { this.id3d12videoencodecommandlist3_vtable.Barrier(this, NumBarrierGroups, pBarrierGroups); }
-
 vtable :: (obj: *ID3D12VideoEncodeCommandList3) -> *ID3D12VideoEncodeCommandList3_VTable { return obj.id3d12videoencodecommandlist3_vtable; }
 
 

@@ -18,8 +18,6 @@ ID3D12Debug_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     EnableDebugLayer: (this: *ID3D12Debug) -> void #cpp_method;
 }
-ID3D12Debug_EnableDebugLayer :: inline (this: *ID3D12Debug) { this.id3d12debug_vtable.EnableDebugLayer(this); }
-
 vtable :: (obj: *ID3D12Debug) -> *ID3D12Debug_VTable { return obj.id3d12debug_vtable; }
 
 
@@ -45,10 +43,6 @@ ID3D12Debug1_VTable :: struct #type_info_none {
     SetEnableGPUBasedValidation: (this: *ID3D12Debug1, Enable: BOOL) -> void #cpp_method;
     SetEnableSynchronizedCommandQueueValidation: (this: *ID3D12Debug1, Enable: BOOL) -> void #cpp_method;
 }
-ID3D12Debug1_EnableDebugLayer :: inline (this: *ID3D12Debug1) { this.id3d12debug1_vtable.EnableDebugLayer(this); }
-ID3D12Debug1_SetEnableGPUBasedValidation :: inline (this: *ID3D12Debug1, Enable: BOOL) { this.id3d12debug1_vtable.SetEnableGPUBasedValidation(this, Enable); }
-ID3D12Debug1_SetEnableSynchronizedCommandQueueValidation :: inline (this: *ID3D12Debug1, Enable: BOOL) { this.id3d12debug1_vtable.SetEnableSynchronizedCommandQueueValidation(this, Enable); }
-
 vtable :: (obj: *ID3D12Debug1) -> *ID3D12Debug1_VTable { return obj.id3d12debug1_vtable; }
 
 
@@ -62,8 +56,6 @@ ID3D12Debug2_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     SetGPUBasedValidationFlags: (this: *ID3D12Debug2, Flags: D3D12_GPU_BASED_VALIDATION_FLAGS) -> void #cpp_method;
 }
-ID3D12Debug2_SetGPUBasedValidationFlags :: inline (this: *ID3D12Debug2, Flags: D3D12_GPU_BASED_VALIDATION_FLAGS) { this.id3d12debug2_vtable.SetGPUBasedValidationFlags(this, Flags); }
-
 vtable :: (obj: *ID3D12Debug2) -> *ID3D12Debug2_VTable { return obj.id3d12debug2_vtable; }
 
 
@@ -79,10 +71,6 @@ ID3D12Debug3_VTable :: struct #type_info_none {
     SetEnableSynchronizedCommandQueueValidation: (this: *ID3D12Debug3, Enable: BOOL) -> void #cpp_method;
     SetGPUBasedValidationFlags: (this: *ID3D12Debug3, Flags: D3D12_GPU_BASED_VALIDATION_FLAGS) -> void #cpp_method;
 }
-ID3D12Debug3_SetEnableGPUBasedValidation :: inline (this: *ID3D12Debug3, Enable: BOOL) { this.id3d12debug3_vtable.SetEnableGPUBasedValidation(this, Enable); }
-ID3D12Debug3_SetEnableSynchronizedCommandQueueValidation :: inline (this: *ID3D12Debug3, Enable: BOOL) { this.id3d12debug3_vtable.SetEnableSynchronizedCommandQueueValidation(this, Enable); }
-ID3D12Debug3_SetGPUBasedValidationFlags :: inline (this: *ID3D12Debug3, Flags: D3D12_GPU_BASED_VALIDATION_FLAGS) { this.id3d12debug3_vtable.SetGPUBasedValidationFlags(this, Flags); }
-
 vtable :: (obj: *ID3D12Debug3) -> *ID3D12Debug3_VTable { return obj.id3d12debug3_vtable; }
 
 
@@ -96,8 +84,6 @@ ID3D12Debug4_VTable :: struct #type_info_none {
     using id3d12debug3: ID3D12Debug3_VTable;
     DisableDebugLayer: (this: *ID3D12Debug4) -> void #cpp_method;
 }
-ID3D12Debug4_DisableDebugLayer :: inline (this: *ID3D12Debug4) { this.id3d12debug4_vtable.DisableDebugLayer(this); }
-
 vtable :: (obj: *ID3D12Debug4) -> *ID3D12Debug4_VTable { return obj.id3d12debug4_vtable; }
 
 
@@ -111,8 +97,6 @@ ID3D12Debug5_VTable :: struct #type_info_none {
     using id3d12debug4: ID3D12Debug4_VTable;
     SetEnableAutoName: (this: *ID3D12Debug5, Enable: BOOL) -> void #cpp_method;
 }
-ID3D12Debug5_SetEnableAutoName :: inline (this: *ID3D12Debug5, Enable: BOOL) { this.id3d12debug5_vtable.SetEnableAutoName(this, Enable); }
-
 vtable :: (obj: *ID3D12Debug5) -> *ID3D12Debug5_VTable { return obj.id3d12debug5_vtable; }
 
 
@@ -126,8 +110,6 @@ ID3D12Debug6_VTable :: struct #type_info_none {
     using id3d12debug5: ID3D12Debug5_VTable;
     SetForceLegacyBarrierValidation: (this: *ID3D12Debug6, Enable: BOOL) -> void #cpp_method;
 }
-ID3D12Debug6_SetForceLegacyBarrierValidation :: inline (this: *ID3D12Debug6, Enable: BOOL) { this.id3d12debug6_vtable.SetForceLegacyBarrierValidation(this, Enable); }
-
 vtable :: (obj: *ID3D12Debug6) -> *ID3D12Debug6_VTable { return obj.id3d12debug6_vtable; }
 
 
@@ -213,10 +195,6 @@ ID3D12DebugDevice1_VTable :: struct #type_info_none {
     GetDebugParameter: (this: *ID3D12DebugDevice1, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
     ReportLiveDeviceObjects: (this: *ID3D12DebugDevice1, Flags: D3D12_RLDO_FLAGS) -> HRESULT #cpp_method;
 }
-ID3D12DebugDevice1_SetDebugParameter :: inline (this: *ID3D12DebugDevice1, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugdevice1_vtable.SetDebugParameter(this, Type, pData, DataSize); }
-ID3D12DebugDevice1_GetDebugParameter :: inline (this: *ID3D12DebugDevice1, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugdevice1_vtable.GetDebugParameter(this, Type, pData, DataSize); }
-ID3D12DebugDevice1_ReportLiveDeviceObjects :: inline (this: *ID3D12DebugDevice1, Flags: D3D12_RLDO_FLAGS) -> HRESULT { return this.id3d12debugdevice1_vtable.ReportLiveDeviceObjects(this, Flags); }
-
 vtable :: (obj: *ID3D12DebugDevice1) -> *ID3D12DebugDevice1_VTable { return obj.id3d12debugdevice1_vtable; }
 
 
@@ -232,10 +210,6 @@ ID3D12DebugDevice_VTable :: struct #type_info_none {
     GetFeatureMask: (this: *ID3D12DebugDevice) -> D3D12_DEBUG_FEATURE #cpp_method;
     ReportLiveDeviceObjects: (this: *ID3D12DebugDevice, Flags: D3D12_RLDO_FLAGS) -> HRESULT #cpp_method;
 }
-ID3D12DebugDevice_SetFeatureMask :: inline (this: *ID3D12DebugDevice, Mask: D3D12_DEBUG_FEATURE) -> HRESULT { return this.id3d12debugdevice_vtable.SetFeatureMask(this, Mask); }
-ID3D12DebugDevice_GetFeatureMask :: inline (this: *ID3D12DebugDevice) -> D3D12_DEBUG_FEATURE { return this.id3d12debugdevice_vtable.GetFeatureMask(this); }
-ID3D12DebugDevice_ReportLiveDeviceObjects :: inline (this: *ID3D12DebugDevice, Flags: D3D12_RLDO_FLAGS) -> HRESULT { return this.id3d12debugdevice_vtable.ReportLiveDeviceObjects(this, Flags); }
-
 vtable :: (obj: *ID3D12DebugDevice) -> *ID3D12DebugDevice_VTable { return obj.id3d12debugdevice_vtable; }
 
 
@@ -250,9 +224,6 @@ ID3D12DebugDevice2_VTable :: struct #type_info_none {
     SetDebugParameter: (this: *ID3D12DebugDevice2, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
     GetDebugParameter: (this: *ID3D12DebugDevice2, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
 }
-ID3D12DebugDevice2_SetDebugParameter :: inline (this: *ID3D12DebugDevice2, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugdevice2_vtable.SetDebugParameter(this, Type, pData, DataSize); }
-ID3D12DebugDevice2_GetDebugParameter :: inline (this: *ID3D12DebugDevice2, Type: D3D12_DEBUG_DEVICE_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugdevice2_vtable.GetDebugParameter(this, Type, pData, DataSize); }
-
 vtable :: (obj: *ID3D12DebugDevice2) -> *ID3D12DebugDevice2_VTable { return obj.id3d12debugdevice2_vtable; }
 
 
@@ -268,8 +239,6 @@ ID3D12DebugCommandQueue_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     AssertResourceState: (this: *ID3D12DebugCommandQueue, pResource: *ID3D12Resource, Subresource: u32, State: u32) -> BOOL #cpp_method;
 }
-ID3D12DebugCommandQueue_AssertResourceState :: inline (this: *ID3D12DebugCommandQueue, pResource: *ID3D12Resource, Subresource: u32, State: u32) -> BOOL { return this.id3d12debugcommandqueue_vtable.AssertResourceState(this, pResource, Subresource, State); }
-
 vtable :: (obj: *ID3D12DebugCommandQueue) -> *ID3D12DebugCommandQueue_VTable { return obj.id3d12debugcommandqueue_vtable; }
 
 
@@ -295,10 +264,6 @@ ID3D12DebugCommandList1_VTable :: struct #type_info_none {
     SetDebugParameter: (this: *ID3D12DebugCommandList1, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
     GetDebugParameter: (this: *ID3D12DebugCommandList1, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
 }
-ID3D12DebugCommandList1_AssertResourceState :: inline (this: *ID3D12DebugCommandList1, pResource: *ID3D12Resource, Subresource: u32, State: u32) -> BOOL { return this.id3d12debugcommandlist1_vtable.AssertResourceState(this, pResource, Subresource, State); }
-ID3D12DebugCommandList1_SetDebugParameter :: inline (this: *ID3D12DebugCommandList1, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugcommandlist1_vtable.SetDebugParameter(this, Type, pData, DataSize); }
-ID3D12DebugCommandList1_GetDebugParameter :: inline (this: *ID3D12DebugCommandList1, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugcommandlist1_vtable.GetDebugParameter(this, Type, pData, DataSize); }
-
 vtable :: (obj: *ID3D12DebugCommandList1) -> *ID3D12DebugCommandList1_VTable { return obj.id3d12debugcommandlist1_vtable; }
 
 
@@ -314,10 +279,6 @@ ID3D12DebugCommandList_VTable :: struct #type_info_none {
     SetFeatureMask: (this: *ID3D12DebugCommandList, Mask: D3D12_DEBUG_FEATURE) -> HRESULT #cpp_method;
     GetFeatureMask: (this: *ID3D12DebugCommandList) -> D3D12_DEBUG_FEATURE #cpp_method;
 }
-ID3D12DebugCommandList_AssertResourceState :: inline (this: *ID3D12DebugCommandList, pResource: *ID3D12Resource, Subresource: u32, State: u32) -> BOOL { return this.id3d12debugcommandlist_vtable.AssertResourceState(this, pResource, Subresource, State); }
-ID3D12DebugCommandList_SetFeatureMask :: inline (this: *ID3D12DebugCommandList, Mask: D3D12_DEBUG_FEATURE) -> HRESULT { return this.id3d12debugcommandlist_vtable.SetFeatureMask(this, Mask); }
-ID3D12DebugCommandList_GetFeatureMask :: inline (this: *ID3D12DebugCommandList) -> D3D12_DEBUG_FEATURE { return this.id3d12debugcommandlist_vtable.GetFeatureMask(this); }
-
 vtable :: (obj: *ID3D12DebugCommandList) -> *ID3D12DebugCommandList_VTable { return obj.id3d12debugcommandlist_vtable; }
 
 
@@ -332,9 +293,6 @@ ID3D12DebugCommandList2_VTable :: struct #type_info_none {
     SetDebugParameter: (this: *ID3D12DebugCommandList2, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
     GetDebugParameter: (this: *ID3D12DebugCommandList2, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT #cpp_method;
 }
-ID3D12DebugCommandList2_SetDebugParameter :: inline (this: *ID3D12DebugCommandList2, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugcommandlist2_vtable.SetDebugParameter(this, Type, pData, DataSize); }
-ID3D12DebugCommandList2_GetDebugParameter :: inline (this: *ID3D12DebugCommandList2, Type: D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE, pData: *void, DataSize: u32) -> HRESULT { return this.id3d12debugcommandlist2_vtable.GetDebugParameter(this, Type, pData, DataSize); }
-
 vtable :: (obj: *ID3D12DebugCommandList2) -> *ID3D12DebugCommandList2_VTable { return obj.id3d12debugcommandlist2_vtable; }
 
 
@@ -351,11 +309,6 @@ ID3D12SharingContract_VTable :: struct #type_info_none {
     BeginCapturableWork: (this: *ID3D12SharingContract, guid: *GUID) -> void #cpp_method;
     EndCapturableWork: (this: *ID3D12SharingContract, guid: *GUID) -> void #cpp_method;
 }
-ID3D12SharingContract_Present :: inline (this: *ID3D12SharingContract, pResource: *ID3D12Resource, Subresource: u32, window: HWND) { this.id3d12sharingcontract_vtable.Present(this, pResource, Subresource, window); }
-ID3D12SharingContract_SharedFenceSignal :: inline (this: *ID3D12SharingContract, pFence: *ID3D12Fence, FenceValue: u64) { this.id3d12sharingcontract_vtable.SharedFenceSignal(this, pFence, FenceValue); }
-ID3D12SharingContract_BeginCapturableWork :: inline (this: *ID3D12SharingContract, guid: *GUID) { this.id3d12sharingcontract_vtable.BeginCapturableWork(this, guid); }
-ID3D12SharingContract_EndCapturableWork :: inline (this: *ID3D12SharingContract, guid: *GUID) { this.id3d12sharingcontract_vtable.EndCapturableWork(this, guid); }
-
 vtable :: (obj: *ID3D12SharingContract) -> *ID3D12SharingContract_VTable { return obj.id3d12sharingcontract_vtable; }
 
 
@@ -2287,42 +2240,6 @@ ID3D12InfoQueue_VTable :: struct #type_info_none {
     SetMuteDebugOutput: (this: *ID3D12InfoQueue, bMute: BOOL) -> void #cpp_method;
     GetMuteDebugOutput: (this: *ID3D12InfoQueue) -> BOOL #cpp_method;
 }
-ID3D12InfoQueue_SetMessageCountLimit :: inline (this: *ID3D12InfoQueue, MessageCountLimit: u64) -> HRESULT { return this.id3d12infoqueue_vtable.SetMessageCountLimit(this, MessageCountLimit); }
-ID3D12InfoQueue_ClearStoredMessages :: inline (this: *ID3D12InfoQueue) { this.id3d12infoqueue_vtable.ClearStoredMessages(this); }
-ID3D12InfoQueue_GetMessageA :: inline (this: *ID3D12InfoQueue, MessageIndex: u64, pMessage: *D3D12_MESSAGE, pMessageByteLength: *SIZE_T) -> HRESULT { return this.id3d12infoqueue_vtable.GetMessageA(this, MessageIndex, pMessage, pMessageByteLength); }
-ID3D12InfoQueue_GetNumMessagesAllowedByStorageFilter :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetNumMessagesAllowedByStorageFilter(this); }
-ID3D12InfoQueue_GetNumMessagesDeniedByStorageFilter :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetNumMessagesDeniedByStorageFilter(this); }
-ID3D12InfoQueue_GetNumStoredMessages :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetNumStoredMessages(this); }
-ID3D12InfoQueue_GetNumStoredMessagesAllowedByRetrievalFilter :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetNumStoredMessagesAllowedByRetrievalFilter(this); }
-ID3D12InfoQueue_GetNumMessagesDiscardedByMessageCountLimit :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetNumMessagesDiscardedByMessageCountLimit(this); }
-ID3D12InfoQueue_GetMessageCountLimit :: inline (this: *ID3D12InfoQueue) -> u64 { return this.id3d12infoqueue_vtable.GetMessageCountLimit(this); }
-ID3D12InfoQueue_AddStorageFilterEntries :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER) -> HRESULT { return this.id3d12infoqueue_vtable.AddStorageFilterEntries(this, pFilter); }
-ID3D12InfoQueue_GetStorageFilter :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER, pFilterByteLength: *SIZE_T) -> HRESULT { return this.id3d12infoqueue_vtable.GetStorageFilter(this, pFilter, pFilterByteLength); }
-ID3D12InfoQueue_ClearStorageFilter :: inline (this: *ID3D12InfoQueue) { this.id3d12infoqueue_vtable.ClearStorageFilter(this); }
-ID3D12InfoQueue_PushEmptyStorageFilter :: inline (this: *ID3D12InfoQueue) -> HRESULT { return this.id3d12infoqueue_vtable.PushEmptyStorageFilter(this); }
-ID3D12InfoQueue_PushCopyOfStorageFilter :: inline (this: *ID3D12InfoQueue) -> HRESULT { return this.id3d12infoqueue_vtable.PushCopyOfStorageFilter(this); }
-ID3D12InfoQueue_PushStorageFilter :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER) -> HRESULT { return this.id3d12infoqueue_vtable.PushStorageFilter(this, pFilter); }
-ID3D12InfoQueue_PopStorageFilter :: inline (this: *ID3D12InfoQueue) { this.id3d12infoqueue_vtable.PopStorageFilter(this); }
-ID3D12InfoQueue_GetStorageFilterStackSize :: inline (this: *ID3D12InfoQueue) -> u32 { return this.id3d12infoqueue_vtable.GetStorageFilterStackSize(this); }
-ID3D12InfoQueue_AddRetrievalFilterEntries :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER) -> HRESULT { return this.id3d12infoqueue_vtable.AddRetrievalFilterEntries(this, pFilter); }
-ID3D12InfoQueue_GetRetrievalFilter :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER, pFilterByteLength: *SIZE_T) -> HRESULT { return this.id3d12infoqueue_vtable.GetRetrievalFilter(this, pFilter, pFilterByteLength); }
-ID3D12InfoQueue_ClearRetrievalFilter :: inline (this: *ID3D12InfoQueue) { this.id3d12infoqueue_vtable.ClearRetrievalFilter(this); }
-ID3D12InfoQueue_PushEmptyRetrievalFilter :: inline (this: *ID3D12InfoQueue) -> HRESULT { return this.id3d12infoqueue_vtable.PushEmptyRetrievalFilter(this); }
-ID3D12InfoQueue_PushCopyOfRetrievalFilter :: inline (this: *ID3D12InfoQueue) -> HRESULT { return this.id3d12infoqueue_vtable.PushCopyOfRetrievalFilter(this); }
-ID3D12InfoQueue_PushRetrievalFilter :: inline (this: *ID3D12InfoQueue, pFilter: *D3D12_INFO_QUEUE_FILTER) -> HRESULT { return this.id3d12infoqueue_vtable.PushRetrievalFilter(this, pFilter); }
-ID3D12InfoQueue_PopRetrievalFilter :: inline (this: *ID3D12InfoQueue) { this.id3d12infoqueue_vtable.PopRetrievalFilter(this); }
-ID3D12InfoQueue_GetRetrievalFilterStackSize :: inline (this: *ID3D12InfoQueue) -> u32 { return this.id3d12infoqueue_vtable.GetRetrievalFilterStackSize(this); }
-ID3D12InfoQueue_AddMessage :: inline (this: *ID3D12InfoQueue, Category: D3D12_MESSAGE_CATEGORY, Severity: D3D12_MESSAGE_SEVERITY, ID: D3D12_MESSAGE_ID, pDescription: *u8) -> HRESULT { return this.id3d12infoqueue_vtable.AddMessage(this, Category, Severity, ID, pDescription); }
-ID3D12InfoQueue_AddApplicationMessage :: inline (this: *ID3D12InfoQueue, Severity: D3D12_MESSAGE_SEVERITY, pDescription: *u8) -> HRESULT { return this.id3d12infoqueue_vtable.AddApplicationMessage(this, Severity, pDescription); }
-ID3D12InfoQueue_SetBreakOnCategory :: inline (this: *ID3D12InfoQueue, Category: D3D12_MESSAGE_CATEGORY, bEnable: BOOL) -> HRESULT { return this.id3d12infoqueue_vtable.SetBreakOnCategory(this, Category, bEnable); }
-ID3D12InfoQueue_SetBreakOnSeverity :: inline (this: *ID3D12InfoQueue, Severity: D3D12_MESSAGE_SEVERITY, bEnable: BOOL) -> HRESULT { return this.id3d12infoqueue_vtable.SetBreakOnSeverity(this, Severity, bEnable); }
-ID3D12InfoQueue_SetBreakOnID :: inline (this: *ID3D12InfoQueue, ID: D3D12_MESSAGE_ID, bEnable: BOOL) -> HRESULT { return this.id3d12infoqueue_vtable.SetBreakOnID(this, ID, bEnable); }
-ID3D12InfoQueue_GetBreakOnCategory :: inline (this: *ID3D12InfoQueue, Category: D3D12_MESSAGE_CATEGORY) -> BOOL { return this.id3d12infoqueue_vtable.GetBreakOnCategory(this, Category); }
-ID3D12InfoQueue_GetBreakOnSeverity :: inline (this: *ID3D12InfoQueue, Severity: D3D12_MESSAGE_SEVERITY) -> BOOL { return this.id3d12infoqueue_vtable.GetBreakOnSeverity(this, Severity); }
-ID3D12InfoQueue_GetBreakOnID :: inline (this: *ID3D12InfoQueue, ID: D3D12_MESSAGE_ID) -> BOOL { return this.id3d12infoqueue_vtable.GetBreakOnID(this, ID); }
-ID3D12InfoQueue_SetMuteDebugOutput :: inline (this: *ID3D12InfoQueue, bMute: BOOL) { this.id3d12infoqueue_vtable.SetMuteDebugOutput(this, bMute); }
-ID3D12InfoQueue_GetMuteDebugOutput :: inline (this: *ID3D12InfoQueue) -> BOOL { return this.id3d12infoqueue_vtable.GetMuteDebugOutput(this); }
-
 vtable :: (obj: *ID3D12InfoQueue) -> *ID3D12InfoQueue_VTable { return obj.id3d12infoqueue_vtable; }
 
 
@@ -2349,9 +2266,6 @@ ID3D12InfoQueue1_VTable :: struct #type_info_none {
     RegisterMessageCallback: (this: *ID3D12InfoQueue1, CallbackFunc: D3D12MessageFunc, CallbackFilterFlags: D3D12_MESSAGE_CALLBACK_FLAGS, pContext: *void, pCallbackCookie: *u32) -> HRESULT #cpp_method;
     UnregisterMessageCallback: (this: *ID3D12InfoQueue1, CallbackCookie: u32) -> HRESULT #cpp_method;
 }
-ID3D12InfoQueue1_RegisterMessageCallback :: inline (this: *ID3D12InfoQueue1, CallbackFunc: D3D12MessageFunc, CallbackFilterFlags: D3D12_MESSAGE_CALLBACK_FLAGS, pContext: *void, pCallbackCookie: *u32) -> HRESULT { return this.id3d12infoqueue1_vtable.RegisterMessageCallback(this, CallbackFunc, CallbackFilterFlags, pContext, pCallbackCookie); }
-ID3D12InfoQueue1_UnregisterMessageCallback :: inline (this: *ID3D12InfoQueue1, CallbackCookie: u32) -> HRESULT { return this.id3d12infoqueue1_vtable.UnregisterMessageCallback(this, CallbackCookie); }
-
 vtable :: (obj: *ID3D12InfoQueue1) -> *ID3D12InfoQueue1_VTable { return obj.id3d12infoqueue1_vtable; }
 
 

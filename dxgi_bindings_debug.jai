@@ -141,44 +141,6 @@ IDXGIInfoQueue_VTable :: struct #type_info_none {
     SetMuteDebugOutput: (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, bMute: BOOL) -> void #cpp_method;
     GetMuteDebugOutput: (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> BOOL #cpp_method;
 }
-IDXGIInfoQueue_SetMessageCountLimit :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, MessageCountLimit: u64) -> HRESULT { return this.idxgiinfoqueue_vtable.SetMessageCountLimit(this, Producer, MessageCountLimit); }
-IDXGIInfoQueue_ClearStoredMessages :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) { this.idxgiinfoqueue_vtable.ClearStoredMessages(this, Producer); }
-IDXGIInfoQueue_GetMessageA :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, MessageIndex: u64, pMessage: *DXGI_INFO_QUEUE_MESSAGE, pMessageByteLength: *SIZE_T) -> HRESULT { return this.idxgiinfoqueue_vtable.GetMessageA(this, Producer, MessageIndex, pMessage, pMessageByteLength); }
-IDXGIInfoQueue_GetNumStoredMessagesAllowedByRetrievalFilters :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetNumStoredMessagesAllowedByRetrievalFilters(this, Producer); }
-IDXGIInfoQueue_GetNumStoredMessages :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetNumStoredMessages(this, Producer); }
-IDXGIInfoQueue_GetNumMessagesDiscardedByMessageCountLimit :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetNumMessagesDiscardedByMessageCountLimit(this, Producer); }
-IDXGIInfoQueue_GetMessageCountLimit :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetMessageCountLimit(this, Producer); }
-IDXGIInfoQueue_GetNumMessagesAllowedByStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetNumMessagesAllowedByStorageFilter(this, Producer); }
-IDXGIInfoQueue_GetNumMessagesDeniedByStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u64 { return this.idxgiinfoqueue_vtable.GetNumMessagesDeniedByStorageFilter(this, Producer); }
-IDXGIInfoQueue_AddStorageFilterEntries :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER) -> HRESULT { return this.idxgiinfoqueue_vtable.AddStorageFilterEntries(this, Producer, pFilter); }
-IDXGIInfoQueue_GetStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER, pFilterByteLength: *SIZE_T) -> HRESULT { return this.idxgiinfoqueue_vtable.GetStorageFilter(this, Producer, pFilter, pFilterByteLength); }
-IDXGIInfoQueue_ClearStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) { this.idxgiinfoqueue_vtable.ClearStorageFilter(this, Producer); }
-IDXGIInfoQueue_PushEmptyStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushEmptyStorageFilter(this, Producer); }
-IDXGIInfoQueue_PushDenyAllStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushDenyAllStorageFilter(this, Producer); }
-IDXGIInfoQueue_PushCopyOfStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushCopyOfStorageFilter(this, Producer); }
-IDXGIInfoQueue_PushStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER) -> HRESULT { return this.idxgiinfoqueue_vtable.PushStorageFilter(this, Producer, pFilter); }
-IDXGIInfoQueue_PopStorageFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) { this.idxgiinfoqueue_vtable.PopStorageFilter(this, Producer); }
-IDXGIInfoQueue_GetStorageFilterStackSize :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u32 { return this.idxgiinfoqueue_vtable.GetStorageFilterStackSize(this, Producer); }
-IDXGIInfoQueue_AddRetrievalFilterEntries :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER) -> HRESULT { return this.idxgiinfoqueue_vtable.AddRetrievalFilterEntries(this, Producer, pFilter); }
-IDXGIInfoQueue_GetRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER, pFilterByteLength: *SIZE_T) -> HRESULT { return this.idxgiinfoqueue_vtable.GetRetrievalFilter(this, Producer, pFilter, pFilterByteLength); }
-IDXGIInfoQueue_ClearRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) { this.idxgiinfoqueue_vtable.ClearRetrievalFilter(this, Producer); }
-IDXGIInfoQueue_PushEmptyRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushEmptyRetrievalFilter(this, Producer); }
-IDXGIInfoQueue_PushDenyAllRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushDenyAllRetrievalFilter(this, Producer); }
-IDXGIInfoQueue_PushCopyOfRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> HRESULT { return this.idxgiinfoqueue_vtable.PushCopyOfRetrievalFilter(this, Producer); }
-IDXGIInfoQueue_PushRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, pFilter: *DXGI_INFO_QUEUE_FILTER) -> HRESULT { return this.idxgiinfoqueue_vtable.PushRetrievalFilter(this, Producer, pFilter); }
-IDXGIInfoQueue_PopRetrievalFilter :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) { this.idxgiinfoqueue_vtable.PopRetrievalFilter(this, Producer); }
-IDXGIInfoQueue_GetRetrievalFilterStackSize :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> u32 { return this.idxgiinfoqueue_vtable.GetRetrievalFilterStackSize(this, Producer); }
-IDXGIInfoQueue_AddMessage :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, Category: DXGI_INFO_QUEUE_MESSAGE_CATEGORY, Severity: DXGI_INFO_QUEUE_MESSAGE_SEVERITY, ID: DXGI_INFO_QUEUE_MESSAGE_ID, pDescription: *u8) -> HRESULT { return this.idxgiinfoqueue_vtable.AddMessage(this, Producer, Category, Severity, ID, pDescription); }
-IDXGIInfoQueue_AddApplicationMessage :: inline (this: *IDXGIInfoQueue, Severity: DXGI_INFO_QUEUE_MESSAGE_SEVERITY, pDescription: *u8) -> HRESULT { return this.idxgiinfoqueue_vtable.AddApplicationMessage(this, Severity, pDescription); }
-IDXGIInfoQueue_SetBreakOnCategory :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, Category: DXGI_INFO_QUEUE_MESSAGE_CATEGORY, bEnable: BOOL) -> HRESULT { return this.idxgiinfoqueue_vtable.SetBreakOnCategory(this, Producer, Category, bEnable); }
-IDXGIInfoQueue_SetBreakOnSeverity :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, Severity: DXGI_INFO_QUEUE_MESSAGE_SEVERITY, bEnable: BOOL) -> HRESULT { return this.idxgiinfoqueue_vtable.SetBreakOnSeverity(this, Producer, Severity, bEnable); }
-IDXGIInfoQueue_SetBreakOnID :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, ID: DXGI_INFO_QUEUE_MESSAGE_ID, bEnable: BOOL) -> HRESULT { return this.idxgiinfoqueue_vtable.SetBreakOnID(this, Producer, ID, bEnable); }
-IDXGIInfoQueue_GetBreakOnCategory :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, Category: DXGI_INFO_QUEUE_MESSAGE_CATEGORY) -> BOOL { return this.idxgiinfoqueue_vtable.GetBreakOnCategory(this, Producer, Category); }
-IDXGIInfoQueue_GetBreakOnSeverity :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, Severity: DXGI_INFO_QUEUE_MESSAGE_SEVERITY) -> BOOL { return this.idxgiinfoqueue_vtable.GetBreakOnSeverity(this, Producer, Severity); }
-IDXGIInfoQueue_GetBreakOnID :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, ID: DXGI_INFO_QUEUE_MESSAGE_ID) -> BOOL { return this.idxgiinfoqueue_vtable.GetBreakOnID(this, Producer, ID); }
-IDXGIInfoQueue_SetMuteDebugOutput :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID, bMute: BOOL) { this.idxgiinfoqueue_vtable.SetMuteDebugOutput(this, Producer, bMute); }
-IDXGIInfoQueue_GetMuteDebugOutput :: inline (this: *IDXGIInfoQueue, Producer: DXGI_DEBUG_ID) -> BOOL { return this.idxgiinfoqueue_vtable.GetMuteDebugOutput(this, Producer); }
-
 vtable :: (obj: *IDXGIInfoQueue) -> *IDXGIInfoQueue_VTable { return obj.idxgiinfoqueue_vtable; }
 
 
@@ -192,8 +154,6 @@ IDXGIDebug_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     ReportLiveObjects: (this: *IDXGIDebug, apiid: GUID, flags: DXGI_DEBUG_RLO_FLAGS) -> HRESULT #cpp_method;
 }
-IDXGIDebug_ReportLiveObjects :: inline (this: *IDXGIDebug, apiid: GUID, flags: DXGI_DEBUG_RLO_FLAGS) -> HRESULT { return this.idxgidebug_vtable.ReportLiveObjects(this, apiid, flags); }
-
 vtable :: (obj: *IDXGIDebug) -> *IDXGIDebug_VTable { return obj.idxgidebug_vtable; }
 
 
@@ -209,10 +169,6 @@ IDXGIDebug1_VTable :: struct #type_info_none {
     DisableLeakTrackingForThread: (this: *IDXGIDebug1) -> void #cpp_method;
     IsLeakTrackingEnabledForThread: (this: *IDXGIDebug1) -> BOOL #cpp_method;
 }
-IDXGIDebug1_EnableLeakTrackingForThread :: inline (this: *IDXGIDebug1) { this.idxgidebug1_vtable.EnableLeakTrackingForThread(this); }
-IDXGIDebug1_DisableLeakTrackingForThread :: inline (this: *IDXGIDebug1) { this.idxgidebug1_vtable.DisableLeakTrackingForThread(this); }
-IDXGIDebug1_IsLeakTrackingEnabledForThread :: inline (this: *IDXGIDebug1) -> BOOL { return this.idxgidebug1_vtable.IsLeakTrackingEnabledForThread(this); }
-
 vtable :: (obj: *IDXGIDebug1) -> *IDXGIDebug1_VTable { return obj.idxgidebug1_vtable; }
 
 

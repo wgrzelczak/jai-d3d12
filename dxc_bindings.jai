@@ -58,13 +58,6 @@ IMalloc_VTable :: struct #type_info_none {
     DidAlloc: (this: *IMalloc, pv: *void) -> s32 #cpp_method;
     HeapMinimize: (this: *IMalloc) -> void #cpp_method;
 }
-IMalloc_Alloc :: inline (this: *IMalloc, cb: SIZE_T) -> *void { return this.imalloc_vtable.Alloc(this, cb); }
-IMalloc_Realloc :: inline (this: *IMalloc, pv: *void, cb: SIZE_T) -> *void { return this.imalloc_vtable.Realloc(this, pv, cb); }
-IMalloc_Free :: inline (this: *IMalloc, pv: *void) { this.imalloc_vtable.Free(this, pv); }
-IMalloc_GetSize :: inline (this: *IMalloc, pv: *void) -> SIZE_T { return this.imalloc_vtable.GetSize(this, pv); }
-IMalloc_DidAlloc :: inline (this: *IMalloc, pv: *void) -> s32 { return this.imalloc_vtable.DidAlloc(this, pv); }
-IMalloc_HeapMinimize :: inline (this: *IMalloc) { this.imalloc_vtable.HeapMinimize(this); }
-
 vtable :: (obj: *IMalloc) -> *IMalloc_VTable { return obj.imalloc_vtable; }
 
 
@@ -77,9 +70,6 @@ ISequentialStream_VTable :: struct #type_info_none {
     Read: (this: *ISequentialStream, pv: *void, cb: u32, pcbRead: *u32) -> HRESULT #cpp_method;
     Write: (this: *ISequentialStream, pv: *void, cb: u32, pcbWritten: *u32) -> HRESULT #cpp_method;
 }
-ISequentialStream_Read :: inline (this: *ISequentialStream, pv: *void, cb: u32, pcbRead: *u32) -> HRESULT { return this.isequentialstream_vtable.Read(this, pv, cb, pcbRead); }
-ISequentialStream_Write :: inline (this: *ISequentialStream, pv: *void, cb: u32, pcbWritten: *u32) -> HRESULT { return this.isequentialstream_vtable.Write(this, pv, cb, pcbWritten); }
-
 vtable :: (obj: *ISequentialStream) -> *ISequentialStream_VTable { return obj.isequentialstream_vtable; }
 
 
@@ -115,16 +105,6 @@ IStream_VTable :: struct #type_info_none {
     Stat: (this: *IStream, pstatstg: *STATSTG, grfStatFlag: u32) -> HRESULT #cpp_method;
     Clone: (this: *IStream, ppstm: **IStream) -> HRESULT #cpp_method;
 }
-IStream_Seek :: inline (this: *IStream, dlibMove: LARGE_INTEGER, dwOrigin: u32, plibNewPosition: *ULARGE_INTEGER) -> HRESULT { return this.istream_vtable.Seek(this, dlibMove, dwOrigin, plibNewPosition); }
-IStream_SetSize :: inline (this: *IStream, libNewSize: ULARGE_INTEGER) -> HRESULT { return this.istream_vtable.SetSize(this, libNewSize); }
-IStream_CopyTo :: inline (this: *IStream, pstm: *IStream, cb: ULARGE_INTEGER, pcbRead: *ULARGE_INTEGER, pcbWritten: *ULARGE_INTEGER) -> HRESULT { return this.istream_vtable.CopyTo(this, pstm, cb, pcbRead, pcbWritten); }
-IStream_Commit :: inline (this: *IStream, grfCommitFlags: u32) -> HRESULT { return this.istream_vtable.Commit(this, grfCommitFlags); }
-IStream_Revert :: inline (this: *IStream) -> HRESULT { return this.istream_vtable.Revert(this); }
-IStream_LockRegion :: inline (this: *IStream, libOffset: ULARGE_INTEGER, cb: ULARGE_INTEGER, dwLockType: u32) -> HRESULT { return this.istream_vtable.LockRegion(this, libOffset, cb, dwLockType); }
-IStream_UnlockRegion :: inline (this: *IStream, libOffset: ULARGE_INTEGER, cb: ULARGE_INTEGER, dwLockType: u32) -> HRESULT { return this.istream_vtable.UnlockRegion(this, libOffset, cb, dwLockType); }
-IStream_Stat :: inline (this: *IStream, pstatstg: *STATSTG, grfStatFlag: u32) -> HRESULT { return this.istream_vtable.Stat(this, pstatstg, grfStatFlag); }
-IStream_Clone :: inline (this: *IStream, ppstm: **IStream) -> HRESULT { return this.istream_vtable.Clone(this, ppstm); }
-
 vtable :: (obj: *IStream) -> *IStream_VTable { return obj.istream_vtable; }
 
 
@@ -371,18 +351,6 @@ ID3D12ShaderReflectionType_VTable :: struct #type_info_none {
     IsOfType: (this: *ID3D12ShaderReflectionType, pType: *ID3D12ShaderReflectionType) -> HRESULT #cpp_method;
     ImplementsInterface: (this: *ID3D12ShaderReflectionType, pBase: *ID3D12ShaderReflectionType) -> HRESULT #cpp_method;
 }
-ID3D12ShaderReflectionType_GetDesc :: inline (this: *ID3D12ShaderReflectionType, pDesc: *D3D12_SHADER_TYPE_DESC) -> HRESULT { return this.vtable.GetDesc(this, pDesc); }
-ID3D12ShaderReflectionType_GetMemberTypeByIndex :: inline (this: *ID3D12ShaderReflectionType, Index: u32) -> *ID3D12ShaderReflectionType { return this.vtable.GetMemberTypeByIndex(this, Index); }
-ID3D12ShaderReflectionType_GetMemberTypeByName :: inline (this: *ID3D12ShaderReflectionType, Name: *u8) -> *ID3D12ShaderReflectionType { return this.vtable.GetMemberTypeByName(this, Name); }
-ID3D12ShaderReflectionType_GetMemberTypeName :: inline (this: *ID3D12ShaderReflectionType, Index: u32) -> *u8 { return this.vtable.GetMemberTypeName(this, Index); }
-ID3D12ShaderReflectionType_IsEqual :: inline (this: *ID3D12ShaderReflectionType, pType: *ID3D12ShaderReflectionType) -> HRESULT { return this.vtable.IsEqual(this, pType); }
-ID3D12ShaderReflectionType_GetSubType :: inline (this: *ID3D12ShaderReflectionType) -> *ID3D12ShaderReflectionType { return this.vtable.GetSubType(this); }
-ID3D12ShaderReflectionType_GetBaseClass :: inline (this: *ID3D12ShaderReflectionType) -> *ID3D12ShaderReflectionType { return this.vtable.GetBaseClass(this); }
-ID3D12ShaderReflectionType_GetNumInterfaces :: inline (this: *ID3D12ShaderReflectionType) -> u32 { return this.vtable.GetNumInterfaces(this); }
-ID3D12ShaderReflectionType_GetInterfaceByIndex :: inline (this: *ID3D12ShaderReflectionType, uIndex: u32) -> *ID3D12ShaderReflectionType { return this.vtable.GetInterfaceByIndex(this, uIndex); }
-ID3D12ShaderReflectionType_IsOfType :: inline (this: *ID3D12ShaderReflectionType, pType: *ID3D12ShaderReflectionType) -> HRESULT { return this.vtable.IsOfType(this, pType); }
-ID3D12ShaderReflectionType_ImplementsInterface :: inline (this: *ID3D12ShaderReflectionType, pBase: *ID3D12ShaderReflectionType) -> HRESULT { return this.vtable.ImplementsInterface(this, pBase); }
-
 vtable :: (obj: *ID3D12ShaderReflectionType) -> *ID3D12ShaderReflectionType_VTable { return obj.vtable; }
 
 
@@ -396,11 +364,6 @@ ID3D12ShaderReflectionVariable_VTable :: struct #type_info_none {
     GetBuffer: (this: *ID3D12ShaderReflectionVariable) -> *ID3D12ShaderReflectionConstantBuffer #cpp_method;
     GetInterfaceSlot: (this: *ID3D12ShaderReflectionVariable, uArrayIndex: u32) -> u32 #cpp_method;
 }
-ID3D12ShaderReflectionVariable_GetDesc :: inline (this: *ID3D12ShaderReflectionVariable, pDesc: *D3D12_SHADER_VARIABLE_DESC) -> HRESULT { return this.vtable.GetDesc(this, pDesc); }
-ID3D12ShaderReflectionVariable_GetType :: inline (this: *ID3D12ShaderReflectionVariable) -> *ID3D12ShaderReflectionType { return this.vtable.GetType(this); }
-ID3D12ShaderReflectionVariable_GetBuffer :: inline (this: *ID3D12ShaderReflectionVariable) -> *ID3D12ShaderReflectionConstantBuffer { return this.vtable.GetBuffer(this); }
-ID3D12ShaderReflectionVariable_GetInterfaceSlot :: inline (this: *ID3D12ShaderReflectionVariable, uArrayIndex: u32) -> u32 { return this.vtable.GetInterfaceSlot(this, uArrayIndex); }
-
 vtable :: (obj: *ID3D12ShaderReflectionVariable) -> *ID3D12ShaderReflectionVariable_VTable { return obj.vtable; }
 
 
@@ -413,10 +376,6 @@ ID3D12ShaderReflectionConstantBuffer_VTable :: struct #type_info_none {
     GetVariableByIndex: (this: *ID3D12ShaderReflectionConstantBuffer, Index: u32) -> *ID3D12ShaderReflectionVariable #cpp_method;
     GetVariableByName: (this: *ID3D12ShaderReflectionConstantBuffer, Name: *u8) -> *ID3D12ShaderReflectionVariable #cpp_method;
 }
-ID3D12ShaderReflectionConstantBuffer_GetDesc :: inline (this: *ID3D12ShaderReflectionConstantBuffer, pDesc: *D3D12_SHADER_BUFFER_DESC) -> HRESULT { return this.vtable.GetDesc(this, pDesc); }
-ID3D12ShaderReflectionConstantBuffer_GetVariableByIndex :: inline (this: *ID3D12ShaderReflectionConstantBuffer, Index: u32) -> *ID3D12ShaderReflectionVariable { return this.vtable.GetVariableByIndex(this, Index); }
-ID3D12ShaderReflectionConstantBuffer_GetVariableByName :: inline (this: *ID3D12ShaderReflectionConstantBuffer, Name: *u8) -> *ID3D12ShaderReflectionVariable { return this.vtable.GetVariableByName(this, Name); }
-
 vtable :: (obj: *ID3D12ShaderReflectionConstantBuffer) -> *ID3D12ShaderReflectionConstantBuffer_VTable { return obj.vtable; }
 
 
@@ -447,26 +406,6 @@ ID3D12ShaderReflection_VTable :: struct #type_info_none {
     GetThreadGroupSize: (this: *ID3D12ShaderReflection, pSizeX: *u32, pSizeY: *u32, pSizeZ: *u32) -> u32 #cpp_method;
     GetRequiresFlags: (this: *ID3D12ShaderReflection) -> u64 #cpp_method;
 }
-ID3D12ShaderReflection_GetDesc :: inline (this: *ID3D12ShaderReflection, pDesc: *D3D12_SHADER_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetDesc(this, pDesc); }
-ID3D12ShaderReflection_GetConstantBufferByIndex :: inline (this: *ID3D12ShaderReflection, Index: u32) -> *ID3D12ShaderReflectionConstantBuffer { return this.id3d12shaderreflection_vtable.GetConstantBufferByIndex(this, Index); }
-ID3D12ShaderReflection_GetConstantBufferByName :: inline (this: *ID3D12ShaderReflection, Name: *u8) -> *ID3D12ShaderReflectionConstantBuffer { return this.id3d12shaderreflection_vtable.GetConstantBufferByName(this, Name); }
-ID3D12ShaderReflection_GetResourceBindingDesc :: inline (this: *ID3D12ShaderReflection, ResourceIndex: u32, pDesc: *D3D12_SHADER_INPUT_BIND_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetResourceBindingDesc(this, ResourceIndex, pDesc); }
-ID3D12ShaderReflection_GetInputParameterDesc :: inline (this: *ID3D12ShaderReflection, ParameterIndex: u32, pDesc: *D3D12_SIGNATURE_PARAMETER_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetInputParameterDesc(this, ParameterIndex, pDesc); }
-ID3D12ShaderReflection_GetOutputParameterDesc :: inline (this: *ID3D12ShaderReflection, ParameterIndex: u32, pDesc: *D3D12_SIGNATURE_PARAMETER_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetOutputParameterDesc(this, ParameterIndex, pDesc); }
-ID3D12ShaderReflection_GetPatchConstantParameterDesc :: inline (this: *ID3D12ShaderReflection, ParameterIndex: u32, pDesc: *D3D12_SIGNATURE_PARAMETER_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetPatchConstantParameterDesc(this, ParameterIndex, pDesc); }
-ID3D12ShaderReflection_GetVariableByName :: inline (this: *ID3D12ShaderReflection, Name: *u8) -> *ID3D12ShaderReflectionVariable { return this.id3d12shaderreflection_vtable.GetVariableByName(this, Name); }
-ID3D12ShaderReflection_GetResourceBindingDescByName :: inline (this: *ID3D12ShaderReflection, Name: *u8, pDesc: *D3D12_SHADER_INPUT_BIND_DESC) -> HRESULT { return this.id3d12shaderreflection_vtable.GetResourceBindingDescByName(this, Name, pDesc); }
-ID3D12ShaderReflection_GetMovInstructionCount :: inline (this: *ID3D12ShaderReflection) -> u32 { return this.id3d12shaderreflection_vtable.GetMovInstructionCount(this); }
-ID3D12ShaderReflection_GetMovcInstructionCount :: inline (this: *ID3D12ShaderReflection) -> u32 { return this.id3d12shaderreflection_vtable.GetMovcInstructionCount(this); }
-ID3D12ShaderReflection_GetConversionInstructionCount :: inline (this: *ID3D12ShaderReflection) -> u32 { return this.id3d12shaderreflection_vtable.GetConversionInstructionCount(this); }
-ID3D12ShaderReflection_GetBitwiseInstructionCount :: inline (this: *ID3D12ShaderReflection) -> u32 { return this.id3d12shaderreflection_vtable.GetBitwiseInstructionCount(this); }
-ID3D12ShaderReflection_GetGSInputPrimitive :: inline (this: *ID3D12ShaderReflection) -> D3D_PRIMITIVE { return this.id3d12shaderreflection_vtable.GetGSInputPrimitive(this); }
-ID3D12ShaderReflection_IsSampleFrequencyShader :: inline (this: *ID3D12ShaderReflection) -> BOOL { return this.id3d12shaderreflection_vtable.IsSampleFrequencyShader(this); }
-ID3D12ShaderReflection_GetNumInterfaceSlots :: inline (this: *ID3D12ShaderReflection) -> u32 { return this.id3d12shaderreflection_vtable.GetNumInterfaceSlots(this); }
-ID3D12ShaderReflection_GetMinFeatureLevel :: inline (this: *ID3D12ShaderReflection, pLevel: *D3D_FEATURE_LEVEL) -> HRESULT { return this.id3d12shaderreflection_vtable.GetMinFeatureLevel(this, pLevel); }
-ID3D12ShaderReflection_GetThreadGroupSize :: inline (this: *ID3D12ShaderReflection, pSizeX: *u32, pSizeY: *u32, pSizeZ: *u32) -> u32 { return this.id3d12shaderreflection_vtable.GetThreadGroupSize(this, pSizeX, pSizeY, pSizeZ); }
-ID3D12ShaderReflection_GetRequiresFlags :: inline (this: *ID3D12ShaderReflection) -> u64 { return this.id3d12shaderreflection_vtable.GetRequiresFlags(this); }
-
 vtable :: (obj: *ID3D12ShaderReflection) -> *ID3D12ShaderReflection_VTable { return obj.id3d12shaderreflection_vtable; }
 
 
@@ -480,9 +419,6 @@ ID3D12LibraryReflection_VTable :: struct #type_info_none {
     GetDesc: (this: *ID3D12LibraryReflection, pDesc: *D3D12_LIBRARY_DESC) -> HRESULT #cpp_method;
     GetFunctionByIndex: (this: *ID3D12LibraryReflection, FunctionIndex: s32) -> *ID3D12FunctionReflection #cpp_method;
 }
-ID3D12LibraryReflection_GetDesc :: inline (this: *ID3D12LibraryReflection, pDesc: *D3D12_LIBRARY_DESC) -> HRESULT { return this.id3d12libraryreflection_vtable.GetDesc(this, pDesc); }
-ID3D12LibraryReflection_GetFunctionByIndex :: inline (this: *ID3D12LibraryReflection, FunctionIndex: s32) -> *ID3D12FunctionReflection { return this.id3d12libraryreflection_vtable.GetFunctionByIndex(this, FunctionIndex); }
-
 vtable :: (obj: *ID3D12LibraryReflection) -> *ID3D12LibraryReflection_VTable { return obj.id3d12libraryreflection_vtable; }
 
 
@@ -499,14 +435,6 @@ ID3D12FunctionReflection_VTable :: struct #type_info_none {
     GetResourceBindingDescByName: (this: *ID3D12FunctionReflection, Name: *u8, pDesc: *D3D12_SHADER_INPUT_BIND_DESC) -> HRESULT #cpp_method;
     GetFunctionParameter: (this: *ID3D12FunctionReflection, ParameterIndex: s32) -> *ID3D12FunctionParameterReflection #cpp_method;
 }
-ID3D12FunctionReflection_GetDesc :: inline (this: *ID3D12FunctionReflection, pDesc: *D3D12_FUNCTION_DESC) -> HRESULT { return this.vtable.GetDesc(this, pDesc); }
-ID3D12FunctionReflection_GetConstantBufferByIndex :: inline (this: *ID3D12FunctionReflection, BufferIndex: u32) -> *ID3D12ShaderReflectionConstantBuffer { return this.vtable.GetConstantBufferByIndex(this, BufferIndex); }
-ID3D12FunctionReflection_GetConstantBufferByName :: inline (this: *ID3D12FunctionReflection, Name: *u8) -> *ID3D12ShaderReflectionConstantBuffer { return this.vtable.GetConstantBufferByName(this, Name); }
-ID3D12FunctionReflection_GetResourceBindingDesc :: inline (this: *ID3D12FunctionReflection, ResourceIndex: u32, pDesc: *D3D12_SHADER_INPUT_BIND_DESC) -> HRESULT { return this.vtable.GetResourceBindingDesc(this, ResourceIndex, pDesc); }
-ID3D12FunctionReflection_GetVariableByName :: inline (this: *ID3D12FunctionReflection, Name: *u8) -> *ID3D12ShaderReflectionVariable { return this.vtable.GetVariableByName(this, Name); }
-ID3D12FunctionReflection_GetResourceBindingDescByName :: inline (this: *ID3D12FunctionReflection, Name: *u8, pDesc: *D3D12_SHADER_INPUT_BIND_DESC) -> HRESULT { return this.vtable.GetResourceBindingDescByName(this, Name, pDesc); }
-ID3D12FunctionReflection_GetFunctionParameter :: inline (this: *ID3D12FunctionReflection, ParameterIndex: s32) -> *ID3D12FunctionParameterReflection { return this.vtable.GetFunctionParameter(this, ParameterIndex); }
-
 vtable :: (obj: *ID3D12FunctionReflection) -> *ID3D12FunctionReflection_VTable { return obj.vtable; }
 
 
@@ -517,8 +445,6 @@ ID3D12FunctionParameterReflection :: struct {
 ID3D12FunctionParameterReflection_VTable :: struct #type_info_none {
     GetDesc: (this: *ID3D12FunctionParameterReflection, pDesc: *D3D12_PARAMETER_DESC) -> HRESULT #cpp_method;
 }
-ID3D12FunctionParameterReflection_GetDesc :: inline (this: *ID3D12FunctionParameterReflection, pDesc: *D3D12_PARAMETER_DESC) -> HRESULT { return this.vtable.GetDesc(this, pDesc); }
-
 vtable :: (obj: *ID3D12FunctionParameterReflection) -> *ID3D12FunctionParameterReflection_VTable { return obj.vtable; }
 
 
@@ -569,9 +495,6 @@ IDxcBlob_VTable :: struct #type_info_none {
     GetBufferPointer: (this: *IDxcBlob) -> *void #cpp_method;
     GetBufferSize: (this: *IDxcBlob) -> SIZE_T #cpp_method;
 }
-IDxcBlob_GetBufferPointer :: inline (this: *IDxcBlob) -> *void { return this.idxcblob_vtable.GetBufferPointer(this); }
-IDxcBlob_GetBufferSize :: inline (this: *IDxcBlob) -> SIZE_T { return this.idxcblob_vtable.GetBufferSize(this); }
-
 vtable :: (obj: *IDxcBlob) -> *IDxcBlob_VTable { return obj.idxcblob_vtable; }
 
 
@@ -583,8 +506,6 @@ IDxcBlobEncoding_VTable :: struct #type_info_none {
     using idxcblob: IDxcBlob_VTable;
     GetEncoding: (this: *IDxcBlobEncoding, pKnown: *BOOL, pCodePage: *u32) -> HRESULT #cpp_method;
 }
-IDxcBlobEncoding_GetEncoding :: inline (this: *IDxcBlobEncoding, pKnown: *BOOL, pCodePage: *u32) -> HRESULT { return this.idxcblobencoding_vtable.GetEncoding(this, pKnown, pCodePage); }
-
 vtable :: (obj: *IDxcBlobEncoding) -> *IDxcBlobEncoding_VTable { return obj.idxcblobencoding_vtable; }
 
 
@@ -598,9 +519,6 @@ IDxcBlobUtf16_VTable :: struct #type_info_none {
     GetStringPointer: (this: *IDxcBlobUtf16) -> *s16 #cpp_method;
     GetStringLength: (this: *IDxcBlobUtf16) -> SIZE_T #cpp_method;
 }
-IDxcBlobUtf16_GetStringPointer :: inline (this: *IDxcBlobUtf16) -> *s16 { return this.idxcblobutf16_vtable.GetStringPointer(this); }
-IDxcBlobUtf16_GetStringLength :: inline (this: *IDxcBlobUtf16) -> SIZE_T { return this.idxcblobutf16_vtable.GetStringLength(this); }
-
 vtable :: (obj: *IDxcBlobUtf16) -> *IDxcBlobUtf16_VTable { return obj.idxcblobutf16_vtable; }
 
 
@@ -613,9 +531,6 @@ IDxcBlobUtf8_VTable :: struct #type_info_none {
     GetStringPointer: (this: *IDxcBlobUtf8) -> *u8 #cpp_method;
     GetStringLength: (this: *IDxcBlobUtf8) -> SIZE_T #cpp_method;
 }
-IDxcBlobUtf8_GetStringPointer :: inline (this: *IDxcBlobUtf8) -> *u8 { return this.idxcblobutf8_vtable.GetStringPointer(this); }
-IDxcBlobUtf8_GetStringLength :: inline (this: *IDxcBlobUtf8) -> SIZE_T { return this.idxcblobutf8_vtable.GetStringLength(this); }
-
 vtable :: (obj: *IDxcBlobUtf8) -> *IDxcBlobUtf8_VTable { return obj.idxcblobutf8_vtable; }
 
 
@@ -627,8 +542,6 @@ IDxcIncludeHandler_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     LoadSource: (this: *IDxcIncludeHandler, pFilename: *s16, ppIncludeSource: **IDxcBlob) -> HRESULT #cpp_method;
 }
-IDxcIncludeHandler_LoadSource :: inline (this: *IDxcIncludeHandler, pFilename: *s16, ppIncludeSource: **IDxcBlob) -> HRESULT { return this.idxcincludehandler_vtable.LoadSource(this, pFilename, ppIncludeSource); }
-
 vtable :: (obj: *IDxcIncludeHandler) -> *IDxcIncludeHandler_VTable { return obj.idxcincludehandler_vtable; }
 
 
@@ -661,12 +574,6 @@ IDxcCompilerArgs_VTable :: struct #type_info_none {
     AddArgumentsUTF8: (this: *IDxcCompilerArgs, pArguments: **u8, argCount: u32) -> HRESULT #cpp_method;
     AddDefines: (this: *IDxcCompilerArgs, pDefines: *DxcDefine, defineCount: u32) -> HRESULT #cpp_method;
 }
-IDxcCompilerArgs_GetArguments :: inline (this: *IDxcCompilerArgs) -> **s16 { return this.idxccompilerargs_vtable.GetArguments(this); }
-IDxcCompilerArgs_GetCount :: inline (this: *IDxcCompilerArgs) -> u32 { return this.idxccompilerargs_vtable.GetCount(this); }
-IDxcCompilerArgs_AddArguments :: inline (this: *IDxcCompilerArgs, pArguments: **s16, argCount: u32) -> HRESULT { return this.idxccompilerargs_vtable.AddArguments(this, pArguments, argCount); }
-IDxcCompilerArgs_AddArgumentsUTF8 :: inline (this: *IDxcCompilerArgs, pArguments: **u8, argCount: u32) -> HRESULT { return this.idxccompilerargs_vtable.AddArgumentsUTF8(this, pArguments, argCount); }
-IDxcCompilerArgs_AddDefines :: inline (this: *IDxcCompilerArgs, pDefines: *DxcDefine, defineCount: u32) -> HRESULT { return this.idxccompilerargs_vtable.AddDefines(this, pDefines, defineCount); }
-
 vtable :: (obj: *IDxcCompilerArgs) -> *IDxcCompilerArgs_VTable { return obj.idxccompilerargs_vtable; }
 
 
@@ -688,17 +595,6 @@ IDxcLibrary_VTable :: struct #type_info_none {
     GetBlobAsUtf8: (this: *IDxcLibrary, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT #cpp_method;
     GetBlobAsUtf16: (this: *IDxcLibrary, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT #cpp_method;
 }
-IDxcLibrary_SetMalloc :: inline (this: *IDxcLibrary, pMalloc: *IMalloc) -> HRESULT { return this.idxclibrary_vtable.SetMalloc(this, pMalloc); }
-IDxcLibrary_CreateBlobFromBlob :: inline (this: *IDxcLibrary, pBlob: *IDxcBlob, offset: u32, length: u32, ppResult: **IDxcBlob) -> HRESULT { return this.idxclibrary_vtable.CreateBlobFromBlob(this, pBlob, offset, length, ppResult); }
-IDxcLibrary_CreateBlobFromFile :: inline (this: *IDxcLibrary, pFileName: *s16, codePage: *u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.CreateBlobFromFile(this, pFileName, codePage, pBlobEncoding); }
-IDxcLibrary_CreateBlobWithEncodingFromPinned :: inline (this: *IDxcLibrary, pText: *void, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.CreateBlobWithEncodingFromPinned(this, pText, size, codePage, pBlobEncoding); }
-IDxcLibrary_CreateBlobWithEncodingOnHeapCopy :: inline (this: *IDxcLibrary, pText: *void, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.CreateBlobWithEncodingOnHeapCopy(this, pText, size, codePage, pBlobEncoding); }
-IDxcLibrary_CreateBlobWithEncodingOnMalloc :: inline (this: *IDxcLibrary, pText: *void, pIMalloc: *IMalloc, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.CreateBlobWithEncodingOnMalloc(this, pText, pIMalloc, size, codePage, pBlobEncoding); }
-IDxcLibrary_CreateIncludeHandler :: inline (this: *IDxcLibrary, ppResult: **IDxcIncludeHandler) -> HRESULT { return this.idxclibrary_vtable.CreateIncludeHandler(this, ppResult); }
-IDxcLibrary_CreateStreamFromBlobReadOnly :: inline (this: *IDxcLibrary, pBlob: *IDxcBlob, ppStream: **IStream) -> HRESULT { return this.idxclibrary_vtable.CreateStreamFromBlobReadOnly(this, pBlob, ppStream); }
-IDxcLibrary_GetBlobAsUtf8 :: inline (this: *IDxcLibrary, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.GetBlobAsUtf8(this, pBlob, pBlobEncoding); }
-IDxcLibrary_GetBlobAsUtf16 :: inline (this: *IDxcLibrary, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxclibrary_vtable.GetBlobAsUtf16(this, pBlob, pBlobEncoding); }
-
 vtable :: (obj: *IDxcLibrary) -> *IDxcLibrary_VTable { return obj.idxclibrary_vtable; }
 
 
@@ -713,10 +609,6 @@ IDxcOperationResult_VTable :: struct #type_info_none {
     GetResult: (this: *IDxcOperationResult, ppResult: **IDxcBlob) -> HRESULT #cpp_method;
     GetErrorBuffer: (this: *IDxcOperationResult, ppErrors: **IDxcBlobEncoding) -> HRESULT #cpp_method;
 }
-IDxcOperationResult_GetStatus :: inline (this: *IDxcOperationResult, pStatus: *HRESULT) -> HRESULT { return this.idxcoperationresult_vtable.GetStatus(this, pStatus); }
-IDxcOperationResult_GetResult :: inline (this: *IDxcOperationResult, ppResult: **IDxcBlob) -> HRESULT { return this.idxcoperationresult_vtable.GetResult(this, ppResult); }
-IDxcOperationResult_GetErrorBuffer :: inline (this: *IDxcOperationResult, ppErrors: **IDxcBlobEncoding) -> HRESULT { return this.idxcoperationresult_vtable.GetErrorBuffer(this, ppErrors); }
-
 vtable :: (obj: *IDxcOperationResult) -> *IDxcOperationResult_VTable { return obj.idxcoperationresult_vtable; }
 
 
@@ -731,10 +623,6 @@ IDxcCompiler_VTable :: struct #type_info_none {
     Preprocess: (this: *IDxcCompiler, pSource: *IDxcBlob, pSourceName: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, pIncludeHandler: *IDxcIncludeHandler, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
     Disassemble: (this: *IDxcCompiler, pSource: *IDxcBlob, ppDisassembly: **IDxcBlobEncoding) -> HRESULT #cpp_method;
 }
-IDxcCompiler_Compile :: inline (this: *IDxcCompiler, pSource: *IDxcBlob, pSourceName: *s16, pEntryPoint: *s16, pTargetProfile: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, pIncludeHandler: *IDxcIncludeHandler, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxccompiler_vtable.Compile(this, pSource, pSourceName, pEntryPoint, pTargetProfile, pArguments, argCount, pDefines, defineCount, pIncludeHandler, ppResult); }
-IDxcCompiler_Preprocess :: inline (this: *IDxcCompiler, pSource: *IDxcBlob, pSourceName: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, pIncludeHandler: *IDxcIncludeHandler, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxccompiler_vtable.Preprocess(this, pSource, pSourceName, pArguments, argCount, pDefines, defineCount, pIncludeHandler, ppResult); }
-IDxcCompiler_Disassemble :: inline (this: *IDxcCompiler, pSource: *IDxcBlob, ppDisassembly: **IDxcBlobEncoding) -> HRESULT { return this.idxccompiler_vtable.Disassemble(this, pSource, ppDisassembly); }
-
 vtable :: (obj: *IDxcCompiler) -> *IDxcCompiler_VTable { return obj.idxccompiler_vtable; }
 
 
@@ -747,8 +635,6 @@ IDxcCompiler2_VTable :: struct #type_info_none {
     using idxccompiler: IDxcCompiler_VTable;
     CompileWithDebug: (this: *IDxcCompiler2, pSource: *IDxcBlob, pSourceName: *s16, pEntryPoint: *s16, pTargetProfile: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, pIncludeHandler: *IDxcIncludeHandler, ppResult: **IDxcOperationResult, ppDebugBlobName: **s16, ppDebugBlob: **IDxcBlob) -> HRESULT #cpp_method;
 }
-IDxcCompiler2_CompileWithDebug :: inline (this: *IDxcCompiler2, pSource: *IDxcBlob, pSourceName: *s16, pEntryPoint: *s16, pTargetProfile: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, pIncludeHandler: *IDxcIncludeHandler, ppResult: **IDxcOperationResult, ppDebugBlobName: **s16, ppDebugBlob: **IDxcBlob) -> HRESULT { return this.idxccompiler2_vtable.CompileWithDebug(this, pSource, pSourceName, pEntryPoint, pTargetProfile, pArguments, argCount, pDefines, defineCount, pIncludeHandler, ppResult, ppDebugBlobName, ppDebugBlob); }
-
 vtable :: (obj: *IDxcCompiler2) -> *IDxcCompiler2_VTable { return obj.idxccompiler2_vtable; }
 
 
@@ -761,9 +647,6 @@ IDxcLinker_VTable :: struct #type_info_none {
     RegisterLibrary: (this: *IDxcLinker, pLibName: *s16, pLib: *IDxcBlob) -> HRESULT #cpp_method;
     Link: (this: *IDxcLinker, pEntryName: *s16, pTargetProfile: *s16, pLibNames: **s16, libCount: u32, pArguments: **s16, argCount: u32, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
 }
-IDxcLinker_RegisterLibrary :: inline (this: *IDxcLinker, pLibName: *s16, pLib: *IDxcBlob) -> HRESULT { return this.idxclinker_vtable.RegisterLibrary(this, pLibName, pLib); }
-IDxcLinker_Link :: inline (this: *IDxcLinker, pEntryName: *s16, pTargetProfile: *s16, pLibNames: **s16, libCount: u32, pArguments: **s16, argCount: u32, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxclinker_vtable.Link(this, pEntryName, pTargetProfile, pLibNames, libCount, pArguments, argCount, ppResult); }
-
 vtable :: (obj: *IDxcLinker) -> *IDxcLinker_VTable { return obj.idxclinker_vtable; }
 
 
@@ -788,20 +671,6 @@ IDxcUtils_VTable :: struct #type_info_none {
     BuildArguments: (this: *IDxcUtils, pSourceName: *s16, pEntryPoint: *s16, pTargetProfile: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, ppArgs: **IDxcCompilerArgs) -> HRESULT #cpp_method;
     GetPDBContents: (this: *IDxcUtils, pPDBBlob: *IDxcBlob, ppHash: **IDxcBlob, ppContainer: **IDxcBlob) -> HRESULT #cpp_method;
 }
-IDxcUtils_CreateBlobFromBlob :: inline (this: *IDxcUtils, pBlob: *IDxcBlob, offset: u32, length: u32, ppResult: **IDxcBlob) -> HRESULT { return this.idxcutils_vtable.CreateBlobFromBlob(this, pBlob, offset, length, ppResult); }
-IDxcUtils_CreateBlobFromPinned :: inline (this: *IDxcUtils, pData: *void, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxcutils_vtable.CreateBlobFromPinned(this, pData, size, codePage, pBlobEncoding); }
-IDxcUtils_MoveToBlob :: inline (this: *IDxcUtils, pData: *void, pIMalloc: *IMalloc, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxcutils_vtable.MoveToBlob(this, pData, pIMalloc, size, codePage, pBlobEncoding); }
-IDxcUtils_CreateBlob :: inline (this: *IDxcUtils, pData: *void, size: u32, codePage: u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxcutils_vtable.CreateBlob(this, pData, size, codePage, pBlobEncoding); }
-IDxcUtils_LoadFile :: inline (this: *IDxcUtils, pFileName: *s16, pCodePage: *u32, pBlobEncoding: **IDxcBlobEncoding) -> HRESULT { return this.idxcutils_vtable.LoadFile(this, pFileName, pCodePage, pBlobEncoding); }
-IDxcUtils_CreateReadOnlyStreamFromBlob :: inline (this: *IDxcUtils, pBlob: *IDxcBlob, ppStream: **IStream) -> HRESULT { return this.idxcutils_vtable.CreateReadOnlyStreamFromBlob(this, pBlob, ppStream); }
-IDxcUtils_CreateDefaultIncludeHandler :: inline (this: *IDxcUtils, ppResult: **IDxcIncludeHandler) -> HRESULT { return this.idxcutils_vtable.CreateDefaultIncludeHandler(this, ppResult); }
-IDxcUtils_GetBlobAsUtf8 :: inline (this: *IDxcUtils, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobUtf8) -> HRESULT { return this.idxcutils_vtable.GetBlobAsUtf8(this, pBlob, pBlobEncoding); }
-IDxcUtils_GetBlobAsUtf16 :: inline (this: *IDxcUtils, pBlob: *IDxcBlob, pBlobEncoding: **IDxcBlobUtf16) -> HRESULT { return this.idxcutils_vtable.GetBlobAsUtf16(this, pBlob, pBlobEncoding); }
-IDxcUtils_GetDxilContainerPart :: inline (this: *IDxcUtils, pShader: *DxcBuffer, DxcPart: u32, ppPartData: **void, pPartSizeInBytes: *u32) -> HRESULT { return this.idxcutils_vtable.GetDxilContainerPart(this, pShader, DxcPart, ppPartData, pPartSizeInBytes); }
-IDxcUtils_CreateReflection :: inline (this: *IDxcUtils, pData: *DxcBuffer, iid: *IID, ppvReflection: **void) -> HRESULT { return this.idxcutils_vtable.CreateReflection(this, pData, iid, ppvReflection); }
-IDxcUtils_BuildArguments :: inline (this: *IDxcUtils, pSourceName: *s16, pEntryPoint: *s16, pTargetProfile: *s16, pArguments: **s16, argCount: u32, pDefines: *DxcDefine, defineCount: u32, ppArgs: **IDxcCompilerArgs) -> HRESULT { return this.idxcutils_vtable.BuildArguments(this, pSourceName, pEntryPoint, pTargetProfile, pArguments, argCount, pDefines, defineCount, ppArgs); }
-IDxcUtils_GetPDBContents :: inline (this: *IDxcUtils, pPDBBlob: *IDxcBlob, ppHash: **IDxcBlob, ppContainer: **IDxcBlob) -> HRESULT { return this.idxcutils_vtable.GetPDBContents(this, pPDBBlob, ppHash, ppContainer); }
-
 vtable :: (obj: *IDxcUtils) -> *IDxcUtils_VTable { return obj.idxcutils_vtable; }
 
 
@@ -849,12 +718,6 @@ IDxcResult_VTable :: struct #type_info_none {
     GetOutputByIndex: (this: *IDxcResult, Index: u32) -> DXC_OUT_KIND #cpp_method;
     PrimaryOutput: (this: *IDxcResult) -> DXC_OUT_KIND #cpp_method;
 }
-IDxcResult_HasOutput :: inline (this: *IDxcResult, dxcOutKind: DXC_OUT_KIND) -> BOOL { return this.idxcresult_vtable.HasOutput(this, dxcOutKind); }
-IDxcResult_GetOutput :: inline (this: *IDxcResult, dxcOutKind: DXC_OUT_KIND, iid: *IID, ppvObject: **void, ppOutputName: **IDxcBlobUtf16) -> HRESULT { return this.idxcresult_vtable.GetOutput(this, dxcOutKind, iid, ppvObject, ppOutputName); }
-IDxcResult_GetNumOutputs :: inline (this: *IDxcResult) -> u32 { return this.idxcresult_vtable.GetNumOutputs(this); }
-IDxcResult_GetOutputByIndex :: inline (this: *IDxcResult, Index: u32) -> DXC_OUT_KIND { return this.idxcresult_vtable.GetOutputByIndex(this, Index); }
-IDxcResult_PrimaryOutput :: inline (this: *IDxcResult) -> DXC_OUT_KIND { return this.idxcresult_vtable.PrimaryOutput(this); }
-
 vtable :: (obj: *IDxcResult) -> *IDxcResult_VTable { return obj.idxcresult_vtable; }
 
 
@@ -867,9 +730,6 @@ IDxcExtraOutputs_VTable :: struct #type_info_none {
     GetOutputCount: (this: *IDxcExtraOutputs) -> u32 #cpp_method;
     GetOutput: (this: *IDxcExtraOutputs, uIndex: u32, iid: *IID, ppvObject: **void, ppOutputType: **IDxcBlobUtf16, ppOutputName: **IDxcBlobUtf16) -> HRESULT #cpp_method;
 }
-IDxcExtraOutputs_GetOutputCount :: inline (this: *IDxcExtraOutputs) -> u32 { return this.idxcextraoutputs_vtable.GetOutputCount(this); }
-IDxcExtraOutputs_GetOutput :: inline (this: *IDxcExtraOutputs, uIndex: u32, iid: *IID, ppvObject: **void, ppOutputType: **IDxcBlobUtf16, ppOutputName: **IDxcBlobUtf16) -> HRESULT { return this.idxcextraoutputs_vtable.GetOutput(this, uIndex, iid, ppvObject, ppOutputType, ppOutputName); }
-
 vtable :: (obj: *IDxcExtraOutputs) -> *IDxcExtraOutputs_VTable { return obj.idxcextraoutputs_vtable; }
 
 
@@ -882,9 +742,6 @@ IDxcCompiler3_VTable :: struct #type_info_none {
     Compile: (this: *IDxcCompiler3, pSource: *DxcBuffer, pArguments: **s16, argCount: u32, pIncludeHandler: *IDxcIncludeHandler, riid: *IID, ppResult: **void) -> HRESULT #cpp_method;
     Disassemble: (this: *IDxcCompiler3, pObject: *DxcBuffer, riid: *IID, ppResult: **void) -> HRESULT #cpp_method;
 }
-IDxcCompiler3_Compile :: inline (this: *IDxcCompiler3, pSource: *DxcBuffer, pArguments: **s16, argCount: u32, pIncludeHandler: *IDxcIncludeHandler, riid: *IID, ppResult: **void) -> HRESULT { return this.idxccompiler3_vtable.Compile(this, pSource, pArguments, argCount, pIncludeHandler, riid, ppResult); }
-IDxcCompiler3_Disassemble :: inline (this: *IDxcCompiler3, pObject: *DxcBuffer, riid: *IID, ppResult: **void) -> HRESULT { return this.idxccompiler3_vtable.Disassemble(this, pObject, riid, ppResult); }
-
 vtable :: (obj: *IDxcCompiler3) -> *IDxcCompiler3_VTable { return obj.idxccompiler3_vtable; }
 
 
@@ -896,8 +753,6 @@ IDxcValidator_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     Validate: (this: *IDxcValidator, pShader: *IDxcBlob, Flags: u32, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
 }
-IDxcValidator_Validate :: inline (this: *IDxcValidator, pShader: *IDxcBlob, Flags: u32, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxcvalidator_vtable.Validate(this, pShader, Flags, ppResult); }
-
 vtable :: (obj: *IDxcValidator) -> *IDxcValidator_VTable { return obj.idxcvalidator_vtable; }
 
 
@@ -909,8 +764,6 @@ IDxcValidator2_VTable :: struct #type_info_none {
     using idxcvalidator: IDxcValidator_VTable;
     ValidateWithDebug: (this: *IDxcValidator2, pShader: *IDxcBlob, Flags: u32, pOptDebugBitcode: *DxcBuffer, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
 }
-IDxcValidator2_ValidateWithDebug :: inline (this: *IDxcValidator2, pShader: *IDxcBlob, Flags: u32, pOptDebugBitcode: *DxcBuffer, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxcvalidator2_vtable.ValidateWithDebug(this, pShader, Flags, pOptDebugBitcode, ppResult); }
-
 vtable :: (obj: *IDxcValidator2) -> *IDxcValidator2_VTable { return obj.idxcvalidator2_vtable; }
 
 
@@ -925,11 +778,6 @@ IDxcContainerBuilder_VTable :: struct #type_info_none {
     RemovePart: (this: *IDxcContainerBuilder, fourCC: u32) -> HRESULT #cpp_method;
     SerializeContainer: (this: *IDxcContainerBuilder, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
 }
-IDxcContainerBuilder_Load :: inline (this: *IDxcContainerBuilder, pDxilContainerHeader: *IDxcBlob) -> HRESULT { return this.idxccontainerbuilder_vtable.Load(this, pDxilContainerHeader); }
-IDxcContainerBuilder_AddPart :: inline (this: *IDxcContainerBuilder, fourCC: u32, pSource: *IDxcBlob) -> HRESULT { return this.idxccontainerbuilder_vtable.AddPart(this, fourCC, pSource); }
-IDxcContainerBuilder_RemovePart :: inline (this: *IDxcContainerBuilder, fourCC: u32) -> HRESULT { return this.idxccontainerbuilder_vtable.RemovePart(this, fourCC); }
-IDxcContainerBuilder_SerializeContainer :: inline (this: *IDxcContainerBuilder, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxccontainerbuilder_vtable.SerializeContainer(this, ppResult); }
-
 vtable :: (obj: *IDxcContainerBuilder) -> *IDxcContainerBuilder_VTable { return obj.idxccontainerbuilder_vtable; }
 
 
@@ -941,8 +789,6 @@ IDxcAssembler_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     AssembleToContainer: (this: *IDxcAssembler, pShader: *IDxcBlob, ppResult: **IDxcOperationResult) -> HRESULT #cpp_method;
 }
-IDxcAssembler_AssembleToContainer :: inline (this: *IDxcAssembler, pShader: *IDxcBlob, ppResult: **IDxcOperationResult) -> HRESULT { return this.idxcassembler_vtable.AssembleToContainer(this, pShader, ppResult); }
-
 vtable :: (obj: *IDxcAssembler) -> *IDxcAssembler_VTable { return obj.idxcassembler_vtable; }
 
 
@@ -959,13 +805,6 @@ IDxcContainerReflection_VTable :: struct #type_info_none {
     FindFirstPartKind: (this: *IDxcContainerReflection, kind: u32, pResult: *u32) -> HRESULT #cpp_method;
     GetPartReflection: (this: *IDxcContainerReflection, idx: u32, iid: *IID, ppvObject: **void) -> HRESULT #cpp_method;
 }
-IDxcContainerReflection_Load :: inline (this: *IDxcContainerReflection, pContainer: *IDxcBlob) -> HRESULT { return this.idxccontainerreflection_vtable.Load(this, pContainer); }
-IDxcContainerReflection_GetPartCount :: inline (this: *IDxcContainerReflection, pResult: *u32) -> HRESULT { return this.idxccontainerreflection_vtable.GetPartCount(this, pResult); }
-IDxcContainerReflection_GetPartKind :: inline (this: *IDxcContainerReflection, idx: u32, pResult: *u32) -> HRESULT { return this.idxccontainerreflection_vtable.GetPartKind(this, idx, pResult); }
-IDxcContainerReflection_GetPartContent :: inline (this: *IDxcContainerReflection, idx: u32, ppResult: **IDxcBlob) -> HRESULT { return this.idxccontainerreflection_vtable.GetPartContent(this, idx, ppResult); }
-IDxcContainerReflection_FindFirstPartKind :: inline (this: *IDxcContainerReflection, kind: u32, pResult: *u32) -> HRESULT { return this.idxccontainerreflection_vtable.FindFirstPartKind(this, kind, pResult); }
-IDxcContainerReflection_GetPartReflection :: inline (this: *IDxcContainerReflection, idx: u32, iid: *IID, ppvObject: **void) -> HRESULT { return this.idxccontainerreflection_vtable.GetPartReflection(this, idx, iid, ppvObject); }
-
 vtable :: (obj: *IDxcContainerReflection) -> *IDxcContainerReflection_VTable { return obj.idxccontainerreflection_vtable; }
 
 
@@ -981,12 +820,6 @@ IDxcOptimizerPass_VTable :: struct #type_info_none {
     GetOptionArgName: (this: *IDxcOptimizerPass, argIndex: u32, ppResult: **s16) -> HRESULT #cpp_method;
     GetOptionArgDescription: (this: *IDxcOptimizerPass, argIndex: u32, ppResult: **s16) -> HRESULT #cpp_method;
 }
-IDxcOptimizerPass_GetOptionName :: inline (this: *IDxcOptimizerPass, ppResult: **s16) -> HRESULT { return this.idxcoptimizerpass_vtable.GetOptionName(this, ppResult); }
-IDxcOptimizerPass_GetDescription :: inline (this: *IDxcOptimizerPass, ppResult: **s16) -> HRESULT { return this.idxcoptimizerpass_vtable.GetDescription(this, ppResult); }
-IDxcOptimizerPass_GetOptionArgCount :: inline (this: *IDxcOptimizerPass, pCount: *u32) -> HRESULT { return this.idxcoptimizerpass_vtable.GetOptionArgCount(this, pCount); }
-IDxcOptimizerPass_GetOptionArgName :: inline (this: *IDxcOptimizerPass, argIndex: u32, ppResult: **s16) -> HRESULT { return this.idxcoptimizerpass_vtable.GetOptionArgName(this, argIndex, ppResult); }
-IDxcOptimizerPass_GetOptionArgDescription :: inline (this: *IDxcOptimizerPass, argIndex: u32, ppResult: **s16) -> HRESULT { return this.idxcoptimizerpass_vtable.GetOptionArgDescription(this, argIndex, ppResult); }
-
 vtable :: (obj: *IDxcOptimizerPass) -> *IDxcOptimizerPass_VTable { return obj.idxcoptimizerpass_vtable; }
 
 
@@ -1000,10 +833,6 @@ IDxcOptimizer_VTable :: struct #type_info_none {
     GetAvailablePass: (this: *IDxcOptimizer, index: u32, ppResult: **IDxcOptimizerPass) -> HRESULT #cpp_method;
     RunOptimizer: (this: *IDxcOptimizer, pBlob: *IDxcBlob, ppOptions: **s16, optionCount: u32, pOutputModule: **IDxcBlob, ppOutputText: **IDxcBlobEncoding) -> HRESULT #cpp_method;
 }
-IDxcOptimizer_GetAvailablePassCount :: inline (this: *IDxcOptimizer, pCount: *u32) -> HRESULT { return this.idxcoptimizer_vtable.GetAvailablePassCount(this, pCount); }
-IDxcOptimizer_GetAvailablePass :: inline (this: *IDxcOptimizer, index: u32, ppResult: **IDxcOptimizerPass) -> HRESULT { return this.idxcoptimizer_vtable.GetAvailablePass(this, index, ppResult); }
-IDxcOptimizer_RunOptimizer :: inline (this: *IDxcOptimizer, pBlob: *IDxcBlob, ppOptions: **s16, optionCount: u32, pOutputModule: **IDxcBlob, ppOutputText: **IDxcBlobEncoding) -> HRESULT { return this.idxcoptimizer_vtable.RunOptimizer(this, pBlob, ppOptions, optionCount, pOutputModule, ppOutputText); }
-
 vtable :: (obj: *IDxcOptimizer) -> *IDxcOptimizer_VTable { return obj.idxcoptimizer_vtable; }
 
 
@@ -1016,9 +845,6 @@ IDxcVersionInfo_VTable :: struct #type_info_none {
     GetVersion: (this: *IDxcVersionInfo, pMajor: *u32, pMinor: *u32) -> HRESULT #cpp_method;
     GetFlags: (this: *IDxcVersionInfo, pFlags: *u32) -> HRESULT #cpp_method;
 }
-IDxcVersionInfo_GetVersion :: inline (this: *IDxcVersionInfo, pMajor: *u32, pMinor: *u32) -> HRESULT { return this.idxcversioninfo_vtable.GetVersion(this, pMajor, pMinor); }
-IDxcVersionInfo_GetFlags :: inline (this: *IDxcVersionInfo, pFlags: *u32) -> HRESULT { return this.idxcversioninfo_vtable.GetFlags(this, pFlags); }
-
 vtable :: (obj: *IDxcVersionInfo) -> *IDxcVersionInfo_VTable { return obj.idxcversioninfo_vtable; }
 
 
@@ -1030,8 +856,6 @@ IDxcVersionInfo2_VTable :: struct #type_info_none {
     using idxcversioninfo: IDxcVersionInfo_VTable;
     GetCommitInfo: (this: *IDxcVersionInfo2, pCommitCount: *u32, pCommitHash: **u8) -> HRESULT #cpp_method;
 }
-IDxcVersionInfo2_GetCommitInfo :: inline (this: *IDxcVersionInfo2, pCommitCount: *u32, pCommitHash: **u8) -> HRESULT { return this.idxcversioninfo2_vtable.GetCommitInfo(this, pCommitCount, pCommitHash); }
-
 vtable :: (obj: *IDxcVersionInfo2) -> *IDxcVersionInfo2_VTable { return obj.idxcversioninfo2_vtable; }
 
 
@@ -1043,8 +867,6 @@ IDxcVersionInfo3_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
     GetCustomVersionString: (this: *IDxcVersionInfo3, pVersionString: **u8) -> HRESULT #cpp_method;
 }
-IDxcVersionInfo3_GetCustomVersionString :: inline (this: *IDxcVersionInfo3, pVersionString: **u8) -> HRESULT { return this.idxcversioninfo3_vtable.GetCustomVersionString(this, pVersionString); }
-
 vtable :: (obj: *IDxcVersionInfo3) -> *IDxcVersionInfo3_VTable { return obj.idxcversioninfo3_vtable; }
 
 
@@ -1084,31 +906,6 @@ IDxcPdbUtils_VTable :: struct #type_info_none {
     OverrideArgs: (this: *IDxcPdbUtils, pArgPairs: *DxcArgPair, uNumArgPairs: u32) -> HRESULT #cpp_method;
     OverrideRootSignature: (this: *IDxcPdbUtils, pRootSignature: *s16) -> HRESULT #cpp_method;
 }
-IDxcPdbUtils_Load :: inline (this: *IDxcPdbUtils, pPdbOrDxil: *IDxcBlob) -> HRESULT { return this.idxcpdbutils_vtable.Load(this, pPdbOrDxil); }
-IDxcPdbUtils_GetSourceCount :: inline (this: *IDxcPdbUtils, pCount: *u32) -> HRESULT { return this.idxcpdbutils_vtable.GetSourceCount(this, pCount); }
-IDxcPdbUtils_GetSource :: inline (this: *IDxcPdbUtils, uIndex: u32, ppResult: **IDxcBlobEncoding) -> HRESULT { return this.idxcpdbutils_vtable.GetSource(this, uIndex, ppResult); }
-IDxcPdbUtils_GetSourceName :: inline (this: *IDxcPdbUtils, uIndex: u32, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetSourceName(this, uIndex, pResult); }
-IDxcPdbUtils_GetFlagCount :: inline (this: *IDxcPdbUtils, pCount: *u32) -> HRESULT { return this.idxcpdbutils_vtable.GetFlagCount(this, pCount); }
-IDxcPdbUtils_GetFlag :: inline (this: *IDxcPdbUtils, uIndex: u32, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetFlag(this, uIndex, pResult); }
-IDxcPdbUtils_GetArgCount :: inline (this: *IDxcPdbUtils, pCount: *u32) -> HRESULT { return this.idxcpdbutils_vtable.GetArgCount(this, pCount); }
-IDxcPdbUtils_GetArg :: inline (this: *IDxcPdbUtils, uIndex: u32, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetArg(this, uIndex, pResult); }
-IDxcPdbUtils_GetArgPairCount :: inline (this: *IDxcPdbUtils, pCount: *u32) -> HRESULT { return this.idxcpdbutils_vtable.GetArgPairCount(this, pCount); }
-IDxcPdbUtils_GetArgPair :: inline (this: *IDxcPdbUtils, uIndex: u32, pName: *BSTR, pValue: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetArgPair(this, uIndex, pName, pValue); }
-IDxcPdbUtils_GetDefineCount :: inline (this: *IDxcPdbUtils, pCount: *u32) -> HRESULT { return this.idxcpdbutils_vtable.GetDefineCount(this, pCount); }
-IDxcPdbUtils_GetDefine :: inline (this: *IDxcPdbUtils, uIndex: u32, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetDefine(this, uIndex, pResult); }
-IDxcPdbUtils_GetTargetProfile :: inline (this: *IDxcPdbUtils, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetTargetProfile(this, pResult); }
-IDxcPdbUtils_GetEntryPoint :: inline (this: *IDxcPdbUtils, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetEntryPoint(this, pResult); }
-IDxcPdbUtils_GetMainFileName :: inline (this: *IDxcPdbUtils, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetMainFileName(this, pResult); }
-IDxcPdbUtils_GetHash :: inline (this: *IDxcPdbUtils, ppResult: **IDxcBlob) -> HRESULT { return this.idxcpdbutils_vtable.GetHash(this, ppResult); }
-IDxcPdbUtils_GetName :: inline (this: *IDxcPdbUtils, pResult: *BSTR) -> HRESULT { return this.idxcpdbutils_vtable.GetName(this, pResult); }
-IDxcPdbUtils_IsFullPDB :: inline (this: *IDxcPdbUtils) -> BOOL { return this.idxcpdbutils_vtable.IsFullPDB(this); }
-IDxcPdbUtils_GetFullPDB :: inline (this: *IDxcPdbUtils, ppFullPDB: **IDxcBlob) -> HRESULT { return this.idxcpdbutils_vtable.GetFullPDB(this, ppFullPDB); }
-IDxcPdbUtils_GetVersionInfo :: inline (this: *IDxcPdbUtils, ppVersionInfo: **IDxcVersionInfo) -> HRESULT { return this.idxcpdbutils_vtable.GetVersionInfo(this, ppVersionInfo); }
-IDxcPdbUtils_SetCompiler :: inline (this: *IDxcPdbUtils, pCompiler: *IDxcCompiler3) -> HRESULT { return this.idxcpdbutils_vtable.SetCompiler(this, pCompiler); }
-IDxcPdbUtils_CompileForFullPDB :: inline (this: *IDxcPdbUtils, ppResult: **IDxcResult) -> HRESULT { return this.idxcpdbutils_vtable.CompileForFullPDB(this, ppResult); }
-IDxcPdbUtils_OverrideArgs :: inline (this: *IDxcPdbUtils, pArgPairs: *DxcArgPair, uNumArgPairs: u32) -> HRESULT { return this.idxcpdbutils_vtable.OverrideArgs(this, pArgPairs, uNumArgPairs); }
-IDxcPdbUtils_OverrideRootSignature :: inline (this: *IDxcPdbUtils, pRootSignature: *s16) -> HRESULT { return this.idxcpdbutils_vtable.OverrideRootSignature(this, pRootSignature); }
-
 vtable :: (obj: *IDxcPdbUtils) -> *IDxcPdbUtils_VTable { return obj.idxcpdbutils_vtable; }
 
 

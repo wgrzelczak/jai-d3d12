@@ -109,9 +109,11 @@ make_default_generator_options :: () -> Generate_Bindings_Options {
     array_add(*opts.system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
     array_add(*opts.extra_clang_arguments, "-x", "c++", "-fms-extensions");
 
-    opts.mimic_spacing_flags &= ~Mimic_Spacing_Flags.VTABLE;
+    opts.mimic_spacing_flags                &= ~Mimic_Spacing_Flags.VTABLE;
     opts.generate_compile_time_struct_checks = false;
-
+    opts.generate_c_style_api_for_vtable     = false;
+    opts.generate_vtable_helpers             = true;
+    
     opts.will_print_bindings = () {
         for context.compiler.global_scope.members {
             visit_declarations(d3d_visitor, it);
@@ -121,6 +123,7 @@ make_default_generator_options :: () -> Generate_Bindings_Options {
 }
 
 generate_bindings :: (output_filename : string, opts : Generate_Bindings_Options) {
+    log("Generating %", output_filename);
     bindings_builder, success := generate_bindings(opts);
     defer free_buffers(*bindings_builder);
     assert(success);
