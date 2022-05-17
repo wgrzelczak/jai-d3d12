@@ -41,6 +41,7 @@ Copy dlls next to your executable:
 
 # TODO
 - complete dxc helpers
+- bindings for AMD D3D12 Memory Allocator [https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator]
 - add nvapi submodule
 - add example code
 
