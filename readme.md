@@ -16,7 +16,7 @@ Each submodule is divided into multiple files:
 # Generating bindings
 (Because of compilacted licensing for external codebases I don't include them here)
 
-Confuigure parameters for `generate.jai`:
+- Configure generator parameters in `generate.jai`:
 ```
 USE_D3D12_AGILITY :: true;
 D3D12_AGILITY_SRC :: "d3d12_agility_src/build/native/";
@@ -27,16 +27,16 @@ DXC           :: true;
 PIX           :: true;
 ```
 
-Download needed sources. All instructions how to do this and links are in `*_src/readme.md`.  
+- Download needed sources. All instructions how to do this and links are in `*_src/readme.md`.  
 
-Call `jai generate.jai`.  
+- Call `jai generate.jai`.  
 
-Copy dlls next to your executable:
-- D3D12Core.dll (for Agility)
-- d3d12SDKLayers.dll (for Agility)
-- dxcompiler.dll (for dxc)
-- dxil.dll (for dxc)
-- WinPixEventRuntime.dll (for pix)
+- Copy dlls next to your executable:
+  - D3D12Core.dll (for Agility)
+  - d3d12SDKLayers.dll (for Agility)
+  - dxcompiler.dll (for dxc)
+  - dxil.dll (for dxc)
+  - WinPixEventRuntime.dll (for pix)
 
 
 # TODO
