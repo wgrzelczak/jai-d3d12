@@ -31,6 +31,13 @@ PIX           :: true;
 
 - Call `jai generate.jai`.  
 
+- Configure runtime in `module.jai`:
+```
+USE_DEBUG :: true;
+USE_D3D12_AGILITY :: true;
+USE_DXC :: true;
+```
+
 - Copy dlls next to your executable:
   - D3D12Core.dll (for Agility)
   - d3d12SDKLayers.dll (for Agility)
@@ -40,6 +47,7 @@ PIX           :: true;
 
 
 # TODO
+- share parameters between `generate.jai` and `module.jai`
 - complete dxc helpers
 - bindings for AMD D3D12 Memory Allocator [https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator]
 - add nvapi submodule
