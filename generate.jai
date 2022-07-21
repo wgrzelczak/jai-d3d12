@@ -124,12 +124,11 @@ make_default_generator_options :: () -> Generate_Bindings_Options {
 
 generate_bindings :: (output_filename : string, opts : Generate_Bindings_Options) {
     log("Generating %", output_filename);
-    bindings_builder, success := generate_bindings(opts);
+    bindings_builder, success := generate_bindings(opts, log_results=true);
     defer free_buffers(*bindings_builder);
     assert(success);
 
-    show_generator_results();
-    success = write_entire_file(output_filename, bindings_builder);
+    success = write_entire_file(output_filename, *bindings_builder);
     assert(success, "Could not write generated output to \"%\"\n", output_filename);
 
     reset_temporary_storage();

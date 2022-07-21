@@ -1,7 +1,7 @@
 //
 // This file was auto-generated using the following command:
 //
-// 
+// jai generate.jai
 //
 
 
@@ -99,7 +99,7 @@ DXGI_INFO_QUEUE_FILTER :: struct {
 IDXGIInfoQueue_UUID :: "D67441C7-672A-476f-9E82-CD55B44949CE";
 IDXGIInfoQueue :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgiinfoqueue_vtable: *IDXGIInfoQueue_VTable;
+    #place iunknown; idxgiinfoqueue_vtable: *IDXGIInfoQueue_VTable;
 }
 IDXGIInfoQueue_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -148,7 +148,7 @@ vtable :: (obj: *IDXGIInfoQueue) -> *IDXGIInfoQueue_VTable { return obj.idxgiinf
 IDXGIDebug_UUID :: "119E7452-DE9E-40fe-8806-88F90C12B441";
 IDXGIDebug :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgidebug_vtable: *IDXGIDebug_VTable;
+    #place iunknown; idxgidebug_vtable: *IDXGIDebug_VTable;
 }
 IDXGIDebug_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -161,7 +161,7 @@ vtable :: (obj: *IDXGIDebug) -> *IDXGIDebug_VTable { return obj.idxgidebug_vtabl
 IDXGIDebug1_UUID :: "c5a05f0c-16f2-4adf-9f4d-a8c4d58ac550";
 IDXGIDebug1 :: struct {
     #as using idxgidebug: IDXGIDebug;
-    #place vtable; idxgidebug1_vtable: *IDXGIDebug1_VTable;
+    #place idxgidebug; idxgidebug1_vtable: *IDXGIDebug1_VTable;
 }
 IDXGIDebug1_VTable :: struct #type_info_none {
     using idxgidebug: IDXGIDebug_VTable;

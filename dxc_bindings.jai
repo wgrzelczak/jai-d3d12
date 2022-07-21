@@ -1,7 +1,7 @@
 //
 // This file was auto-generated using the following command:
 //
-// 
+// jai generate.jai
 //
 
 
@@ -47,7 +47,7 @@ DXC_HASHFLAG_INCLUDES_SOURCE :: 1;
 
 IMalloc :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; imalloc_vtable: *IMalloc_VTable;
+    #place iunknown; imalloc_vtable: *IMalloc_VTable;
 }
 IMalloc_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -63,7 +63,7 @@ vtable :: (obj: *IMalloc) -> *IMalloc_VTable { return obj.imalloc_vtable; }
 
 ISequentialStream :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; isequentialstream_vtable: *ISequentialStream_VTable;
+    #place iunknown; isequentialstream_vtable: *ISequentialStream_VTable;
 }
 ISequentialStream_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -91,7 +91,7 @@ STATSTG :: tagSTATSTG;
 
 IStream :: struct {
     #as using isequentialstream: ISequentialStream;
-    #place vtable; istream_vtable: *IStream_VTable;
+    #place isequentialstream; istream_vtable: *IStream_VTable;
 }
 IStream_VTable :: struct #type_info_none {
     using isequentialstream: ISequentialStream_VTable;
@@ -382,7 +382,7 @@ vtable :: (obj: *ID3D12ShaderReflectionConstantBuffer) -> *ID3D12ShaderReflectio
 // {5A58797D-A72C-478D-8BA2-EFC6B0EFE88E}
 ID3D12ShaderReflection :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12shaderreflection_vtable: *ID3D12ShaderReflection_VTable;
+    #place iunknown; id3d12shaderreflection_vtable: *ID3D12ShaderReflection_VTable;
 }
 ID3D12ShaderReflection_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -412,7 +412,7 @@ vtable :: (obj: *ID3D12ShaderReflection) -> *ID3D12ShaderReflection_VTable { ret
 // {8E349D19-54DB-4A56-9DC9-119D87BDB804}
 ID3D12LibraryReflection :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12libraryreflection_vtable: *ID3D12LibraryReflection_VTable;
+    #place iunknown; id3d12libraryreflection_vtable: *ID3D12LibraryReflection_VTable;
 }
 ID3D12LibraryReflection_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -488,7 +488,7 @@ DxcShaderHash :: struct {
 // IDxcBlob is an alias of ID3D10Blob and ID3DBlob
 IDxcBlob :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcblob_vtable: *IDxcBlob_VTable;
+    #place iunknown; idxcblob_vtable: *IDxcBlob_VTable;
 }
 IDxcBlob_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -500,7 +500,7 @@ vtable :: (obj: *IDxcBlob) -> *IDxcBlob_VTable { return obj.idxcblob_vtable; }
 
 IDxcBlobEncoding :: struct {
     #as using idxcblob: IDxcBlob;
-    #place vtable; idxcblobencoding_vtable: *IDxcBlobEncoding_VTable;
+    #place idxcblob; idxcblobencoding_vtable: *IDxcBlobEncoding_VTable;
 }
 IDxcBlobEncoding_VTable :: struct #type_info_none {
     using idxcblob: IDxcBlob_VTable;
@@ -512,7 +512,7 @@ vtable :: (obj: *IDxcBlobEncoding) -> *IDxcBlobEncoding_VTable { return obj.idxc
 // The API will use this interface for output name strings
 IDxcBlobUtf16 :: struct {
     #as using idxcblobencoding: IDxcBlobEncoding;
-    #place vtable; idxcblobutf16_vtable: *IDxcBlobUtf16_VTable;
+    #place idxcblobencoding; idxcblobutf16_vtable: *IDxcBlobUtf16_VTable;
 }
 IDxcBlobUtf16_VTable :: struct #type_info_none {
     using idxcblobencoding: IDxcBlobEncoding_VTable;
@@ -524,7 +524,7 @@ vtable :: (obj: *IDxcBlobUtf16) -> *IDxcBlobUtf16_VTable { return obj.idxcblobut
 
 IDxcBlobUtf8 :: struct {
     #as using idxcblobencoding: IDxcBlobEncoding;
-    #place vtable; idxcblobutf8_vtable: *IDxcBlobUtf8_VTable;
+    #place idxcblobencoding; idxcblobutf8_vtable: *IDxcBlobUtf8_VTable;
 }
 IDxcBlobUtf8_VTable :: struct #type_info_none {
     using idxcblobencoding: IDxcBlobEncoding_VTable;
@@ -536,7 +536,7 @@ vtable :: (obj: *IDxcBlobUtf8) -> *IDxcBlobUtf8_VTable { return obj.idxcblobutf8
 
 IDxcIncludeHandler :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcincludehandler_vtable: *IDxcIncludeHandler_VTable;
+    #place iunknown; idxcincludehandler_vtable: *IDxcIncludeHandler_VTable;
 }
 IDxcIncludeHandler_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -564,7 +564,7 @@ DxcDefine :: struct {
 
 IDxcCompilerArgs :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxccompilerargs_vtable: *IDxcCompilerArgs_VTable;
+    #place iunknown; idxccompilerargs_vtable: *IDxcCompilerArgs_VTable;
 }
 IDxcCompilerArgs_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -580,7 +580,7 @@ vtable :: (obj: *IDxcCompilerArgs) -> *IDxcCompilerArgs_VTable { return obj.idxc
 // NOTE: IDxcUtils replaces IDxcLibrary
 IDxcLibrary :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxclibrary_vtable: *IDxcLibrary_VTable;
+    #place iunknown; idxclibrary_vtable: *IDxcLibrary_VTable;
 }
 IDxcLibrary_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -601,7 +601,7 @@ vtable :: (obj: *IDxcLibrary) -> *IDxcLibrary_VTable { return obj.idxclibrary_vt
 // NOTE: IDxcResult replaces IDxcOperationResult
 IDxcOperationResult :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcoperationresult_vtable: *IDxcOperationResult_VTable;
+    #place iunknown; idxcoperationresult_vtable: *IDxcOperationResult_VTable;
 }
 IDxcOperationResult_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -615,7 +615,7 @@ vtable :: (obj: *IDxcOperationResult) -> *IDxcOperationResult_VTable { return ob
 // NOTE: IDxcCompiler3 replaces IDxcCompiler and IDxcCompiler2
 IDxcCompiler :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxccompiler_vtable: *IDxcCompiler_VTable;
+    #place iunknown; idxccompiler_vtable: *IDxcCompiler_VTable;
 }
 IDxcCompiler_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -629,7 +629,7 @@ vtable :: (obj: *IDxcCompiler) -> *IDxcCompiler_VTable { return obj.idxccompiler
 // NOTE: IDxcCompiler3 replaces IDxcCompiler and IDxcCompiler2
 IDxcCompiler2 :: struct {
     #as using idxccompiler: IDxcCompiler;
-    #place vtable; idxccompiler2_vtable: *IDxcCompiler2_VTable;
+    #place idxccompiler; idxccompiler2_vtable: *IDxcCompiler2_VTable;
 }
 IDxcCompiler2_VTable :: struct #type_info_none {
     using idxccompiler: IDxcCompiler_VTable;
@@ -640,7 +640,7 @@ vtable :: (obj: *IDxcCompiler2) -> *IDxcCompiler2_VTable { return obj.idxccompil
 
 IDxcLinker :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxclinker_vtable: *IDxcLinker_VTable;
+    #place iunknown; idxclinker_vtable: *IDxcLinker_VTable;
 }
 IDxcLinker_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -653,7 +653,7 @@ vtable :: (obj: *IDxcLinker) -> *IDxcLinker_VTable { return obj.idxclinker_vtabl
 // NOTE: IDxcUtils replaces IDxcLibrary
 IDxcUtils :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcutils_vtable: *IDxcUtils_VTable;
+    #place iunknown; idxcutils_vtable: *IDxcUtils_VTable;
 }
 IDxcUtils_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -708,7 +708,7 @@ DXC_OUT_KIND :: enum s32 {
 
 IDxcResult :: struct {
     #as using idxcoperationresult: IDxcOperationResult;
-    #place vtable; idxcresult_vtable: *IDxcResult_VTable;
+    #place idxcoperationresult; idxcresult_vtable: *IDxcResult_VTable;
 }
 IDxcResult_VTable :: struct #type_info_none {
     using idxcoperationresult: IDxcOperationResult_VTable;
@@ -723,7 +723,7 @@ vtable :: (obj: *IDxcResult) -> *IDxcResult_VTable { return obj.idxcresult_vtabl
 
 IDxcExtraOutputs :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcextraoutputs_vtable: *IDxcExtraOutputs_VTable;
+    #place iunknown; idxcextraoutputs_vtable: *IDxcExtraOutputs_VTable;
 }
 IDxcExtraOutputs_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -735,7 +735,7 @@ vtable :: (obj: *IDxcExtraOutputs) -> *IDxcExtraOutputs_VTable { return obj.idxc
 
 IDxcCompiler3 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxccompiler3_vtable: *IDxcCompiler3_VTable;
+    #place iunknown; idxccompiler3_vtable: *IDxcCompiler3_VTable;
 }
 IDxcCompiler3_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -747,7 +747,7 @@ vtable :: (obj: *IDxcCompiler3) -> *IDxcCompiler3_VTable { return obj.idxccompil
 
 IDxcValidator :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcvalidator_vtable: *IDxcValidator_VTable;
+    #place iunknown; idxcvalidator_vtable: *IDxcValidator_VTable;
 }
 IDxcValidator_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -758,7 +758,7 @@ vtable :: (obj: *IDxcValidator) -> *IDxcValidator_VTable { return obj.idxcvalida
 
 IDxcValidator2 :: struct {
     #as using idxcvalidator: IDxcValidator;
-    #place vtable; idxcvalidator2_vtable: *IDxcValidator2_VTable;
+    #place idxcvalidator; idxcvalidator2_vtable: *IDxcValidator2_VTable;
 }
 IDxcValidator2_VTable :: struct #type_info_none {
     using idxcvalidator: IDxcValidator_VTable;
@@ -769,7 +769,7 @@ vtable :: (obj: *IDxcValidator2) -> *IDxcValidator2_VTable { return obj.idxcvali
 
 IDxcContainerBuilder :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxccontainerbuilder_vtable: *IDxcContainerBuilder_VTable;
+    #place iunknown; idxccontainerbuilder_vtable: *IDxcContainerBuilder_VTable;
 }
 IDxcContainerBuilder_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -783,7 +783,7 @@ vtable :: (obj: *IDxcContainerBuilder) -> *IDxcContainerBuilder_VTable { return 
 
 IDxcAssembler :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcassembler_vtable: *IDxcAssembler_VTable;
+    #place iunknown; idxcassembler_vtable: *IDxcAssembler_VTable;
 }
 IDxcAssembler_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -794,7 +794,7 @@ vtable :: (obj: *IDxcAssembler) -> *IDxcAssembler_VTable { return obj.idxcassemb
 
 IDxcContainerReflection :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxccontainerreflection_vtable: *IDxcContainerReflection_VTable;
+    #place iunknown; idxccontainerreflection_vtable: *IDxcContainerReflection_VTable;
 }
 IDxcContainerReflection_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -810,7 +810,7 @@ vtable :: (obj: *IDxcContainerReflection) -> *IDxcContainerReflection_VTable { r
 
 IDxcOptimizerPass :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcoptimizerpass_vtable: *IDxcOptimizerPass_VTable;
+    #place iunknown; idxcoptimizerpass_vtable: *IDxcOptimizerPass_VTable;
 }
 IDxcOptimizerPass_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -825,7 +825,7 @@ vtable :: (obj: *IDxcOptimizerPass) -> *IDxcOptimizerPass_VTable { return obj.id
 
 IDxcOptimizer :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcoptimizer_vtable: *IDxcOptimizer_VTable;
+    #place iunknown; idxcoptimizer_vtable: *IDxcOptimizer_VTable;
 }
 IDxcOptimizer_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -838,7 +838,7 @@ vtable :: (obj: *IDxcOptimizer) -> *IDxcOptimizer_VTable { return obj.idxcoptimi
 
 IDxcVersionInfo :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcversioninfo_vtable: *IDxcVersionInfo_VTable;
+    #place iunknown; idxcversioninfo_vtable: *IDxcVersionInfo_VTable;
 }
 IDxcVersionInfo_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -850,7 +850,7 @@ vtable :: (obj: *IDxcVersionInfo) -> *IDxcVersionInfo_VTable { return obj.idxcve
 
 IDxcVersionInfo2 :: struct {
     #as using idxcversioninfo: IDxcVersionInfo;
-    #place vtable; idxcversioninfo2_vtable: *IDxcVersionInfo2_VTable;
+    #place idxcversioninfo; idxcversioninfo2_vtable: *IDxcVersionInfo2_VTable;
 }
 IDxcVersionInfo2_VTable :: struct #type_info_none {
     using idxcversioninfo: IDxcVersionInfo_VTable;
@@ -861,7 +861,7 @@ vtable :: (obj: *IDxcVersionInfo2) -> *IDxcVersionInfo2_VTable { return obj.idxc
 
 IDxcVersionInfo3 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcversioninfo3_vtable: *IDxcVersionInfo3_VTable;
+    #place iunknown; idxcversioninfo3_vtable: *IDxcVersionInfo3_VTable;
 }
 IDxcVersionInfo3_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -877,7 +877,7 @@ DxcArgPair :: struct {
 
 IDxcPdbUtils :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxcpdbutils_vtable: *IDxcPdbUtils_VTable;
+    #place iunknown; idxcpdbutils_vtable: *IDxcPdbUtils_VTable;
 }
 IDxcPdbUtils_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;

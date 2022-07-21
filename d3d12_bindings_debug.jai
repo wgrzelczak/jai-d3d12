@@ -1,7 +1,7 @@
 //
 // This file was auto-generated using the following command:
 //
-// 
+// jai generate.jai
 //
 
 
@@ -12,7 +12,7 @@ D3D12_INFO_QUEUE_DEFAULT_MESSAGE_COUNT_LIMIT :: 1024;
 ID3D12Debug_UUID :: "344488b7-6846-474b-b989-f027448245e0";
 ID3D12Debug :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debug_vtable: *ID3D12Debug_VTable;
+    #place iunknown; id3d12debug_vtable: *ID3D12Debug_VTable;
 }
 ID3D12Debug_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -35,7 +35,7 @@ D3D12_GPU_BASED_VALIDATION_FLAGS :: enum_flags u32 {
 ID3D12Debug1_UUID :: "affaa4ca-63fe-4d8e-b8ad-159000af4304";
 ID3D12Debug1 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debug1_vtable: *ID3D12Debug1_VTable;
+    #place iunknown; id3d12debug1_vtable: *ID3D12Debug1_VTable;
 }
 ID3D12Debug1_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -50,7 +50,7 @@ vtable :: (obj: *ID3D12Debug1) -> *ID3D12Debug1_VTable { return obj.id3d12debug1
 ID3D12Debug2_UUID :: "93a665c4-a3b2-4e5d-b692-a26ae14e3374";
 ID3D12Debug2 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debug2_vtable: *ID3D12Debug2_VTable;
+    #place iunknown; id3d12debug2_vtable: *ID3D12Debug2_VTable;
 }
 ID3D12Debug2_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -63,7 +63,7 @@ vtable :: (obj: *ID3D12Debug2) -> *ID3D12Debug2_VTable { return obj.id3d12debug2
 ID3D12Debug3_UUID :: "5cf4e58f-f671-4ff1-a542-3686e3d153d1";
 ID3D12Debug3 :: struct {
     #as using id3d12debug: ID3D12Debug;
-    #place vtable; id3d12debug3_vtable: *ID3D12Debug3_VTable;
+    #place id3d12debug; id3d12debug3_vtable: *ID3D12Debug3_VTable;
 }
 ID3D12Debug3_VTable :: struct #type_info_none {
     using id3d12debug: ID3D12Debug_VTable;
@@ -78,7 +78,7 @@ vtable :: (obj: *ID3D12Debug3) -> *ID3D12Debug3_VTable { return obj.id3d12debug3
 ID3D12Debug4_UUID :: "014b816e-9ec5-4a2f-a845-ffbe441ce13a";
 ID3D12Debug4 :: struct {
     #as using id3d12debug3: ID3D12Debug3;
-    #place vtable; id3d12debug4_vtable: *ID3D12Debug4_VTable;
+    #place id3d12debug3; id3d12debug4_vtable: *ID3D12Debug4_VTable;
 }
 ID3D12Debug4_VTable :: struct #type_info_none {
     using id3d12debug3: ID3D12Debug3_VTable;
@@ -91,7 +91,7 @@ vtable :: (obj: *ID3D12Debug4) -> *ID3D12Debug4_VTable { return obj.id3d12debug4
 ID3D12Debug5_UUID :: "548d6b12-09fa-40e0-9069-5dcd589a52c9";
 ID3D12Debug5 :: struct {
     #as using id3d12debug4: ID3D12Debug4;
-    #place vtable; id3d12debug5_vtable: *ID3D12Debug5_VTable;
+    #place id3d12debug4; id3d12debug5_vtable: *ID3D12Debug5_VTable;
 }
 ID3D12Debug5_VTable :: struct #type_info_none {
     using id3d12debug4: ID3D12Debug4_VTable;
@@ -104,7 +104,7 @@ vtable :: (obj: *ID3D12Debug5) -> *ID3D12Debug5_VTable { return obj.id3d12debug5
 ID3D12Debug6_UUID :: "82a816d6-5d01-4157-97d0-4975463fd1ed";
 ID3D12Debug6 :: struct {
     #as using id3d12debug5: ID3D12Debug5;
-    #place vtable; id3d12debug6_vtable: *ID3D12Debug6_VTable;
+    #place id3d12debug5; id3d12debug6_vtable: *ID3D12Debug6_VTable;
 }
 ID3D12Debug6_VTable :: struct #type_info_none {
     using id3d12debug5: ID3D12Debug5_VTable;
@@ -187,7 +187,7 @@ D3D12_DEBUG_DEVICE_GPU_SLOWDOWN_PERFORMANCE_FACTOR :: struct {
 ID3D12DebugDevice1_UUID :: "a9b71770-d099-4a65-a698-3dee10020f88";
 ID3D12DebugDevice1 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debugdevice1_vtable: *ID3D12DebugDevice1_VTable;
+    #place iunknown; id3d12debugdevice1_vtable: *ID3D12DebugDevice1_VTable;
 }
 ID3D12DebugDevice1_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -202,7 +202,7 @@ vtable :: (obj: *ID3D12DebugDevice1) -> *ID3D12DebugDevice1_VTable { return obj.
 ID3D12DebugDevice_UUID :: "3febd6dd-4973-4787-8194-e45f9e28923e";
 ID3D12DebugDevice :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debugdevice_vtable: *ID3D12DebugDevice_VTable;
+    #place iunknown; id3d12debugdevice_vtable: *ID3D12DebugDevice_VTable;
 }
 ID3D12DebugDevice_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -217,7 +217,7 @@ vtable :: (obj: *ID3D12DebugDevice) -> *ID3D12DebugDevice_VTable { return obj.id
 ID3D12DebugDevice2_UUID :: "60eccbc1-378d-4df1-894c-f8ac5ce4d7dd";
 ID3D12DebugDevice2 :: struct {
     #as using id3d12debugdevice: ID3D12DebugDevice;
-    #place vtable; id3d12debugdevice2_vtable: *ID3D12DebugDevice2_VTable;
+    #place id3d12debugdevice; id3d12debugdevice2_vtable: *ID3D12DebugDevice2_VTable;
 }
 ID3D12DebugDevice2_VTable :: struct #type_info_none {
     using id3d12debugdevice: ID3D12DebugDevice_VTable;
@@ -233,7 +233,7 @@ DXGI_DEBUG_D3D12: GUID;
 ID3D12DebugCommandQueue_UUID :: "09e0bf36-54ac-484f-8847-4baeeab6053a";
 ID3D12DebugCommandQueue :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debugcommandqueue_vtable: *ID3D12DebugCommandQueue_VTable;
+    #place iunknown; id3d12debugcommandqueue_vtable: *ID3D12DebugCommandQueue_VTable;
 }
 ID3D12DebugCommandQueue_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -246,7 +246,7 @@ vtable :: (obj: *ID3D12DebugCommandQueue) -> *ID3D12DebugCommandQueue_VTable { r
 ID3D12DebugCommandQueue1_UUID :: "16be35a2-bfd6-49f2-bcae-eaae4aff862d";
 ID3D12DebugCommandQueue1 :: struct {
     #as using id3d12debugcommandqueue: ID3D12DebugCommandQueue;
-    #place vtable; id3d12debugcommandqueue1_vtable: *ID3D12DebugCommandQueue1_VTable;
+    #place id3d12debugcommandqueue; id3d12debugcommandqueue1_vtable: *ID3D12DebugCommandQueue1_VTable;
 }
 ID3D12DebugCommandQueue1_VTable :: struct #type_info_none {
     using id3d12debugcommandqueue: ID3D12DebugCommandQueue_VTable;
@@ -270,7 +270,7 @@ D3D12_DEBUG_COMMAND_LIST_GPU_BASED_VALIDATION_SETTINGS :: struct {
 ID3D12DebugCommandList1_UUID :: "102ca951-311b-4b01-b11f-ecb83e061b37";
 ID3D12DebugCommandList1 :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debugcommandlist1_vtable: *ID3D12DebugCommandList1_VTable;
+    #place iunknown; id3d12debugcommandlist1_vtable: *ID3D12DebugCommandList1_VTable;
 }
 ID3D12DebugCommandList1_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -285,7 +285,7 @@ vtable :: (obj: *ID3D12DebugCommandList1) -> *ID3D12DebugCommandList1_VTable { r
 ID3D12DebugCommandList_UUID :: "09e0bf36-54ac-484f-8847-4baeeab6053f";
 ID3D12DebugCommandList :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12debugcommandlist_vtable: *ID3D12DebugCommandList_VTable;
+    #place iunknown; id3d12debugcommandlist_vtable: *ID3D12DebugCommandList_VTable;
 }
 ID3D12DebugCommandList_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -300,7 +300,7 @@ vtable :: (obj: *ID3D12DebugCommandList) -> *ID3D12DebugCommandList_VTable { ret
 ID3D12DebugCommandList2_UUID :: "aeb575cf-4e06-48be-ba3b-c450fc96652e";
 ID3D12DebugCommandList2 :: struct {
     #as using id3d12debugcommandlist: ID3D12DebugCommandList;
-    #place vtable; id3d12debugcommandlist2_vtable: *ID3D12DebugCommandList2_VTable;
+    #place id3d12debugcommandlist; id3d12debugcommandlist2_vtable: *ID3D12DebugCommandList2_VTable;
 }
 ID3D12DebugCommandList2_VTable :: struct #type_info_none {
     using id3d12debugcommandlist: ID3D12DebugCommandList_VTable;
@@ -314,7 +314,7 @@ vtable :: (obj: *ID3D12DebugCommandList2) -> *ID3D12DebugCommandList2_VTable { r
 ID3D12DebugCommandList3_UUID :: "197d5e15-4d37-4d34-af78-724cd70fdb1f";
 ID3D12DebugCommandList3 :: struct {
     #as using id3d12debugcommandlist2: ID3D12DebugCommandList2;
-    #place vtable; id3d12debugcommandlist3_vtable: *ID3D12DebugCommandList3_VTable;
+    #place id3d12debugcommandlist2; id3d12debugcommandlist3_vtable: *ID3D12DebugCommandList3_VTable;
 }
 ID3D12DebugCommandList3_VTable :: struct #type_info_none {
     using id3d12debugcommandlist2: ID3D12DebugCommandList2_VTable;
@@ -328,7 +328,7 @@ vtable :: (obj: *ID3D12DebugCommandList3) -> *ID3D12DebugCommandList3_VTable { r
 ID3D12SharingContract_UUID :: "0adf7d52-929c-4e61-addb-ffed30de66ef";
 ID3D12SharingContract :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12sharingcontract_vtable: *ID3D12SharingContract_VTable;
+    #place iunknown; id3d12sharingcontract_vtable: *ID3D12SharingContract_VTable;
 }
 ID3D12SharingContract_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -2264,7 +2264,7 @@ D3D12_INFO_QUEUE_FILTER :: struct {
 ID3D12InfoQueue_UUID :: "0742a90b-c387-483f-b946-30a7e4e61458";
 ID3D12InfoQueue :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; id3d12infoqueue_vtable: *ID3D12InfoQueue_VTable;
+    #place iunknown; id3d12infoqueue_vtable: *ID3D12InfoQueue_VTable;
 }
 ID3D12InfoQueue_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -2323,7 +2323,7 @@ D3D12MessageFunc :: #type (a0: D3D12_MESSAGE_CATEGORY, a1: D3D12_MESSAGE_SEVERIT
 ID3D12InfoQueue1_UUID :: "2852dd88-b484-4c0c-b6b1-67168500e600";
 ID3D12InfoQueue1 :: struct {
     #as using id3d12infoqueue: ID3D12InfoQueue;
-    #place vtable; id3d12infoqueue1_vtable: *ID3D12InfoQueue1_VTable;
+    #place id3d12infoqueue; id3d12infoqueue1_vtable: *ID3D12InfoQueue1_VTable;
 }
 ID3D12InfoQueue1_VTable :: struct #type_info_none {
     using id3d12infoqueue: ID3D12InfoQueue_VTable;

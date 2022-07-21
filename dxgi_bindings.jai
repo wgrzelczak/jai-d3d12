@@ -1,7 +1,7 @@
 //
 // This file was auto-generated using the following command:
 //
-// 
+// jai generate.jai
 //
 
 
@@ -588,7 +588,7 @@ DXGI_SWAP_CHAIN_DESC :: struct {
 IDXGIObject_UUID :: "aec22fb8-76f3-4639-9be0-28eb43a67a2e";
 IDXGIObject :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgiobject_vtable: *IDXGIObject_VTable;
+    #place iunknown; idxgiobject_vtable: *IDXGIObject_VTable;
 }
 IDXGIObject_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -604,7 +604,7 @@ vtable :: (obj: *IDXGIObject) -> *IDXGIObject_VTable { return obj.idxgiobject_vt
 IDXGIDeviceSubObject_UUID :: "3d3e0379-f9de-4d58-bb6c-18d62992f1a6";
 IDXGIDeviceSubObject :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgidevicesubobject_vtable: *IDXGIDeviceSubObject_VTable;
+    #place idxgiobject; idxgidevicesubobject_vtable: *IDXGIDeviceSubObject_VTable;
 }
 IDXGIDeviceSubObject_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -617,7 +617,7 @@ vtable :: (obj: *IDXGIDeviceSubObject) -> *IDXGIDeviceSubObject_VTable { return 
 IDXGIResource_UUID :: "035f3ab4-482e-4e50-b41f-8a7f8bd8960b";
 IDXGIResource :: struct {
     #as using idxgidevicesubobject: IDXGIDeviceSubObject;
-    #place vtable; idxgiresource_vtable: *IDXGIResource_VTable;
+    #place idxgidevicesubobject; idxgiresource_vtable: *IDXGIResource_VTable;
 }
 IDXGIResource_VTable :: struct #type_info_none {
     using idxgidevicesubobject: IDXGIDeviceSubObject_VTable;
@@ -633,7 +633,7 @@ vtable :: (obj: *IDXGIResource) -> *IDXGIResource_VTable { return obj.idxgiresou
 IDXGIKeyedMutex_UUID :: "9d8e1289-d7b3-465f-8126-250e349af85d";
 IDXGIKeyedMutex :: struct {
     #as using idxgidevicesubobject: IDXGIDeviceSubObject;
-    #place vtable; idxgikeyedmutex_vtable: *IDXGIKeyedMutex_VTable;
+    #place idxgidevicesubobject; idxgikeyedmutex_vtable: *IDXGIKeyedMutex_VTable;
 }
 IDXGIKeyedMutex_VTable :: struct #type_info_none {
     using idxgidevicesubobject: IDXGIDeviceSubObject_VTable;
@@ -647,7 +647,7 @@ vtable :: (obj: *IDXGIKeyedMutex) -> *IDXGIKeyedMutex_VTable { return obj.idxgik
 IDXGISurface_UUID :: "cafcb56c-6ac3-4889-bf47-9e23bbd260ec";
 IDXGISurface :: struct {
     #as using idxgidevicesubobject: IDXGIDeviceSubObject;
-    #place vtable; idxgisurface_vtable: *IDXGISurface_VTable;
+    #place idxgidevicesubobject; idxgisurface_vtable: *IDXGISurface_VTable;
 }
 IDXGISurface_VTable :: struct #type_info_none {
     using idxgidevicesubobject: IDXGIDeviceSubObject_VTable;
@@ -662,7 +662,7 @@ vtable :: (obj: *IDXGISurface) -> *IDXGISurface_VTable { return obj.idxgisurface
 IDXGISurface1_UUID :: "4AE63092-6327-4c1b-80AE-BFE12EA32B86";
 IDXGISurface1 :: struct {
     #as using idxgisurface: IDXGISurface;
-    #place vtable; idxgisurface1_vtable: *IDXGISurface1_VTable;
+    #place idxgisurface; idxgisurface1_vtable: *IDXGISurface1_VTable;
 }
 IDXGISurface1_VTable :: struct #type_info_none {
     using idxgisurface: IDXGISurface_VTable;
@@ -676,7 +676,7 @@ vtable :: (obj: *IDXGISurface1) -> *IDXGISurface1_VTable { return obj.idxgisurfa
 IDXGIAdapter_UUID :: "2411e7e1-12ac-4ccf-bd14-9798e8534dc0";
 IDXGIAdapter :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgiadapter_vtable: *IDXGIAdapter_VTable;
+    #place idxgiobject; idxgiadapter_vtable: *IDXGIAdapter_VTable;
 }
 IDXGIAdapter_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -691,7 +691,7 @@ vtable :: (obj: *IDXGIAdapter) -> *IDXGIAdapter_VTable { return obj.idxgiadapter
 IDXGIOutput_UUID :: "ae02eedb-c735-4690-8d52-5a8dc20213aa";
 IDXGIOutput :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgioutput_vtable: *IDXGIOutput_VTable;
+    #place idxgiobject; idxgioutput_vtable: *IDXGIOutput_VTable;
 }
 IDXGIOutput_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -715,7 +715,7 @@ vtable :: (obj: *IDXGIOutput) -> *IDXGIOutput_VTable { return obj.idxgioutput_vt
 IDXGISwapChain_UUID :: "310d36a0-d2e7-4c0a-aa04-6a9d23b8886a";
 IDXGISwapChain :: struct {
     #as using idxgidevicesubobject: IDXGIDeviceSubObject;
-    #place vtable; idxgiswapchain_vtable: *IDXGISwapChain_VTable;
+    #place idxgidevicesubobject; idxgiswapchain_vtable: *IDXGISwapChain_VTable;
 }
 IDXGISwapChain_VTable :: struct #type_info_none {
     using idxgidevicesubobject: IDXGIDeviceSubObject_VTable;
@@ -737,7 +737,7 @@ vtable :: (obj: *IDXGISwapChain) -> *IDXGISwapChain_VTable { return obj.idxgiswa
 IDXGIFactory_UUID :: "7b7166ec-21c7-44ae-b21a-c9ae321ae369";
 IDXGIFactory :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgifactory_vtable: *IDXGIFactory_VTable;
+    #place idxgiobject; idxgifactory_vtable: *IDXGIFactory_VTable;
 }
 IDXGIFactory_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -764,7 +764,7 @@ CreateDXGIFactory1 :: (riid: IID, ppFactory: **void) -> HRESULT #no_context {
 IDXGIDevice_UUID :: "54ec77fa-1377-44e6-8c32-88fd5f44c84c";
 IDXGIDevice :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgidevice_vtable: *IDXGIDevice_VTable;
+    #place idxgiobject; idxgidevice_vtable: *IDXGIDevice_VTable;
 }
 IDXGIDevice_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -811,7 +811,7 @@ DXGI_DISPLAY_COLOR_SPACE :: struct {
 IDXGIFactory1_UUID :: "770aae78-f26f-4dba-a829-253c83d1b387";
 IDXGIFactory1 :: struct {
     #as using idxgifactory: IDXGIFactory;
-    #place vtable; idxgifactory1_vtable: *IDXGIFactory1_VTable;
+    #place idxgifactory; idxgifactory1_vtable: *IDXGIFactory1_VTable;
 }
 IDXGIFactory1_VTable :: struct #type_info_none {
     using idxgifactory: IDXGIFactory_VTable;
@@ -825,7 +825,7 @@ vtable :: (obj: *IDXGIFactory1) -> *IDXGIFactory1_VTable { return obj.idxgifacto
 IDXGIAdapter1_UUID :: "29038f61-3839-4626-91fd-086879011a05";
 IDXGIAdapter1 :: struct {
     #as using idxgiadapter: IDXGIAdapter;
-    #place vtable; idxgiadapter1_vtable: *IDXGIAdapter1_VTable;
+    #place idxgiadapter; idxgiadapter1_vtable: *IDXGIAdapter1_VTable;
 }
 IDXGIAdapter1_VTable :: struct #type_info_none {
     using idxgiadapter: IDXGIAdapter_VTable;
@@ -838,7 +838,7 @@ vtable :: (obj: *IDXGIAdapter1) -> *IDXGIAdapter1_VTable { return obj.idxgiadapt
 IDXGIDevice1_UUID :: "77db970f-6276-48ba-ba28-070143b4392c";
 IDXGIDevice1 :: struct {
     #as using idxgidevice: IDXGIDevice;
-    #place vtable; idxgidevice1_vtable: *IDXGIDevice1_VTable;
+    #place idxgidevice; idxgidevice1_vtable: *IDXGIDevice1_VTable;
 }
 IDXGIDevice1_VTable :: struct #type_info_none {
     using idxgidevice: IDXGIDevice_VTable;
@@ -852,7 +852,7 @@ vtable :: (obj: *IDXGIDevice1) -> *IDXGIDevice1_VTable { return obj.idxgidevice1
 IDXGIDisplayControl_UUID :: "ea9dbf1a-c88e-4486-854a-98aa0138f30c";
 IDXGIDisplayControl :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgidisplaycontrol_vtable: *IDXGIDisplayControl_VTable;
+    #place iunknown; idxgidisplaycontrol_vtable: *IDXGIDisplayControl_VTable;
 }
 IDXGIDisplayControl_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -911,7 +911,7 @@ DXGI_OUTDUPL_FRAME_INFO :: struct {
 IDXGIOutputDuplication_UUID :: "191cfac3-a341-470d-b26e-a864f428319c";
 IDXGIOutputDuplication :: struct {
     #as using idxgiobject: IDXGIObject;
-    #place vtable; idxgioutputduplication_vtable: *IDXGIOutputDuplication_VTable;
+    #place idxgiobject; idxgioutputduplication_vtable: *IDXGIOutputDuplication_VTable;
 }
 IDXGIOutputDuplication_VTable :: struct #type_info_none {
     using idxgiobject: IDXGIObject_VTable;
@@ -945,7 +945,7 @@ DXGI_ALPHA_MODE :: enum s32 {
 IDXGISurface2_UUID :: "aba496dd-b617-4cb8-a866-bc44d7eb1fa2";
 IDXGISurface2 :: struct {
     #as using idxgisurface1: IDXGISurface1;
-    #place vtable; idxgisurface2_vtable: *IDXGISurface2_VTable;
+    #place idxgisurface1; idxgisurface2_vtable: *IDXGISurface2_VTable;
 }
 IDXGISurface2_VTable :: struct #type_info_none {
     using idxgisurface1: IDXGISurface1_VTable;
@@ -958,7 +958,7 @@ vtable :: (obj: *IDXGISurface2) -> *IDXGISurface2_VTable { return obj.idxgisurfa
 IDXGIResource1_UUID :: "30961379-4609-4a41-998e-54fe567ee0c1";
 IDXGIResource1 :: struct {
     #as using idxgiresource: IDXGIResource;
-    #place vtable; idxgiresource1_vtable: *IDXGIResource1_VTable;
+    #place idxgiresource; idxgiresource1_vtable: *IDXGIResource1_VTable;
 }
 IDXGIResource1_VTable :: struct #type_info_none {
     using idxgiresource: IDXGIResource_VTable;
@@ -982,7 +982,7 @@ DXGI_OFFER_RESOURCE_PRIORITY :: enum s32 {
 IDXGIDevice2_UUID :: "05008617-fbfd-4051-a790-144884b4f6a9";
 IDXGIDevice2 :: struct {
     #as using idxgidevice1: IDXGIDevice1;
-    #place vtable; idxgidevice2_vtable: *IDXGIDevice2_VTable;
+    #place idxgidevice1; idxgidevice2_vtable: *IDXGIDevice2_VTable;
 }
 IDXGIDevice2_VTable :: struct #type_info_none {
     using idxgidevice1: IDXGIDevice1_VTable;
@@ -1046,7 +1046,7 @@ DXGI_PRESENT_PARAMETERS :: struct {
 IDXGISwapChain1_UUID :: "790a45f7-0d42-4876-983a-0a55cfe6f4aa";
 IDXGISwapChain1 :: struct {
     #as using idxgiswapchain: IDXGISwapChain;
-    #place vtable; idxgiswapchain1_vtable: *IDXGISwapChain1_VTable;
+    #place idxgiswapchain; idxgiswapchain1_vtable: *IDXGISwapChain1_VTable;
 }
 IDXGISwapChain1_VTable :: struct #type_info_none {
     using idxgiswapchain: IDXGISwapChain_VTable;
@@ -1069,7 +1069,7 @@ vtable :: (obj: *IDXGISwapChain1) -> *IDXGISwapChain1_VTable { return obj.idxgis
 IDXGIFactory2_UUID :: "50c83a1c-e072-4c48-87b0-3630fa36a6d0";
 IDXGIFactory2 :: struct {
     #as using idxgifactory1: IDXGIFactory1;
-    #place vtable; idxgifactory2_vtable: *IDXGIFactory2_VTable;
+    #place idxgifactory1; idxgifactory2_vtable: *IDXGIFactory2_VTable;
 }
 IDXGIFactory2_VTable :: struct #type_info_none {
     using idxgifactory1: IDXGIFactory1_VTable;
@@ -1135,7 +1135,7 @@ DXGI_ADAPTER_DESC2 :: struct {
 IDXGIAdapter2_UUID :: "0AA1AE0A-FA0E-4B84-8644-E05FF8E5ACB5";
 IDXGIAdapter2 :: struct {
     #as using idxgiadapter1: IDXGIAdapter1;
-    #place vtable; idxgiadapter2_vtable: *IDXGIAdapter2_VTable;
+    #place idxgiadapter1; idxgiadapter2_vtable: *IDXGIAdapter2_VTable;
 }
 IDXGIAdapter2_VTable :: struct #type_info_none {
     using idxgiadapter1: IDXGIAdapter1_VTable;
@@ -1148,7 +1148,7 @@ vtable :: (obj: *IDXGIAdapter2) -> *IDXGIAdapter2_VTable { return obj.idxgiadapt
 IDXGIOutput1_UUID :: "00cddea8-939b-4b83-a340-a685226666cc";
 IDXGIOutput1 :: struct {
     #as using idxgioutput: IDXGIOutput;
-    #place vtable; idxgioutput1_vtable: *IDXGIOutput1_VTable;
+    #place idxgioutput; idxgioutput1_vtable: *IDXGIOutput1_VTable;
 }
 IDXGIOutput1_VTable :: struct #type_info_none {
     using idxgioutput: IDXGIOutput_VTable;
@@ -1173,7 +1173,7 @@ DXGIGetDebugInterface1 :: (Flags: u32, riid: IID, pDebug: **void) -> HRESULT #no
 IDXGIDevice3_UUID :: "6007896c-3244-4afd-bf18-a6d3beda5023";
 IDXGIDevice3 :: struct {
     #as using idxgidevice2: IDXGIDevice2;
-    #place vtable; idxgidevice3_vtable: *IDXGIDevice3_VTable;
+    #place idxgidevice2; idxgidevice3_vtable: *IDXGIDevice3_VTable;
 }
 IDXGIDevice3_VTable :: struct #type_info_none {
     using idxgidevice2: IDXGIDevice2_VTable;
@@ -1195,7 +1195,7 @@ DXGI_MATRIX_3X2_F :: struct {
 IDXGISwapChain2_UUID :: "a8be2ac4-199f-4946-b331-79599fb98de7";
 IDXGISwapChain2 :: struct {
     #as using idxgiswapchain1: IDXGISwapChain1;
-    #place vtable; idxgiswapchain2_vtable: *IDXGISwapChain2_VTable;
+    #place idxgiswapchain1; idxgiswapchain2_vtable: *IDXGISwapChain2_VTable;
 }
 IDXGISwapChain2_VTable :: struct #type_info_none {
     using idxgiswapchain1: IDXGISwapChain1_VTable;
@@ -1214,7 +1214,7 @@ vtable :: (obj: *IDXGISwapChain2) -> *IDXGISwapChain2_VTable { return obj.idxgis
 IDXGIOutput2_UUID :: "595e39d1-2724-4663-99b1-da969de28364";
 IDXGIOutput2 :: struct {
     #as using idxgioutput1: IDXGIOutput1;
-    #place vtable; idxgioutput2_vtable: *IDXGIOutput2_VTable;
+    #place idxgioutput1; idxgioutput2_vtable: *IDXGIOutput2_VTable;
 }
 IDXGIOutput2_VTable :: struct #type_info_none {
     using idxgioutput1: IDXGIOutput1_VTable;
@@ -1227,7 +1227,7 @@ vtable :: (obj: *IDXGIOutput2) -> *IDXGIOutput2_VTable { return obj.idxgioutput2
 IDXGIFactory3_UUID :: "25483823-cd46-4c7d-86ca-47aa95b837bd";
 IDXGIFactory3 :: struct {
     #as using idxgifactory2: IDXGIFactory2;
-    #place vtable; idxgifactory3_vtable: *IDXGIFactory3_VTable;
+    #place idxgifactory2; idxgifactory3_vtable: *IDXGIFactory3_VTable;
 }
 IDXGIFactory3_VTable :: struct #type_info_none {
     using idxgifactory2: IDXGIFactory2_VTable;
@@ -1254,7 +1254,7 @@ DXGI_MULTIPLANE_OVERLAY_YCbCr_FLAGS :: enum_flags u32 {
 IDXGIDecodeSwapChain_UUID :: "2633066b-4514-4c7a-8fd8-12ea98059d18";
 IDXGIDecodeSwapChain :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgidecodeswapchain_vtable: *IDXGIDecodeSwapChain_VTable;
+    #place iunknown; idxgidecodeswapchain_vtable: *IDXGIDecodeSwapChain_VTable;
 }
 IDXGIDecodeSwapChain_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -1275,7 +1275,7 @@ vtable :: (obj: *IDXGIDecodeSwapChain) -> *IDXGIDecodeSwapChain_VTable { return 
 IDXGIFactoryMedia_UUID :: "41e7d1f2-a591-4f7b-a2e5-fa9c843e1c12";
 IDXGIFactoryMedia :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgifactorymedia_vtable: *IDXGIFactoryMedia_VTable;
+    #place iunknown; idxgifactorymedia_vtable: *IDXGIFactoryMedia_VTable;
 }
 IDXGIFactoryMedia_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -1311,7 +1311,7 @@ DXGI_FRAME_STATISTICS_MEDIA :: struct {
 IDXGISwapChainMedia_UUID :: "dd95b90b-f05f-4f6a-bd65-25bfb264bd84";
 IDXGISwapChainMedia :: struct {
     #as using iunknown: IUnknown;
-    #place vtable; idxgiswapchainmedia_vtable: *IDXGISwapChainMedia_VTable;
+    #place iunknown; idxgiswapchainmedia_vtable: *IDXGISwapChainMedia_VTable;
 }
 IDXGISwapChainMedia_VTable :: struct #type_info_none {
     using iunknown: IUnknown_VTable;
@@ -1334,7 +1334,7 @@ DXGI_OVERLAY_SUPPORT_FLAG :: enum_flags u32 {
 IDXGIOutput3_UUID :: "8a6bb301-7e7e-41F4-a8e0-5b32f7f99b18";
 IDXGIOutput3 :: struct {
     #as using idxgioutput2: IDXGIOutput2;
-    #place vtable; idxgioutput3_vtable: *IDXGIOutput3_VTable;
+    #place idxgioutput2; idxgioutput3_vtable: *IDXGIOutput3_VTable;
 }
 IDXGIOutput3_VTable :: struct #type_info_none {
     using idxgioutput2: IDXGIOutput2_VTable;
@@ -1355,7 +1355,7 @@ DXGI_SWAP_CHAIN_COLOR_SPACE_SUPPORT_FLAG :: enum_flags u32 {
 IDXGISwapChain3_UUID :: "94d99bdb-f1f8-4ab0-b236-7da0170edab1";
 IDXGISwapChain3 :: struct {
     #as using idxgiswapchain2: IDXGISwapChain2;
-    #place vtable; idxgiswapchain3_vtable: *IDXGISwapChain3_VTable;
+    #place idxgiswapchain2; idxgiswapchain3_vtable: *IDXGISwapChain3_VTable;
 }
 IDXGISwapChain3_VTable :: struct #type_info_none {
     using idxgiswapchain2: IDXGISwapChain2_VTable;
@@ -1376,7 +1376,7 @@ DXGI_OVERLAY_COLOR_SPACE_SUPPORT_FLAG :: enum_flags u32 {
 IDXGIOutput4_UUID :: "dc7dca35-2196-414d-9F53-617884032a60";
 IDXGIOutput4 :: struct {
     #as using idxgioutput3: IDXGIOutput3;
-    #place vtable; idxgioutput4_vtable: *IDXGIOutput4_VTable;
+    #place idxgioutput3; idxgioutput4_vtable: *IDXGIOutput4_VTable;
 }
 IDXGIOutput4_VTable :: struct #type_info_none {
     using idxgioutput3: IDXGIOutput3_VTable;
@@ -1389,7 +1389,7 @@ vtable :: (obj: *IDXGIOutput4) -> *IDXGIOutput4_VTable { return obj.idxgioutput4
 IDXGIFactory4_UUID :: "1bc6ea02-ef36-464f-bf0c-21ca39e5168a";
 IDXGIFactory4 :: struct {
     #as using idxgifactory3: IDXGIFactory3;
-    #place vtable; idxgifactory4_vtable: *IDXGIFactory4_VTable;
+    #place idxgifactory3; idxgifactory4_vtable: *IDXGIFactory4_VTable;
 }
 IDXGIFactory4_VTable :: struct #type_info_none {
     using idxgifactory3: IDXGIFactory3_VTable;
@@ -1418,7 +1418,7 @@ DXGI_QUERY_VIDEO_MEMORY_INFO :: struct {
 IDXGIAdapter3_UUID :: "645967A4-1392-4310-A798-8053CE3E93FD";
 IDXGIAdapter3 :: struct {
     #as using idxgiadapter2: IDXGIAdapter2;
-    #place vtable; idxgiadapter3_vtable: *IDXGIAdapter3_VTable;
+    #place idxgiadapter2; idxgiadapter3_vtable: *IDXGIAdapter3_VTable;
 }
 IDXGIAdapter3_VTable :: struct #type_info_none {
     using idxgiadapter2: IDXGIAdapter2_VTable;
@@ -1440,7 +1440,7 @@ DXGI_OUTDUPL_FLAG :: enum_flags u32 {
 IDXGIOutput5_UUID :: "80A07424-AB52-42EB-833C-0C42FD282D98";
 IDXGIOutput5 :: struct {
     #as using idxgioutput4: IDXGIOutput4;
-    #place vtable; idxgioutput5_vtable: *IDXGIOutput5_VTable;
+    #place idxgioutput4; idxgioutput5_vtable: *IDXGIOutput5_VTable;
 }
 IDXGIOutput5_VTable :: struct #type_info_none {
     using idxgioutput4: IDXGIOutput4_VTable;
@@ -1478,7 +1478,7 @@ DXGI_HDR_METADATA_HDR10PLUS :: struct {
 IDXGISwapChain4_UUID :: "3D585D5A-BD4A-489E-B1F4-3DBCB6452FFB";
 IDXGISwapChain4 :: struct {
     #as using idxgiswapchain3: IDXGISwapChain3;
-    #place vtable; idxgiswapchain4_vtable: *IDXGISwapChain4_VTable;
+    #place idxgiswapchain3; idxgiswapchain4_vtable: *IDXGISwapChain4_VTable;
 }
 IDXGISwapChain4_VTable :: struct #type_info_none {
     using idxgiswapchain3: IDXGISwapChain3_VTable;
@@ -1505,7 +1505,7 @@ DXGI_RECLAIM_RESOURCE_RESULTS :: enum s32 {
 IDXGIDevice4_UUID :: "95B4F95F-D8DA-4CA4-9EE6-3B76D5968A10";
 IDXGIDevice4 :: struct {
     #as using idxgidevice3: IDXGIDevice3;
-    #place vtable; idxgidevice4_vtable: *IDXGIDevice4_VTable;
+    #place idxgidevice3; idxgidevice4_vtable: *IDXGIDevice4_VTable;
 }
 IDXGIDevice4_VTable :: struct #type_info_none {
     using idxgidevice3: IDXGIDevice3_VTable;
@@ -1524,7 +1524,7 @@ DXGI_FEATURE :: enum s32 {
 IDXGIFactory5_UUID :: "7632e1f5-ee65-4dca-87fd-84cd75f8838d";
 IDXGIFactory5 :: struct {
     #as using idxgifactory4: IDXGIFactory4;
-    #place vtable; idxgifactory5_vtable: *IDXGIFactory5_VTable;
+    #place idxgifactory4; idxgifactory5_vtable: *IDXGIFactory5_VTable;
 }
 IDXGIFactory5_VTable :: struct #type_info_none {
     using idxgifactory4: IDXGIFactory4_VTable;
@@ -1574,7 +1574,7 @@ DXGI_ADAPTER_DESC3 :: struct {
 IDXGIAdapter4_UUID :: "3c8d99d1-4fbf-4181-a82c-af66bf7bd24e";
 IDXGIAdapter4 :: struct {
     #as using idxgiadapter3: IDXGIAdapter3;
-    #place vtable; idxgiadapter4_vtable: *IDXGIAdapter4_VTable;
+    #place idxgiadapter3; idxgiadapter4_vtable: *IDXGIAdapter4_VTable;
 }
 IDXGIAdapter4_VTable :: struct #type_info_none {
     using idxgiadapter3: IDXGIAdapter3_VTable;
@@ -1614,7 +1614,7 @@ DXGI_HARDWARE_COMPOSITION_SUPPORT_FLAGS :: enum_flags u32 {
 IDXGIOutput6_UUID :: "068346e8-aaec-4b84-add7-137f513f77a1";
 IDXGIOutput6 :: struct {
     #as using idxgioutput5: IDXGIOutput5;
-    #place vtable; idxgioutput6_vtable: *IDXGIOutput6_VTable;
+    #place idxgioutput5; idxgioutput6_vtable: *IDXGIOutput6_VTable;
 }
 IDXGIOutput6_VTable :: struct #type_info_none {
     using idxgioutput5: IDXGIOutput5_VTable;
@@ -1638,7 +1638,7 @@ DXGI_GPU_PREFERENCE :: enum s32 {
 IDXGIFactory6_UUID :: "c1b6694f-ff09-44a9-b03c-77900a0a1d17";
 IDXGIFactory6 :: struct {
     #as using idxgifactory5: IDXGIFactory5;
-    #place vtable; idxgifactory6_vtable: *IDXGIFactory6_VTable;
+    #place idxgifactory5; idxgifactory6_vtable: *IDXGIFactory6_VTable;
 }
 IDXGIFactory6_VTable :: struct #type_info_none {
     using idxgifactory5: IDXGIFactory5_VTable;
@@ -1651,7 +1651,7 @@ vtable :: (obj: *IDXGIFactory6) -> *IDXGIFactory6_VTable { return obj.idxgifacto
 IDXGIFactory7_UUID :: "a4966eed-76db-44da-84c1-ee9a7afb20a8";
 IDXGIFactory7 :: struct {
     #as using idxgifactory6: IDXGIFactory6;
-    #place vtable; idxgifactory7_vtable: *IDXGIFactory7_VTable;
+    #place idxgifactory6; idxgifactory7_vtable: *IDXGIFactory7_VTable;
 }
 IDXGIFactory7_VTable :: struct #type_info_none {
     using idxgifactory6: IDXGIFactory6_VTable;
