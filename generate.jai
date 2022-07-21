@@ -228,6 +228,10 @@ TYPES_TO_OMIT :: string.[
     "DXGI_CPU_ACCESS_READ_WRITE",
     "DXGI_CPU_ACCESS_SCRATCH",
     "DXGI_CPU_ACCESS_FIELD",
+
+    // Below two had been defined twice in header files...
+    "D3D_SHADER_FEATURE_ADVANCED_TEXTURE_OPS",
+    "D3D_SHADER_FEATURE_WRITEABLE_MSAA_TEXTURES"
 ];
 
 
