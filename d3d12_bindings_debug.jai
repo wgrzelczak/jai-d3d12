@@ -242,7 +242,21 @@ ID3D12DebugCommandQueue_VTable :: struct #type_info_none {
 vtable :: (obj: *ID3D12DebugCommandQueue) -> *ID3D12DebugCommandQueue_VTable { return obj.id3d12debugcommandqueue_vtable; }
 
 
-/* interface __MIDL_itf_d3d12sdklayers_0000_0011 */
+
+ID3D12DebugCommandQueue1_UUID :: "16be35a2-bfd6-49f2-bcae-eaae4aff862d";
+ID3D12DebugCommandQueue1 :: struct {
+    #as using id3d12debugcommandqueue: ID3D12DebugCommandQueue;
+    #place vtable; id3d12debugcommandqueue1_vtable: *ID3D12DebugCommandQueue1_VTable;
+}
+ID3D12DebugCommandQueue1_VTable :: struct #type_info_none {
+    using id3d12debugcommandqueue: ID3D12DebugCommandQueue_VTable;
+    AssertResourceAccess: (this: *ID3D12DebugCommandQueue1, pResource: *ID3D12Resource, Subresource: u32, Access: D3D12_BARRIER_ACCESS) -> void #cpp_method;
+    AssertTextureLayout: (this: *ID3D12DebugCommandQueue1, pResource: *ID3D12Resource, Subresource: u32, Layout: D3D12_BARRIER_LAYOUT) -> void #cpp_method;
+}
+vtable :: (obj: *ID3D12DebugCommandQueue1) -> *ID3D12DebugCommandQueue1_VTable { return obj.id3d12debugcommandqueue1_vtable; }
+
+
+/* interface __MIDL_itf_d3d12sdklayers_0000_0012 */
 /* [local] */
 D3D12_DEBUG_COMMAND_LIST_PARAMETER_TYPE :: enum s32 {
     D3D12_DEBUG_COMMAND_LIST_PARAMETER_GPU_BASED_VALIDATION_SETTINGS :: 0;
@@ -297,6 +311,20 @@ vtable :: (obj: *ID3D12DebugCommandList2) -> *ID3D12DebugCommandList2_VTable { r
 
 
 
+ID3D12DebugCommandList3_UUID :: "197d5e15-4d37-4d34-af78-724cd70fdb1f";
+ID3D12DebugCommandList3 :: struct {
+    #as using id3d12debugcommandlist2: ID3D12DebugCommandList2;
+    #place vtable; id3d12debugcommandlist3_vtable: *ID3D12DebugCommandList3_VTable;
+}
+ID3D12DebugCommandList3_VTable :: struct #type_info_none {
+    using id3d12debugcommandlist2: ID3D12DebugCommandList2_VTable;
+    AssertResourceAccess: (this: *ID3D12DebugCommandList3, pResource: *ID3D12Resource, Subresource: u32, Access: D3D12_BARRIER_ACCESS) -> void #cpp_method;
+    AssertTextureLayout: (this: *ID3D12DebugCommandList3, pResource: *ID3D12Resource, Subresource: u32, Layout: D3D12_BARRIER_LAYOUT) -> void #cpp_method;
+}
+vtable :: (obj: *ID3D12DebugCommandList3) -> *ID3D12DebugCommandList3_VTable { return obj.id3d12debugcommandlist3_vtable; }
+
+
+
 ID3D12SharingContract_UUID :: "0adf7d52-929c-4e61-addb-ffed30de66ef";
 ID3D12SharingContract :: struct {
     #as using iunknown: IUnknown;
@@ -312,7 +340,7 @@ ID3D12SharingContract_VTable :: struct #type_info_none {
 vtable :: (obj: *ID3D12SharingContract) -> *ID3D12SharingContract_VTable { return obj.id3d12sharingcontract_vtable; }
 
 
-/* interface __MIDL_itf_d3d12sdklayers_0000_0015 */
+/* interface __MIDL_itf_d3d12sdklayers_0000_0017 */
 /* [local] */
 D3D12_MESSAGE_CATEGORY :: enum s32 {
     APPLICATION_DEFINED   :: 0;
@@ -1262,7 +1290,25 @@ D3D12_MESSAGE_ID :: enum s32 {
     UNSUPPORTED_BARRIER_LAYOUT                                                                    :: 1341;
     CREATERESOURCEANDHEAP_INVALID_PARAMETERS                                                      :: 1342;
     ENHANCED_BARRIERS_NOT_SUPPORTED                                                               :: 1343;
-    D3D12_MESSAGES_END                                                                            :: 1344;
+    CAST_TARGET_TEXEL_SIZE_MISMATCH                                                               :: 1344;
+    CAST_TO_PLANAR_NOT_SUPORTED                                                                   :: 1345;
+    LEGACY_BARRIER_VALIDATION_FORCED_ON                                                           :: 1346;
+    EMPTY_ROOT_DESCRIPTOR_TABLE                                                                   :: 1347;
+    COMMAND_LIST_DRAW_ELEMENT_OFFSET_UNALIGNED                                                    :: 1348;
+    ALPHA_BLEND_FACTOR_NOT_SUPPORTED                                                              :: 1349;
+    BARRIER_INTEROP_INVALID_LAYOUT                                                                :: 1350;
+    BARRIER_INTEROP_INVALID_STATE                                                                 :: 1351;
+    GRAPHICS_PIPELINE_STATE_DESC_ZERO_SAMPLE_MASK                                                 :: 1352;
+    INDEPENDENT_STENCIL_REF_NOT_SUPPORTED                                                         :: 1353;
+    CREATEDEPTHSTENCILSTATE_INDEPENDENT_MASKS_UNSUPPORTED                                         :: 1354;
+    TEXTURE_BARRIER_SUBRESOURCES_OUT_OF_BOUNDS                                                    :: 1355;
+    NON_OPTIMAL_BARRIER_ONLY_EXECUTE_COMMAND_LISTS                                                :: 1356;
+    EXECUTE_INDIRECT_ZERO_COMMAND_COUNT                                                           :: 1357;
+    GPU_BASED_VALIDATION_INCOMPATIBLE_TEXTURE_LAYOUT                                              :: 1358;
+    CREATEGRAPHICSPIPELINESTATE_DYNAMIC_INDEX_BUFFER_STRIP_CUT_NOT_SUPPORTED                      :: 1359;
+    PRIMITIVE_TOPOLOGY_TRIANGLE_FANS_NOT_SUPPORTED                                                :: 1360;
+    CREATE_SAMPLER_COMPARISON_FUNC_IGNORED                                                        :: 1361;
+    D3D12_MESSAGES_END                                                                            :: 1362;
 
     D3D12_MESSAGE_ID_UNKNOWN                                                                                       :: UNKNOWN;
     D3D12_MESSAGE_ID_STRING_FROM_APPLICATION                                                                       :: STRING_FROM_APPLICATION;
@@ -2171,6 +2217,24 @@ D3D12_MESSAGE_ID :: enum s32 {
     D3D12_MESSAGE_ID_UNSUPPORTED_BARRIER_LAYOUT                                                                    :: UNSUPPORTED_BARRIER_LAYOUT;
     D3D12_MESSAGE_ID_CREATERESOURCEANDHEAP_INVALID_PARAMETERS                                                      :: CREATERESOURCEANDHEAP_INVALID_PARAMETERS;
     D3D12_MESSAGE_ID_ENHANCED_BARRIERS_NOT_SUPPORTED                                                               :: ENHANCED_BARRIERS_NOT_SUPPORTED;
+    D3D12_MESSAGE_ID_CAST_TARGET_TEXEL_SIZE_MISMATCH                                                               :: CAST_TARGET_TEXEL_SIZE_MISMATCH;
+    D3D12_MESSAGE_ID_CAST_TO_PLANAR_NOT_SUPORTED                                                                   :: CAST_TO_PLANAR_NOT_SUPORTED;
+    D3D12_MESSAGE_ID_LEGACY_BARRIER_VALIDATION_FORCED_ON                                                           :: LEGACY_BARRIER_VALIDATION_FORCED_ON;
+    D3D12_MESSAGE_ID_EMPTY_ROOT_DESCRIPTOR_TABLE                                                                   :: EMPTY_ROOT_DESCRIPTOR_TABLE;
+    D3D12_MESSAGE_ID_COMMAND_LIST_DRAW_ELEMENT_OFFSET_UNALIGNED                                                    :: COMMAND_LIST_DRAW_ELEMENT_OFFSET_UNALIGNED;
+    D3D12_MESSAGE_ID_ALPHA_BLEND_FACTOR_NOT_SUPPORTED                                                              :: ALPHA_BLEND_FACTOR_NOT_SUPPORTED;
+    D3D12_MESSAGE_ID_BARRIER_INTEROP_INVALID_LAYOUT                                                                :: BARRIER_INTEROP_INVALID_LAYOUT;
+    D3D12_MESSAGE_ID_BARRIER_INTEROP_INVALID_STATE                                                                 :: BARRIER_INTEROP_INVALID_STATE;
+    D3D12_MESSAGE_ID_GRAPHICS_PIPELINE_STATE_DESC_ZERO_SAMPLE_MASK                                                 :: GRAPHICS_PIPELINE_STATE_DESC_ZERO_SAMPLE_MASK;
+    D3D12_MESSAGE_ID_INDEPENDENT_STENCIL_REF_NOT_SUPPORTED                                                         :: INDEPENDENT_STENCIL_REF_NOT_SUPPORTED;
+    D3D12_MESSAGE_ID_CREATEDEPTHSTENCILSTATE_INDEPENDENT_MASKS_UNSUPPORTED                                         :: CREATEDEPTHSTENCILSTATE_INDEPENDENT_MASKS_UNSUPPORTED;
+    D3D12_MESSAGE_ID_TEXTURE_BARRIER_SUBRESOURCES_OUT_OF_BOUNDS                                                    :: TEXTURE_BARRIER_SUBRESOURCES_OUT_OF_BOUNDS;
+    D3D12_MESSAGE_ID_NON_OPTIMAL_BARRIER_ONLY_EXECUTE_COMMAND_LISTS                                                :: NON_OPTIMAL_BARRIER_ONLY_EXECUTE_COMMAND_LISTS;
+    D3D12_MESSAGE_ID_EXECUTE_INDIRECT_ZERO_COMMAND_COUNT                                                           :: EXECUTE_INDIRECT_ZERO_COMMAND_COUNT;
+    D3D12_MESSAGE_ID_GPU_BASED_VALIDATION_INCOMPATIBLE_TEXTURE_LAYOUT                                              :: GPU_BASED_VALIDATION_INCOMPATIBLE_TEXTURE_LAYOUT;
+    D3D12_MESSAGE_ID_CREATEGRAPHICSPIPELINESTATE_DYNAMIC_INDEX_BUFFER_STRIP_CUT_NOT_SUPPORTED                      :: CREATEGRAPHICSPIPELINESTATE_DYNAMIC_INDEX_BUFFER_STRIP_CUT_NOT_SUPPORTED;
+    D3D12_MESSAGE_ID_PRIMITIVE_TOPOLOGY_TRIANGLE_FANS_NOT_SUPPORTED                                                :: PRIMITIVE_TOPOLOGY_TRIANGLE_FANS_NOT_SUPPORTED;
+    D3D12_MESSAGE_ID_CREATE_SAMPLER_COMPARISON_FUNC_IGNORED                                                        :: CREATE_SAMPLER_COMPARISON_FUNC_IGNORED;
     D3D12_MESSAGE_ID_D3D12_MESSAGES_END                                                                            :: D3D12_MESSAGES_END;
 }
 
@@ -2243,7 +2307,7 @@ ID3D12InfoQueue_VTable :: struct #type_info_none {
 vtable :: (obj: *ID3D12InfoQueue) -> *ID3D12InfoQueue_VTable { return obj.id3d12infoqueue_vtable; }
 
 
-/* interface __MIDL_itf_d3d12sdklayers_0000_0016 */
+/* interface __MIDL_itf_d3d12sdklayers_0000_0018 */
 /* [local] */
 D3D12_MESSAGE_CALLBACK_FLAGS :: enum_flags u32 {
     FLAG_NONE      :: 0x0;
