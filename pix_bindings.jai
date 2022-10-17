@@ -21,6 +21,8 @@ WINPIX_EVENT_UNICODE_VERSION :: 0;
 WINPIX_EVENT_ANSI_VERSION :: 1;
 WINPIX_EVENT_PIX3BLOB_VERSION :: 2;
 
+D3D12_EVENT_METADATA :: WINPIX_EVENT_PIX3BLOB_VERSION;
+
 PIXCaptureParameters :: union {
     PIXCaptureStorage :: enum s32 {
         Memory :: 0;
@@ -61,8 +63,8 @@ PIXEventsThreadInfo :: struct {}
 
 PIXGetTimestampCounter :: () -> u64 #foreign pix_wrapper "?PIXGetTimestampCounter@@YA_KXZ";
 
-PIXGpuCaptureNextFrames :: (unk0: PCWSTR, unk1: u32) -> HRESULT #foreign pix_wrapper "?PIXGpuCaptureNextFrames@@YAJPEB_WI@Z";
-PIXSetTargetWindow :: (unk0: HWND) -> HRESULT #foreign pix_wrapper "?PIXSetTargetWindow@@YAJPEAUHWND__@@@Z";
+PIXGpuCaptureNextFrames :: (unknown0: PCWSTR, unknown1: u32) -> HRESULT #foreign pix_wrapper "?PIXGpuCaptureNextFrames@@YAJPEB_WI@Z";
+PIXSetTargetWindow :: (unknown0: HWND) -> HRESULT #foreign pix_wrapper "?PIXSetTargetWindow@@YAJPEAUHWND__@@@Z";
 PIXLoadLatestWinPixGpuCapturerLibrary :: () -> HMODULE #foreign pix_wrapper "?PIXLoadLatestWinPixGpuCapturerLibrary@@YAPEAUHINSTANCE__@@XZ";
 
 PIXEndEvent :: () -> void #foreign pix_wrapper "?PIXEndEvent@@YAXXZ";

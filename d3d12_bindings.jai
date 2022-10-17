@@ -856,6 +856,7 @@ D3D12_WHQL_DRAW_VERTEX_COUNT_2_TO_EXP :: 25;
 
 D3D12_SHADER_COMPONENT_MAPPING_MASK :: 0x7;
 D3D12_SHADER_COMPONENT_MAPPING_SHIFT :: 3;
+D3D12_SHADER_COMPONENT_MAPPING_ALWAYS_SET_BIT_AVOIDING_ZEROMEM_MISTAKES :: 1<<(D3D12_SHADER_COMPONENT_MAPPING_SHIFT*4);
 
 D3D12_FILTER_REDUCTION_TYPE_MASK :: 0x3;
 
@@ -1266,7 +1267,7 @@ vtable :: (obj: *ID3D10Blob) -> *ID3D10Blob_VTable { return obj.id3d10blob_vtabl
 
 ID3DBlob :: ID3D10Blob;
 
-PFN_DESTRUCTION_CALLBACK :: #type (a0: *void) -> void #c_call;
+PFN_DESTRUCTION_CALLBACK :: #type (pData: *void) -> void #c_call;
 
 
 ID3DDestructionNotifier_UUID :: "a06eb39a-50da-425b-8c31-4eecd6c270f3";
@@ -4524,22 +4525,22 @@ vtable :: (obj: *ID3D12VersionedRootSignatureDeserializer) -> *ID3D12VersionedRo
 
 /* interface __MIDL_itf_d3d12_0000_0003 */
 /* [local] */
-PFN_D3D12_SERIALIZE_ROOT_SIGNATURE :: #type (a0: *D3D12_ROOT_SIGNATURE_DESC, a1: D3D_ROOT_SIGNATURE_VERSION, a2: **ID3DBlob, a3: **ID3DBlob) -> HRESULT #c_call;
+PFN_D3D12_SERIALIZE_ROOT_SIGNATURE :: #type (pRootSignature: *D3D12_ROOT_SIGNATURE_DESC, Version: D3D_ROOT_SIGNATURE_VERSION, ppBlob: **ID3DBlob, ppErrorBlob: **ID3DBlob) -> HRESULT #c_call;
 
 D3D12SerializeRootSignature :: (pRootSignature: *D3D12_ROOT_SIGNATURE_DESC, Version: D3D_ROOT_SIGNATURE_VERSION, ppBlob: **ID3DBlob, ppErrorBlob: **ID3DBlob) -> HRESULT #foreign d3d12;
 
-PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER :: #type (a0: *void, a1: SIZE_T, a2: *IID, a3: **void) -> HRESULT #c_call;
+PFN_D3D12_CREATE_ROOT_SIGNATURE_DESERIALIZER :: #type (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: *IID, ppRootSignatureDeserializer: **void) -> HRESULT #c_call;
 
 D3D12CreateRootSignatureDeserializer :: (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: *IID, ppRootSignatureDeserializer: **void) -> HRESULT #foreign d3d12;
 D3D12CreateRootSignatureDeserializer :: (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: IID, ppRootSignatureDeserializer: **void) -> HRESULT #no_context {
     return D3D12CreateRootSignatureDeserializer(pSrcData, SrcDataSizeInBytes, *pRootSignatureDeserializerInterface, ppRootSignatureDeserializer);
 }
 
-PFN_D3D12_SERIALIZE_VERSIONED_ROOT_SIGNATURE :: #type (a0: *D3D12_VERSIONED_ROOT_SIGNATURE_DESC, a1: **ID3DBlob, a2: **ID3DBlob) -> HRESULT #c_call;
+PFN_D3D12_SERIALIZE_VERSIONED_ROOT_SIGNATURE :: #type (pRootSignature: *D3D12_VERSIONED_ROOT_SIGNATURE_DESC, ppBlob: **ID3DBlob, ppErrorBlob: **ID3DBlob) -> HRESULT #c_call;
 
 D3D12SerializeVersionedRootSignature :: (pRootSignature: *D3D12_VERSIONED_ROOT_SIGNATURE_DESC, ppBlob: **ID3DBlob, ppErrorBlob: **ID3DBlob) -> HRESULT #foreign d3d12;
 
-PFN_D3D12_CREATE_VERSIONED_ROOT_SIGNATURE_DESERIALIZER :: #type (a0: *void, a1: SIZE_T, a2: *IID, a3: **void) -> HRESULT #c_call;
+PFN_D3D12_CREATE_VERSIONED_ROOT_SIGNATURE_DESERIALIZER :: #type (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: *IID, ppRootSignatureDeserializer: **void) -> HRESULT #c_call;
 
 D3D12CreateVersionedRootSignatureDeserializer :: (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: *IID, ppRootSignatureDeserializer: **void) -> HRESULT #foreign d3d12;
 D3D12CreateVersionedRootSignatureDeserializer :: (pSrcData: *void, SrcDataSizeInBytes: SIZE_T, pRootSignatureDeserializerInterface: IID, ppRootSignatureDeserializer: **void) -> HRESULT #no_context {
@@ -6982,14 +6983,14 @@ D3D12_MEMCPY_DEST :: struct {
 //          D3D12CreateDevice
 //
 ///////////////////////////////////////////////////////////////////////////
-PFN_D3D12_CREATE_DEVICE :: #type (a0: *IUnknown, a1: D3D_FEATURE_LEVEL, a2: *IID, a3: **void) -> HRESULT #c_call;
+PFN_D3D12_CREATE_DEVICE :: #type (unknown0: *IUnknown, unknown1: D3D_FEATURE_LEVEL, unknown2: *IID, unknown3: **void) -> HRESULT #c_call;
 
 D3D12CreateDevice :: (pAdapter: *IUnknown, MinimumFeatureLevel: D3D_FEATURE_LEVEL, riid: *IID, ppDevice: **void) -> HRESULT #foreign d3d12;
 D3D12CreateDevice :: (pAdapter: *IUnknown, MinimumFeatureLevel: D3D_FEATURE_LEVEL, riid: IID, ppDevice: **void) -> HRESULT #no_context {
     return D3D12CreateDevice(pAdapter, MinimumFeatureLevel, *riid, ppDevice);
 }
 
-PFN_D3D12_GET_DEBUG_INTERFACE :: #type (a0: *IID, a1: **void) -> HRESULT #c_call;
+PFN_D3D12_GET_DEBUG_INTERFACE :: #type (unknown0: *IID, unknown1: **void) -> HRESULT #c_call;
 
 D3D12GetDebugInterface :: (riid: *IID, ppvDebug: **void) -> HRESULT #foreign d3d12;
 D3D12GetDebugInterface :: (riid: IID, ppvDebug: **void) -> HRESULT #no_context {
@@ -7032,7 +7033,7 @@ CLSID_D3D12DeviceRemovedExtendedData: GUID;
 CLSID_D3D12SDKConfiguration: GUID;
 CLSID_D3D12DeviceFactory: GUID;
 
-PFN_D3D12_GET_INTERFACE :: #type (a0: *IID, a1: *IID, a2: **void) -> HRESULT #c_call;
+PFN_D3D12_GET_INTERFACE :: #type (unknown0: *IID, unknown1: *IID, unknown2: **void) -> HRESULT #c_call;
 
 D3D12GetInterface :: (rclsid: *IID, riid: *IID, ppvDebug: **void) -> HRESULT #foreign d3d12;
 D3D12GetInterface :: (rclsid: IID, riid: IID, ppvDebug: **void) -> HRESULT #no_context {
@@ -9065,8 +9066,8 @@ D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT_HEVC :: struct {
     MaxLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
     MinLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
     MaxLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
-    max_transform_hierarchy_depth_inter: UCHAR;
-    max_transform_hierarchy_depth_intra: UCHAR;
+    max_transform_hierarchy_depth_inter: u8;
+    max_transform_hierarchy_depth_intra: u8;
 }
 
 D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_SUPPORT :: struct {
@@ -9205,8 +9206,8 @@ D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC :: struct {
     MaxLumaCodingUnitSize:               D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_CUSIZE;
     MinLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
     MaxLumaTransformUnitSize:            D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION_HEVC_TUSIZE;
-    max_transform_hierarchy_depth_inter: UCHAR;
-    max_transform_hierarchy_depth_intra: UCHAR;
+    max_transform_hierarchy_depth_inter: u8;
+    max_transform_hierarchy_depth_intra: u8;
 }
 
 D3D12_VIDEO_ENCODER_CODEC_CONFIGURATION :: struct {
@@ -9268,15 +9269,15 @@ D3D12_VIDEO_ENCODER_VALIDATION_FLAGS :: enum_flags u32 {
 D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_H264 :: struct {
     GOPLength:                         u32;
     PPicturePeriod:                    u32;
-    pic_order_cnt_type:                UCHAR;
-    log2_max_frame_num_minus4:         UCHAR;
-    log2_max_pic_order_cnt_lsb_minus4: UCHAR;
+    pic_order_cnt_type:                u8;
+    log2_max_frame_num_minus4:         u8;
+    log2_max_pic_order_cnt_lsb_minus4: u8;
 }
 
 D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE_HEVC :: struct {
     GOPLength:                         u32;
     PPicturePeriod:                    u32;
-    log2_max_pic_order_cnt_lsb_minus4: UCHAR;
+    log2_max_pic_order_cnt_lsb_minus4: u8;
 }
 
 D3D12_VIDEO_ENCODER_SEQUENCE_GOP_STRUCTURE :: struct {
@@ -9416,7 +9417,7 @@ D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_FLAGS :: enum_flags u32 {
 }
 
 D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_MARKING_OPERATION :: struct {
-    memory_management_control_operation: UCHAR;
+    memory_management_control_operation: u8;
     difference_of_pic_nums_minus1:       u32;
     long_term_pic_num:                   u32;
     long_term_frame_idx:                 u32;
@@ -9424,7 +9425,7 @@ D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_MARKING_OP
 }
 
 D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_LIST_MODIFICATION_OPERATION :: struct {
-    modification_of_pic_nums_idc: UCHAR;
+    modification_of_pic_nums_idc: u8;
     abs_diff_pic_num_minus1:      u32;
     long_term_pic_num:            u32;
 }
@@ -9443,7 +9444,7 @@ D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264 :: struct {
     pList1ReferenceFrames:                       *u32;
     ReferenceFramesReconPictureDescriptorsCount: u32;
     pReferenceFramesReconPictureDescriptors:     *D3D12_VIDEO_ENCODER_REFERENCE_PICTURE_DESCRIPTOR_H264;
-    adaptive_ref_pic_marking_mode_flag:          UCHAR;
+    adaptive_ref_pic_marking_mode_flag:          u8;
     RefPicMarkingOperationsCommandsCount:        u32;
     pRefPicMarkingOperationsCommands:            *D3D12_VIDEO_ENCODER_PICTURE_CONTROL_CODEC_DATA_H264_REFERENCE_PICTURE_MARKING_OPERATION;
     List0RefPicModificationsCount:               u32;

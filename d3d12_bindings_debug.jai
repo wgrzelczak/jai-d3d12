@@ -2317,7 +2317,7 @@ D3D12_MESSAGE_CALLBACK_FLAGS :: enum_flags u32 {
     D3D12_MESSAGE_CALLBACK_IGNORE_FILTERS :: IGNORE_FILTERS;
 }
 
-D3D12MessageFunc :: #type (a0: D3D12_MESSAGE_CATEGORY, a1: D3D12_MESSAGE_SEVERITY, a2: D3D12_MESSAGE_ID, a3: *u8, a4: *void) -> void #c_call;
+D3D12MessageFunc :: #type (Category: D3D12_MESSAGE_CATEGORY, Severity: D3D12_MESSAGE_SEVERITY, ID: D3D12_MESSAGE_ID, pDescription: *u8, pContext: *void) -> void #c_call;
 
 
 ID3D12InfoQueue1_UUID :: "2852dd88-b484-4c0c-b6b1-67168500e600";

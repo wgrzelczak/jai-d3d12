@@ -10,7 +10,7 @@ PIX           :: true;
 
 #run {
     set_build_options_dc(.{do_output=false});
-
+    
     if DXGI {
         opts := make_default_generator_options();
         if USE_D3D12_AGILITY {
@@ -25,10 +25,10 @@ PIX           :: true;
         array_add(*opts.path_suffixes_to_treat_as_non_system_paths, ..dxgi_versions);
         array_add(*opts.source_files,                               "dxgitype.h");
         array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "dxgitype.h", "dxgicommon.h", "fwptypes.h");
-
+        
         generate_bindings("dxgi_bindings.jai", opts);
     }
-
+    
     // Debug
     if DXGI {
         opts := make_default_generator_options();
@@ -36,7 +36,7 @@ PIX           :: true;
         array_add(*opts.path_suffixes_to_treat_as_non_system_paths, "dxgidebug.h");
         generate_bindings("dxgi_bindings_debug.jai", opts);
     }
-
+    
     if D3D12 {
         opts := make_default_generator_options();
         array_add(*opts.libnames, "d3d12.dll");
@@ -65,7 +65,7 @@ PIX           :: true;
         }
         generate_bindings("d3d12_bindings_debug.jai", opts);
     }
-
+    
     if DXC {
         opts := make_default_generator_options();
         array_add(*opts.libpaths,      "dxc_src/lib/x64");
@@ -82,7 +82,7 @@ PIX           :: true;
         array_add(*opts.system_types_to_include, "IMalloc", "IStream", "ISequentialStream", "tagSTATSTG", "STATSTG");
         generate_bindings("dxc_bindings.jai", opts);
     }
-
+    
     // Compile wrapper
     if PIX {
         src_files: [..] string;
@@ -90,7 +90,7 @@ PIX           :: true;
         make_directory_if_it_does_not_exist("pix_wrapper/x64");
         build_cpp_static_lib("pix_wrapper/x64/pix_wrapper", ..src_files, debug=false);
     }
-
+    
     if PIX {
         opts := make_default_generator_options();
         array_add(*opts.libpaths,      "pix_wrapper/x64");
@@ -105,10 +105,10 @@ PIX           :: true;
 
 make_default_generator_options :: () -> Generate_Bindings_Options {
     opts: Generate_Bindings_Options;
-
+    
     array_add(*opts.system_include_paths, GENERATOR_DEFAULT_SYSTEM_INCLUDE_PATH);
     array_add(*opts.extra_clang_arguments, "-x", "c++", "-fms-extensions");
-
+    
     opts.mimic_spacing_flags                &= ~Mimic_Spacing_Flags.VTABLE;
     opts.generate_compile_time_struct_checks = false;
     opts.generate_c_style_api_for_vtable     = false;
@@ -127,10 +127,10 @@ generate_bindings :: (output_filename : string, opts : Generate_Bindings_Options
     bindings_builder, success := generate_bindings(opts, log_results=true);
     defer free_buffers(*bindings_builder);
     assert(success);
-
+    
     success = write_entire_file(output_filename, *bindings_builder);
     assert(success, "Could not write generated output to \"%\"\n", output_filename);
-
+    
     reset_temporary_storage();
 }
 
@@ -139,7 +139,7 @@ d3d_visitor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Vi
     if (decl.kind == .STRUCT || decl.kind == .ENUM) && decl.output_name.count > 2 && decl.output_name[0] == #char "_" && decl.output_name[1] !=  #char "_" {
         advance(*decl.output_name);
     }
-
+    
     if !parent_decl {
         if array_find(TYPES_TO_OMIT, decl.name) {
             decl.decl_flags |= .OMIT_FROM_OUTPUT;
@@ -152,13 +152,13 @@ d3d_visitor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Vi
             }
         }
     }
-
+    
     if decl.kind == .ENUM {
         if ends_with(decl.name, "FLAGS") || ends_with(decl.name, "FLAG") {
             en := cast(*Enum)decl;
             en.flags |= .IS_ENUM_FLAGS;
             en.flags |= .VALUES_IN_HEX;
-
+            
             // Clang on Windows claims that all enums are signed, but MS function declarations expects at least the flags to be unsigned
             if en.type.size == {
                 case 1; en.type = context.compiler.type_def_u8;
@@ -168,17 +168,17 @@ d3d_visitor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Vi
             }
         }
     }
-
+    
     // Replace integers with their corresponding enum flags, where possible
     if parent_decl && (parent_decl.kind == .FUNCTION || parent_decl.kind == .STRUCT) && decl.kind == .DECLARATION && decl.type.number_flags {
         new_name := get_enum_name(decl.name, parent_decl.name);
         if !new_name    return .RECURSE;
-
+        
         for context.compiler.global_scope.members {
             if it.kind != .ENUM  || it.name != new_name     continue;
-
+            
             en := cast(*Enum)it;
-
+            
             // swap in the enum for the integer
             enum_type := New(CType);
             enum_type.type_of_enum = en;
@@ -187,51 +187,57 @@ d3d_visitor :: (decl: *Declaration, parent_decl: *Declaration) -> Declaration_Vi
             
             // we'll also need to output a cast, like "cast(EnumType)5" for the default argument
             decl.decl_flags |= .NEEDS_DEFAULT_ARGUMENT_CAST;
-
+            
             break;
         }
     }
-
+    
     return .RECURSE;
 }
 
 get_enum_name :: (argument_name: string, parent_name: string) -> string {
     if argument_name == {
         case "Flags";
-            if parent_name == {
-                case "DXGI_SWAP_CHAIN_DESC";  return "DXGI_SWAP_CHAIN_FLAG";
-                case "DXGI_SWAP_CHAIN_DESC1"; return "DXGI_SWAP_CHAIN_FLAG";
-                case "DXGI_ADAPTER_DESC1";    return "DXGI_ADAPTER_FLAG";
-            }
+        if parent_name == {
+            case "DXGI_SWAP_CHAIN_DESC";  return "DXGI_SWAP_CHAIN_FLAG";
+            case "DXGI_SWAP_CHAIN_DESC1"; return "DXGI_SWAP_CHAIN_FLAG";
+            case "DXGI_ADAPTER_DESC1";    return "DXGI_ADAPTER_FLAG";
+        }
     }
-
+    
     return "";
 }
 
 PREFIXES_FOR_TYPES_TO_OMIT :: string.[
-   "__REQUIRED_",
-   "LP",
-   "IID_",
-   "__MIDL_",
-];
+                                      "__REQUIRED_",
+                                      "LP",
+                                      "IID_",
+                                      
+                                      "__MIDL_",
+                                      
+                                      ];
 
 TYPES_TO_OMIT :: string.[
-    "WKPDID_D3DDebugObjectName",
-    "DXGI_DEBUG_ALL",
-    "DXGI_DEBUG_DX",
-    "DXGI_DEBUG_DXGI",
-    "DXGI_DEBUG_APP",
-    // Double definitions:
-    "DXGI_CPU_ACCESS_NONE",
-    "DXGI_CPU_ACCESS_DYNAMIC",
-    "DXGI_CPU_ACCESS_READ_WRITE",
-    "DXGI_CPU_ACCESS_SCRATCH",
-    "DXGI_CPU_ACCESS_FIELD",
-
-    // Below two had been defined twice in header files...
-    "D3D_SHADER_FEATURE_ADVANCED_TEXTURE_OPS",
-    "D3D_SHADER_FEATURE_WRITEABLE_MSAA_TEXTURES"
-];
+                         "WKPDID_D3DDebugObjectName",
+                         "DXGI_DEBUG_ALL",
+                         "DXGI_DEBUG_DX",
+                         
+                         "DXGI_DEBUG_DXGI",
+                         "DXGI_DEBUG_APP",
+                         // Double definitions:
+                         "DXGI_CPU_ACCESS_NONE",
+                         "DXGI_CPU_ACCESS_DYNAMIC",
+                         "DXGI_CPU_ACCESS_READ_WRITE",
+                         "DXGI_CPU_ACCESS_SCRATCH",
+                         "DXGI_CPU_ACCESS_FIELD",
+                         
+                         // Below two had been defined twice in header files...
+                         "D3D_SHADER_FEATURE_ADVANCED_TEXTURE_OPS",
+                         "D3D_SHADER_FEATURE_WRITEABLE_MSAA_TEXTURES",
+                         
+                         // Temporary define in headers (d3d agility)
+                         "INTERFACE",
+                         ];
 
 
 #import "Basic";
