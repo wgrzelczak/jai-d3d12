@@ -448,9 +448,9 @@ ID3D12FunctionParameterReflection_VTable :: struct #type_info_none {
 vtable :: (obj: *ID3D12FunctionParameterReflection) -> *ID3D12FunctionParameterReflection_VTable { return obj.vtable; }
 
 
-DxcCreateInstanceProc :: #type (a0: *IID, a1: *IID, a2: **void) -> HRESULT #c_call;
+DxcCreateInstanceProc :: #type (rclsid: *IID, riid: *IID, ppv: **void) -> HRESULT #c_call;
 
-DxcCreateInstance2Proc :: #type (a0: *IMalloc, a1: *IID, a2: *IID, a3: **void) -> HRESULT #c_call;
+DxcCreateInstance2Proc :: #type (pMalloc: *IMalloc, rclsid: *IID, riid: *IID, ppv: **void) -> HRESULT #c_call;
 
 /// <summary>
 /// Creates a single uninitialized object of the class associated with a specified CLSID.
